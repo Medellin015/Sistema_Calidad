@@ -34,3 +34,46 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--lima);outline-offse
   .sendero::before,.nodo{animation:none;opacity:1;transform:none}
 }
 @media print{ header,footer,.no-print{display:none} body{background:#fff} }
+
+/* ===== Mapa de procesos (diagrama clicable) ===== */
+.mapa-marco{background:#fff;border:3px solid var(--tinta);border-radius:1.25rem;
+  padding:.9rem;box-shadow:6px 6px 0 rgba(20,35,27,.15)}
+.mapa-centro{display:flex;gap:.6rem;margin-top:.5rem}
+.franja-mapa{border-radius:.9rem;padding:.6rem .7rem;border:2px solid transparent}
+.franja-titulo{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.65rem;
+  font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.4rem;opacity:.85}
+.franja-nodos{display:grid;gap:.45rem;grid-template-columns:repeat(auto-fit,minmax(11.5rem,1fr))}
+.f-estrategicos{background:rgba(30,107,71,.08);border-color:var(--bosque)}
+.f-misionales{background:rgba(181,224,72,.28);border-color:var(--tinta)}
+.f-apoyo{background:rgba(220,229,220,.45);border-color:#9db3a2}
+.f-evaluacion{background:rgba(244,169,60,.12);border-color:var(--sol)}
+.nodo-proceso{display:flex;align-items:center;gap:.5rem;width:100%;
+  background:#fff;border:2px solid var(--niebla);border-radius:.7rem;
+  padding:.5rem .65rem;font-size:.8rem;font-weight:600;color:var(--tinta);
+  cursor:pointer;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+.nodo-proceso:hover{transform:translateY(-2px);border-color:var(--bosque);
+  box-shadow:0 8px 18px -10px rgba(20,35,27,.4)}
+.flecha-lateral{display:flex;align-items:center;justify-content:center;flex:0 0 2.4rem;
+  border-radius:.6rem;padding:.9rem .3rem;text-align:center}
+.flecha-lateral span{writing-mode:vertical-rl;transform:rotate(180deg);
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.62rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase}
+.flecha-entrada{background:var(--bosque);color:#fff;
+  clip-path:polygon(0 0,100% 6%,100% 94%,0 100%)}
+.flecha-salida{background:var(--lima);color:var(--tinta);
+  clip-path:polygon(0 6%,100% 0,100% 100%,0 94%)}
+.banda-mipg{display:block;width:100%;margin-top:.6rem;background:var(--tinta);
+  color:#F7F8F4;border-radius:.8rem;padding:.6rem .9rem;font-size:.8rem;font-weight:700;
+  text-align:center;cursor:pointer;transition:background .15s ease}
+.banda-mipg:hover{background:var(--bosque-osc)}
+@media (max-width:640px){
+  .mapa-centro{flex-direction:column}
+  .flecha-lateral{flex:none;padding:.35rem .6rem}
+  .flecha-lateral span{writing-mode:horizontal-tb;transform:none}
+  .flecha-entrada{clip-path:polygon(0 0,94% 0,100% 50%,94% 100%,0 100%);order:-1}
+  .flecha-salida{clip-path:polygon(0 0,94% 0,100% 50%,94% 100%,0 100%)}
+}
+@media print{
+  .mapa-marco{box-shadow:none}
+  .nodo-proceso:hover{transform:none}
+}

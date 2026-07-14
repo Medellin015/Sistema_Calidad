@@ -1,8 +1,10 @@
 # Sistema_Calidad
 
 Portal de consulta del **Sistema de Gestión de Calidad (SGC)** de ACTIVA:
-guías paso a paso con flujograma, mapa de procesos y el inventario de
-documentos oficiales, con enlace directo al repositorio en SharePoint.
+un mapa de procesos interactivo (cada proceso abre su página con las
+carpetas reales de SharePoint: Procedimientos, Formatos, Manuales,
+Instructivos, Plantillas), guías paso a paso con flujograma y el
+inventario de documentos oficiales con enlace directo al repositorio.
 
 ## Estructura
 

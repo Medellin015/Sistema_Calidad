@@ -17,13 +17,27 @@
 const { useState, useMemo, useEffect } = React;
 
 /* ===== 1. Configuración ===== */
-const CARPETA_SGC_DEFAULT =
-  'https://activaparquesyeventos.sharepoint.com/sites/SistemadeGestindeCalidad/Documentos%20compartidos/Documentos%20Word/';
+const SITIO_SGC =
+  'https://activaparquesyeventos.sharepoint.com/sites/SistemadeGestindeCalidad';
+const BIBLIOTECA_SGC = SITIO_SGC + '/Documentos compartidos';
+const CARPETA_SGC_DEFAULT = BIBLIOTECA_SGC + '/Documentos Word/';
 const FECHA_CORTE_DEFAULT = '11/07/2026';
 
 // El porqué: los nombres de archivo traen tildes y espacios; el enlace se
 // construye codificando solo el nombre para no romper la ruta de la carpeta.
-const enlaceDoc = (archivo) => CARPETA_SGC_DEFAULT + encodeURIComponent(archivo);
+const enlaceDoc = (archivo) => encodeURI(CARPETA_SGC_DEFAULT) + encodeURIComponent(archivo);
+
+// Enlace a la carpeta de un proceso en SharePoint (o a una de sus subcarpetas).
+// encodeURI conserva las barras y codifica tildes y espacios de la ruta.
+const enlaceCarpeta = (carpetaProceso, subcarpeta) =>
+  encodeURI(BIBLIOTECA_SGC + '/' + carpetaProceso + (subcarpeta ? '/' + subcarpeta : ''));
+
+const ICONO_SECCION = {
+  'Procedimientos': '📋', 'Formatos': '📝', 'Manuales': '📘',
+  'Instructivos': '🧾', 'Plantillas': '📐', 'Documentos del proceso': '🗃️',
+  'Actas de Comité': '🗒️', 'Autodiagnósticos': '🩺', 'Políticas MIPG': '📜',
+  'Certificados curso de integridad': '🎓',
+};
 
 const TIPOS = { P: 'Procedimiento', I: 'Instructivo', F: 'Formato', M: 'Manual / Política' };
 const tipoDeCodigo = (codigo) => {
@@ -33,32 +47,74 @@ const tipoDeCodigo = (codigo) => {
 
 /* ===== 2. Datos ===== */
 
-// Mapa de procesos. La agrupación por franjas sigue el mapa clásico de
-// entidades públicas; validar nombres de sigla con el líder del SGC.
+// Mapa de procesos. Cada proceso corresponde 1:1 con una carpeta real de la
+// biblioteca "Documentos compartidos" del sitio SGC, y sus "secciones" son
+// las subcarpetas que esa carpeta tiene de verdad (inventario del 14/07/2026).
+// seccion.carpeta es el nombre EXACTO de la subcarpeta en SharePoint (ojo:
+// en Disciplinarios la carpeta se llama "Procedimiento", en singular).
+const S = (nombre, carpeta) => ({ nombre, carpeta: carpeta || nombre });
 const FRANJAS = [
   { nombre: 'Estratégicos', desc: 'Dan la dirección y la voz de la entidad', procesos: [
-    { sigla: 'OE', nombre: 'Orientación Estratégica', icono: '🧭' },
-    { sigla: 'RC', nombre: 'Relaciones Corporativas y Comunicaciones', icono: '📣' },
+    { sigla: 'OE', nombre: 'Orientación Estratégica', icono: '🧭',
+      carpeta: 'Orientación Estratégica',
+      secciones: [S('Procedimientos'), S('Formatos'), S('Manuales'), S('Plantillas')] },
+    { sigla: 'PE', nombre: 'Planeación Estratégica', icono: '🗺️',
+      carpeta: 'Planeación Estratégica',
+      secciones: [] }, // los documentos (plan estratégico, PTEP…) están sueltos en la carpeta
   ]},
   { nombre: 'Misionales', desc: 'La razón de ser: parques y eventos', procesos: [
-    { sigla: 'POL', nombre: 'Gestión Comercial y Portafolio', icono: '🤝' },
-    { sigla: 'EV', nombre: 'Gestión de Eventos', icono: '🎪' },
-    { sigla: 'GOP', nombre: 'Gestión de Operaciones', icono: '⚙️' },
+    { sigla: 'POL', nombre: 'Gestión Comercial', icono: '🤝',
+      carpeta: 'Gestión Comercial',
+      secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
+    { sigla: 'GOP', nombre: 'Gestión de Operaciones', icono: '⚙️',
+      carpeta: 'Gestión de Operaciones',
+      secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
   ]},
   { nombre: 'De apoyo', desc: 'Hacen posible la operación', procesos: [
-    { sigla: 'GF', nombre: 'Gestión Financiera', icono: '💰' },
-    { sigla: 'GA', nombre: 'Gestión Administrativa', icono: '🗂️' },
-    { sigla: 'GD', nombre: 'Gestión Documental', icono: '📄' },
-    { sigla: 'GT', nombre: 'Gestión del Talento Humano', icono: '👥' },
-    { sigla: 'GTI', nombre: 'Gestión de Tecnologías de la Información', icono: '💻' },
-    { sigla: 'BS', nombre: 'Gestión de Bienes y Servicios', icono: '📦' },
+    { sigla: 'GF', nombre: 'Gestión Financiera', icono: '💰',
+      carpeta: 'Gestión Financiera',
+      secciones: [S('Procedimientos'), S('Formatos'), S('Plantillas')] },
+    { sigla: 'GA', nombre: 'Gestión Administrativa', icono: '🗂️',
+      carpeta: 'Gestión Administrativa',
+      secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
+    { sigla: 'GD', nombre: 'Gestión Documental', icono: '📄',
+      carpeta: 'Gestión Documental',
+      secciones: [S('Procedimientos'), S('Formatos')] },
+    { sigla: 'GT', nombre: 'Gestión del Talento Humano', icono: '👥',
+      carpeta: 'Gestión del Talento Humano',
+      secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
+    { sigla: 'GTI', nombre: 'Gestión de Tecnologías de la Información', icono: '💻',
+      carpeta: 'Gestión de Tecnologías de Información',
+      secciones: [S('Instructivos')] },
+    { sigla: 'BS', nombre: 'Proceso de Contratación', icono: '📦',
+      carpeta: 'Proceso de Contratación',
+      secciones: [S('Procedimientos'), S('Formatos'), S('Manuales')] },
   ]},
   { nombre: 'Evaluación y mejora', desc: 'Controlan y hacen crecer el sistema', procesos: [
-    { sigla: 'MA', nombre: 'Mejora Continua', icono: '📈' },
-    { sigla: 'PD', nombre: 'Procesos Disciplinarios', icono: '⚖️' },
+    { sigla: 'MA', nombre: 'Mejoramiento Continuo', icono: '📈',
+      carpeta: 'Gestión de Procesos y Mejoramiento Continuo',
+      secciones: [S('Procedimientos')] },
+    { sigla: 'CI', nombre: 'Gestión de Control Interno', icono: '🔍',
+      carpeta: 'Gestión de Control Interno',
+      secciones: [S('Procedimientos'), S('Formatos')] },
+    { sigla: 'PD', nombre: 'Proceso Disciplinario', icono: '⚖️',
+      carpeta: 'Gestión Proceso Disciplinario y juzgamiento',
+      secciones: [S('Procedimientos', 'Procedimiento'), S('Formatos')] },
   ]},
 ];
-const PROCESOS = FRANJAS.flatMap((f) => f.procesos.map((p) => ({ ...p, franja: f.nombre })));
+// MIPG atraviesa todos los procesos: se dibuja como banda transversal del mapa.
+const MIPG = {
+  sigla: 'MIPG', nombre: 'Modelo Integrado de Planeación y Gestión', icono: '🏛️',
+  carpeta: 'Modelo Integrado de Planeación y Gestión', franja: 'Transversal',
+  secciones: [
+    S('Políticas MIPG', 'Políticas Word MIPG'),
+    S('Actas de Comité', 'ACTAS DE COMITÉ'),
+    S('Autodiagnósticos', 'AUTODIAGNOSTICOS'),
+    S('Certificados curso de integridad', 'Certificados Curso Integridad, transparencia y lucha contra la corrupción'),
+  ],
+};
+const PROCESOS = FRANJAS.flatMap((f) => f.procesos.map((p) => ({ ...p, franja: f.nombre })))
+  .concat([MIPG]);
 
 // Inventario real de la carpeta "Documentos Word" del sitio SGC.
 // estado: 'vigente' (enlace directo) | 'aprobacion' (borrador nuevo, aún sin publicar).
@@ -75,17 +131,18 @@ const DOCUMENTOS = [
   { codigo: 'OE-P01', nombre: 'Procedimiento de atención vía telefónica', archivo: 'OE-P01 Procedimiento atención  vía telefónica.docx', proceso: 'OE' },
   { codigo: 'OE-P02', nombre: 'Procedimiento de atención a personas con discapacidad', archivo: 'OE-P02 Procedimiento atención  personas con discapacidad.docx', proceso: 'OE' },
   { codigo: '', nombre: 'Caracterización de grupos de valor', archivo: 'CARACTERIZACIÓN GRUPOS DE VALOR.docx', proceso: 'OE' },
-  // — Relaciones Corporativas
-  { codigo: 'RC-P01', nombre: 'Procedimiento de comunicaciones', archivo: 'RC-P01 Procedimiento comunicaciones.docx', proceso: 'RC', destacado: true },
-  { codigo: '', nombre: 'Términos y condiciones página web ACTIVA', archivo: 'Términos y condiciones página web ACTIVA.docx', proceso: 'RC' },
+  // — Comunicaciones (sin carpeta propia en el sitio: viven con Orientación Estratégica)
+  { codigo: 'RC-P01', nombre: 'Procedimiento de comunicaciones', archivo: 'RC-P01 Procedimiento comunicaciones.docx', proceso: 'OE', destacado: true },
+  { codigo: '', nombre: 'Términos y condiciones página web ACTIVA', archivo: 'Términos y condiciones página web ACTIVA.docx', proceso: 'OE' },
   // — Gestión Comercial
   { codigo: 'POL-I01', nombre: 'Instructivo Comité de Asignaciones', archivo: 'POL-I01 Comité de Asignaciones.docx', proceso: 'POL' },
   { codigo: 'POL-I02', nombre: 'Políticas comerciales', archivo: 'POL-I02 Políticas comerciales.docx', proceso: 'POL' },
   { codigo: 'POL-P01', nombre: 'Procedimiento de ejecución de contratos de clientes', archivo: 'POL-P01 Procedimiento ejecucion de contratos clientes.docx', proceso: 'POL', destacado: true },
   { codigo: 'POL-P02', nombre: 'Procedimiento de gestión comercial', archivo: '', proceso: 'POL', estado: 'aprobacion' },
-  // — Eventos
-  { codigo: 'EV-P01', nombre: 'Procedimiento de eventos propios', archivo: 'EV-P01 Procedimiento Eventos Propios.docx', proceso: 'EV', destacado: true },
-  { codigo: 'EV-P02', nombre: 'Procedimiento de auditorías internas', archivo: 'EV-P02 Procedimiento Auditorías Internas.docx', proceso: 'EV' },
+  // — Eventos propios: operación misional. Auditorías: evaluación (EV = Evaluación
+  //   independiente en la caracterización EV-C01 de Control Interno).
+  { codigo: 'EV-P01', nombre: 'Procedimiento de eventos propios', archivo: 'EV-P01 Procedimiento Eventos Propios.docx', proceso: 'GOP', destacado: true },
+  { codigo: 'EV-P02', nombre: 'Procedimiento de auditorías internas', archivo: 'EV-P02 Procedimiento Auditorías Internas.docx', proceso: 'CI' },
   // — Operaciones
   { codigo: 'GOP-I05', nombre: 'Instructivo Comité de Asignación', archivo: 'GOP-I05 Instructivo Comité de Asignación.docx', proceso: 'GOP' },
   { codigo: 'GOP-P10', nombre: 'Soluciones para el suministro de bienes y servicios', archivo: 'GOP-P10 Soluciones para el suministro de bienes y servicios.docx', proceso: 'GOP' },
@@ -328,33 +385,53 @@ const Buscador = ({ irA }) => {
   );
 };
 
-const MapaProcesos = ({ irA }) => (
-  <div className="space-y-6">
-    {FRANJAS.map((f) => (
-      <section key={f.nombre}>
-        <div className="flex items-baseline gap-3 mb-2">
-          <h3 className="f-display text-lg font-semibold">{f.nombre}</h3>
-          <span className="text-sm text-[#5b6b5f]">{f.desc}</span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {f.procesos.map((p) => {
-            const n = DOCUMENTOS.filter((d) => d.proceso === p.sigla).length;
-            return (
-              <button key={p.sigla} onClick={() => irA(`proceso/${p.sigla}`)}
-                className="tarjeta text-left bg-white rounded-2xl border border-[#DCE5DC] p-4 flex items-center gap-3">
-                <span className="text-2xl" aria-hidden="true">{p.icono}</span>
-                <span className="flex-1">
-                  <span className="block font-semibold leading-snug">{p.nombre}</span>
-                  <span className="text-xs text-[#5b6b5f]">{n} documento{n !== 1 ? 's' : ''}</span>
-                </span>
-                <span className="f-mono text-xs font-bold text-[#1E6B47]">{p.sigla}</span>
-              </button>
-            );
-          })}
-        </div>
-      </section>
-    ))}
+// El mapa de procesos como diagrama clásico y clicable: franjas horizontales,
+// flechas laterales de entrada (necesidades) y salida (satisfacción), y la
+// banda transversal del MIPG. Cada nodo navega a la vista del proceso.
+const NodoProceso = ({ p, irA }) => (
+  <button onClick={() => irA(`proceso/${p.sigla}`)}
+    aria-label={`Entrar al proceso ${p.nombre}`}
+    className="nodo-proceso">
+    <span className="text-lg leading-none" aria-hidden="true">{p.icono}</span>
+    <span className="flex-1 text-left leading-tight">{p.nombre}</span>
+    <span className="f-mono text-[10px] font-bold opacity-70">{p.sigla}</span>
+  </button>
+);
+
+const FranjaMapa = ({ franja, clase, irA }) => (
+  <div className={`franja-mapa ${clase}`}>
+    <p className="franja-titulo">{franja.nombre}</p>
+    <div className="franja-nodos">
+      {franja.procesos.map((p) => <NodoProceso key={p.sigla} p={p} irA={irA} />)}
+    </div>
   </div>
+);
+
+const MapaProcesos = ({ irA }) => (
+  <nav className="mapa-marco" aria-label="Mapa de procesos del SGC">
+    <FranjaMapa franja={FRANJAS[0]} clase="f-estrategicos" irA={irA} />
+    <div className="mapa-centro">
+      <div className="flecha-lateral flecha-entrada" aria-hidden="true">
+        <span>Necesidades y expectativas</span>
+      </div>
+      <div className="flex-1 min-w-0 space-y-2">
+        <FranjaMapa franja={FRANJAS[1]} clase="f-misionales" irA={irA} />
+        <FranjaMapa franja={FRANJAS[2]} clase="f-apoyo" irA={irA} />
+        <FranjaMapa franja={FRANJAS[3]} clase="f-evaluacion" irA={irA} />
+      </div>
+      <div className="flecha-lateral flecha-salida" aria-hidden="true">
+        <span>Satisfacción de los grupos de valor</span>
+      </div>
+    </div>
+    <button onClick={() => irA('proceso/MIPG')} className="banda-mipg"
+      aria-label="Entrar al Modelo Integrado de Planeación y Gestión (MIPG)">
+      🏛️ Modelo Integrado de Planeación y Gestión — MIPG
+      <span className="font-normal opacity-80"> · transversal a todos los procesos</span>
+    </button>
+    <p className="text-xs text-[#5b6b5f] text-center mt-2 no-print">
+      Haz clic en un proceso para ver sus procedimientos, formatos y manuales.
+    </p>
+  </nav>
 );
 
 const Flujograma = ({ pasos }) => (
@@ -427,6 +504,35 @@ const VistaGuia = ({ guia, irA }) => {
   );
 };
 
+// Tarjetas de sección: una por subcarpeta real del proceso en SharePoint.
+// Si el proceso no tiene subcarpetas (Planeación Estratégica), se ofrece la
+// carpeta raíz como única sección.
+const SeccionesProceso = ({ proceso }) => {
+  const secciones = proceso.secciones.length
+    ? proceso.secciones
+    : [{ nombre: 'Documentos del proceso', carpeta: '' }];
+  return (
+    <div className="mt-5">
+      <div className="flex items-baseline justify-between gap-3 mb-2">
+        <h3 className="f-display text-lg font-semibold">Carpetas del proceso en el repositorio</h3>
+        <a href={enlaceCarpeta(proceso.carpeta)} target="_blank" rel="noopener"
+           className="text-sm font-semibold text-[#1E6B47] hover:underline whitespace-nowrap">Abrir carpeta ↗</a>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        {secciones.map((s) => (
+          <a key={s.nombre} target="_blank" rel="noopener"
+             href={s.carpeta ? enlaceCarpeta(proceso.carpeta, s.carpeta) : enlaceCarpeta(proceso.carpeta)}
+             className="tarjeta bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 flex flex-col items-start gap-1">
+            <span className="text-2xl" aria-hidden="true">{ICONO_SECCION[s.nombre] || '📁'}</span>
+            <span className="font-semibold leading-snug">{s.nombre}</span>
+            <span className="text-xs text-[#5b6b5f]">Abrir en SharePoint ↗</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const VistaProceso = ({ sigla, irA }) => {
   const proceso = PROCESOS.find((p) => p.sigla === sigla);
   const docs = DOCUMENTOS.filter((d) => d.proceso === sigla);
@@ -442,8 +548,9 @@ const VistaProceso = ({ sigla, irA }) => {
           <h2 className="f-display text-3xl font-extrabold leading-tight">{proceso.nombre}</h2>
         </div>
       </div>
+      <SeccionesProceso proceso={proceso} />
       {guias.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-5 flex flex-wrap gap-2">
           {guias.map((g) => (
             <button key={g.id} onClick={() => irA(`guia/${g.id}`)}
               className="text-sm font-semibold bg-[#B5E048] text-[#14231B] rounded-full px-4 py-2 hover:bg-[#a3d13a]">
@@ -452,9 +559,14 @@ const VistaProceso = ({ sigla, irA }) => {
           ))}
         </div>
       )}
-      <div className="mt-6 space-y-2">
-        {docs.map((d) => <FilaDocumento key={d.codigo + d.nombre} doc={d} />)}
-      </div>
+      {docs.length > 0 && (
+        <div className="mt-6">
+          <h3 className="f-display text-lg font-semibold mb-2">Documentos del inventario (Word)</h3>
+          <div className="space-y-2">
+            {docs.map((d) => <FilaDocumento key={d.codigo + d.nombre} doc={d} />)}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -482,17 +594,20 @@ const VistaDocumentos = ({ irA }) => {
 
 const Inicio = ({ irA }) => (
   <div className="max-w-4xl mx-auto">
-    {/* Hero: la pregunta es la tesis del portal */}
-    <div className="pt-8 pb-6">
-      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-[.2em] mb-2">Sistema de Gestión de Calidad</p>
-      <h1 className="f-display text-4xl sm:text-6xl font-extrabold leading-[1.05]">
-        ¿Cómo pido<br /><span className="text-[#1E6B47]">lo que necesito</span> en ACTIVA?
-      </h1>
-      <p className="mt-3 text-[#3c4a40] max-w-xl leading-relaxed">
-        Guías paso a paso con su flujograma, el mapa de procesos y los {DOCUMENTOS.length} documentos
-        oficiales del SGC, con enlace directo al repositorio.
-      </p>
+    {/* El mapa de procesos es la puerta de entrada: va arriba de todo */}
+    <div className="pt-6 pb-4 text-center">
+      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-[.2em] mb-1">Sistema de Gestión de Calidad · ACTIVA</p>
+      <h1 className="f-display text-3xl sm:text-4xl font-extrabold leading-tight">Mapa de procesos</h1>
     </div>
+    <MapaProcesos irA={irA} />
+
+    <h2 className="f-display text-2xl sm:text-3xl font-extrabold leading-tight mt-10">
+      ¿Cómo pido <span className="text-[#1E6B47]">lo que necesito</span>?
+    </h2>
+    <p className="mt-2 mb-4 text-[#3c4a40] max-w-xl leading-relaxed">
+      Guías paso a paso con su flujograma y los {DOCUMENTOS.length} documentos
+      oficiales del SGC, con enlace directo al repositorio.
+    </p>
     <div className="flex flex-wrap gap-2 mb-6">
       {GUIAS.map((g) => (
         <button key={g.id} onClick={() => irA(`guia/${g.id}`)}
@@ -507,8 +622,6 @@ const Inicio = ({ irA }) => (
         Ver todos los documentos →
       </button>
     </div>
-    <h2 className="f-display text-2xl font-extrabold mt-10 mb-4">Mapa de procesos</h2>
-    <MapaProcesos irA={irA} />
   </div>
 );
 
