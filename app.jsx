@@ -1,4 +1,6 @@
 'use strict';
+/* Fuente editable (JSX). La página carga app.js (compilado), NO este archivo.
+   Tras editar aquí, regenera app.js con:  node build.mjs   (ver README). */
 /* ============================================================================
    Portal SGC ACTIVA — app de consulta del Sistema de Gestión de Calidad
    Estructura del archivo:

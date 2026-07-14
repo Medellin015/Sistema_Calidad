@@ -8,7 +8,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <!-- Estilos propios: fuentes, sendero del flujograma y animaciones -->
@@ -17,7 +16,8 @@
 <body>
 <div id="root"></div>
 
-<!-- App React (JSX transpilado en el navegador por Babel standalone) -->
-<script type="text/babel" data-presets="react" src="app.jsx"></script>
+<!-- App React ya compilada (JS puro). Funciona abriendo el archivo (file://)
+     o servido por HTTP. La fuente editable con JSX está en app.jsx. -->
+<script src="app.js"></script>
 </body>
 </html>
