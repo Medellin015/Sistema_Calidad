@@ -47,56 +47,56 @@ const tipoDeCodigo = (codigo) => {
 const S = (nombre, carpeta) => ({ nombre, carpeta: carpeta || nombre });
 const FRANJAS = [
     { nombre: 'Estratégicos', desc: 'Dan la dirección y la voz de la entidad', procesos: [
-            { sigla: 'OE', nombre: 'Orientación Estratégica', icono: '🧭',
+            { sigla: 'OE', nombre: 'Orientación Estratégica',
                 carpeta: 'Orientación Estratégica',
                 secciones: [S('Procedimientos'), S('Formatos'), S('Manuales'), S('Plantillas')] },
-            { sigla: 'PE', nombre: 'Planeación Estratégica', icono: '🗺️',
+            { sigla: 'PE', nombre: 'Planeación Estratégica',
                 carpeta: 'Planeación Estratégica',
                 secciones: [] }, // los documentos (plan estratégico, PTEP…) están sueltos en la carpeta
         ] },
     { nombre: 'Misionales', desc: 'La razón de ser: parques y eventos', procesos: [
-            { sigla: 'POL', nombre: 'Gestión Comercial', icono: '🤝',
+            { sigla: 'POL', nombre: 'Gestión Comercial',
                 carpeta: 'Gestión Comercial',
                 secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
-            { sigla: 'GOP', nombre: 'Gestión de Operaciones', icono: '⚙️',
+            { sigla: 'GOP', nombre: 'Gestión de Operaciones',
                 carpeta: 'Gestión de Operaciones',
                 secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
         ] },
     { nombre: 'De apoyo', desc: 'Hacen posible la operación', procesos: [
-            { sigla: 'GF', nombre: 'Gestión Financiera', icono: '💰',
+            { sigla: 'GF', nombre: 'Gestión Financiera',
                 carpeta: 'Gestión Financiera',
                 secciones: [S('Procedimientos'), S('Formatos'), S('Plantillas')] },
-            { sigla: 'GA', nombre: 'Gestión Administrativa', icono: '🗂️',
+            { sigla: 'GA', nombre: 'Gestión Administrativa',
                 carpeta: 'Gestión Administrativa',
                 secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
-            { sigla: 'GD', nombre: 'Gestión Documental', icono: '📄',
+            { sigla: 'GD', nombre: 'Gestión Documental',
                 carpeta: 'Gestión Documental',
                 secciones: [S('Procedimientos'), S('Formatos')] },
-            { sigla: 'GT', nombre: 'Gestión del Talento Humano', icono: '👥',
+            { sigla: 'GT', nombre: 'Gestión del Talento Humano',
                 carpeta: 'Gestión del Talento Humano',
                 secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
-            { sigla: 'GTI', nombre: 'Gestión de Tecnologías de la Información', icono: '💻',
+            { sigla: 'GTI', nombre: 'Gestión de Tecnologías de la Información',
                 carpeta: 'Gestión de Tecnologías de Información',
                 secciones: [S('Instructivos')] },
-            { sigla: 'BS', nombre: 'Proceso de Contratación', icono: '📦',
+            { sigla: 'BS', nombre: 'Proceso de Contratación',
                 carpeta: 'Proceso de Contratación',
                 secciones: [S('Procedimientos'), S('Formatos'), S('Manuales')] },
         ] },
     { nombre: 'Evaluación y mejora', desc: 'Controlan y hacen crecer el sistema', procesos: [
-            { sigla: 'MA', nombre: 'Mejoramiento Continuo', icono: '📈',
+            { sigla: 'MA', nombre: 'Mejoramiento Continuo',
                 carpeta: 'Gestión de Procesos y Mejoramiento Continuo',
                 secciones: [S('Procedimientos')] },
-            { sigla: 'CI', nombre: 'Gestión de Control Interno', icono: '🔍',
+            { sigla: 'CI', nombre: 'Gestión de Control Interno',
                 carpeta: 'Gestión de Control Interno',
                 secciones: [S('Procedimientos'), S('Formatos')] },
-            { sigla: 'PD', nombre: 'Proceso Disciplinario', icono: '⚖️',
+            { sigla: 'PD', nombre: 'Proceso Disciplinario',
                 carpeta: 'Gestión Proceso Disciplinario y juzgamiento',
                 secciones: [S('Procedimientos', 'Procedimiento'), S('Formatos')] },
         ] },
 ];
 // MIPG atraviesa todos los procesos: se dibuja como banda transversal del mapa.
 const MIPG = {
-    sigla: 'MIPG', nombre: 'Modelo Integrado de Planeación y Gestión', icono: '🏛️',
+    sigla: 'MIPG', nombre: 'Modelo Integrado de Planeación y Gestión',
     carpeta: 'Modelo Integrado de Planeación y Gestión', franja: 'Transversal',
     secciones: [
         S('Políticas MIPG', 'Políticas Word MIPG'),
@@ -361,7 +361,6 @@ const Buscador = ({ irA }) => {
 // flechas laterales de entrada (necesidades) y salida (satisfacción), y la
 // banda transversal del MIPG. Cada nodo navega a la vista del proceso.
 const NodoProceso = ({ p, irA }) => (React.createElement("button", { onClick: () => irA(`proceso/${p.sigla}`), "aria-label": `Entrar al proceso ${p.nombre}`, className: "nodo-proceso" },
-    React.createElement("span", { className: "text-lg leading-none", "aria-hidden": "true" }, p.icono),
     React.createElement("span", { className: "flex-1 text-left leading-tight" }, p.nombre),
     React.createElement("span", { className: "f-mono text-[10px] font-bold opacity-70" }, p.sigla)));
 const FranjaMapa = ({ franja, clase, irA }) => (React.createElement("div", { className: `franja-mapa ${clase}` },
@@ -379,7 +378,7 @@ const MapaProcesos = ({ irA }) => (React.createElement("nav", { className: "mapa
         React.createElement("div", { className: "flecha-lateral flecha-salida", "aria-hidden": "true" },
             React.createElement("span", null, "Satisfacci\u00F3n de los grupos de valor"))),
     React.createElement("button", { onClick: () => irA('proceso/MIPG'), className: "banda-mipg", "aria-label": "Entrar al Modelo Integrado de Planeaci\u00F3n y Gesti\u00F3n (MIPG)" },
-        "\uD83C\uDFDB\uFE0F Modelo Integrado de Planeaci\u00F3n y Gesti\u00F3n \u2014 MIPG",
+        "Modelo Integrado de Planeaci\u00F3n y Gesti\u00F3n \u2014 MIPG",
         React.createElement("span", { className: "font-normal opacity-80" }, " \u00B7 transversal a todos los procesos")),
     React.createElement("p", { className: "text-xs text-[#5b6b5f] text-center mt-2 no-print" }, "Haz clic en un proceso para ver sus procedimientos, formatos y manuales.")));
 const Flujograma = ({ pasos }) => (React.createElement("div", { className: "sendero" }, pasos.map((paso, i) => {
@@ -460,14 +459,12 @@ const VistaProceso = ({ sigla, irA }) => {
             React.createElement("button", { className: "text-[#1E6B47] font-semibold", onClick: () => irA('') }, "Volver"));
     return (React.createElement("div", { className: "max-w-3xl mx-auto" },
         React.createElement("button", { onClick: () => irA(''), className: "text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
-        React.createElement("div", { className: "flex items-center gap-4 mb-1" },
-            React.createElement("span", { className: "text-4xl", "aria-hidden": "true" }, proceso.icono),
-            React.createElement("div", null,
-                React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest" },
-                    proceso.franja,
-                    " \u00B7 ",
-                    proceso.sigla),
-                React.createElement("h2", { className: "f-display text-3xl font-extrabold leading-tight" }, proceso.nombre))),
+        React.createElement("div", { className: "mb-1" },
+            React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest" },
+                proceso.franja,
+                " \u00B7 ",
+                proceso.sigla),
+            React.createElement("h2", { className: "f-display text-3xl font-extrabold leading-tight" }, proceso.nombre)),
         React.createElement(SeccionesProceso, { proceso: proceso }),
         guias.length > 0 && (React.createElement("div", { className: "mt-5 flex flex-wrap gap-2" }, guias.map((g) => (React.createElement("button", { key: g.id, onClick: () => irA(`guia/${g.id}`), className: "text-sm font-semibold bg-[#B5E048] text-[#14231B] rounded-full px-4 py-2 hover:bg-[#a3d13a]" }, g.pregunta))))),
         docs.length > 0 && (React.createElement("div", { className: "mt-6" },

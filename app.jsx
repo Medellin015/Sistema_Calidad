@@ -55,56 +55,56 @@ const tipoDeCodigo = (codigo) => {
 const S = (nombre, carpeta) => ({ nombre, carpeta: carpeta || nombre });
 const FRANJAS = [
   { nombre: 'Estratégicos', desc: 'Dan la dirección y la voz de la entidad', procesos: [
-    { sigla: 'OE', nombre: 'Orientación Estratégica', icono: '🧭',
+    { sigla: 'OE', nombre: 'Orientación Estratégica',
       carpeta: 'Orientación Estratégica',
       secciones: [S('Procedimientos'), S('Formatos'), S('Manuales'), S('Plantillas')] },
-    { sigla: 'PE', nombre: 'Planeación Estratégica', icono: '🗺️',
+    { sigla: 'PE', nombre: 'Planeación Estratégica',
       carpeta: 'Planeación Estratégica',
       secciones: [] }, // los documentos (plan estratégico, PTEP…) están sueltos en la carpeta
   ]},
   { nombre: 'Misionales', desc: 'La razón de ser: parques y eventos', procesos: [
-    { sigla: 'POL', nombre: 'Gestión Comercial', icono: '🤝',
+    { sigla: 'POL', nombre: 'Gestión Comercial',
       carpeta: 'Gestión Comercial',
       secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
-    { sigla: 'GOP', nombre: 'Gestión de Operaciones', icono: '⚙️',
+    { sigla: 'GOP', nombre: 'Gestión de Operaciones',
       carpeta: 'Gestión de Operaciones',
       secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
   ]},
   { nombre: 'De apoyo', desc: 'Hacen posible la operación', procesos: [
-    { sigla: 'GF', nombre: 'Gestión Financiera', icono: '💰',
+    { sigla: 'GF', nombre: 'Gestión Financiera',
       carpeta: 'Gestión Financiera',
       secciones: [S('Procedimientos'), S('Formatos'), S('Plantillas')] },
-    { sigla: 'GA', nombre: 'Gestión Administrativa', icono: '🗂️',
+    { sigla: 'GA', nombre: 'Gestión Administrativa',
       carpeta: 'Gestión Administrativa',
       secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
-    { sigla: 'GD', nombre: 'Gestión Documental', icono: '📄',
+    { sigla: 'GD', nombre: 'Gestión Documental',
       carpeta: 'Gestión Documental',
       secciones: [S('Procedimientos'), S('Formatos')] },
-    { sigla: 'GT', nombre: 'Gestión del Talento Humano', icono: '👥',
+    { sigla: 'GT', nombre: 'Gestión del Talento Humano',
       carpeta: 'Gestión del Talento Humano',
       secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
-    { sigla: 'GTI', nombre: 'Gestión de Tecnologías de la Información', icono: '💻',
+    { sigla: 'GTI', nombre: 'Gestión de Tecnologías de la Información',
       carpeta: 'Gestión de Tecnologías de Información',
       secciones: [S('Instructivos')] },
-    { sigla: 'BS', nombre: 'Proceso de Contratación', icono: '📦',
+    { sigla: 'BS', nombre: 'Proceso de Contratación',
       carpeta: 'Proceso de Contratación',
       secciones: [S('Procedimientos'), S('Formatos'), S('Manuales')] },
   ]},
   { nombre: 'Evaluación y mejora', desc: 'Controlan y hacen crecer el sistema', procesos: [
-    { sigla: 'MA', nombre: 'Mejoramiento Continuo', icono: '📈',
+    { sigla: 'MA', nombre: 'Mejoramiento Continuo',
       carpeta: 'Gestión de Procesos y Mejoramiento Continuo',
       secciones: [S('Procedimientos')] },
-    { sigla: 'CI', nombre: 'Gestión de Control Interno', icono: '🔍',
+    { sigla: 'CI', nombre: 'Gestión de Control Interno',
       carpeta: 'Gestión de Control Interno',
       secciones: [S('Procedimientos'), S('Formatos')] },
-    { sigla: 'PD', nombre: 'Proceso Disciplinario', icono: '⚖️',
+    { sigla: 'PD', nombre: 'Proceso Disciplinario',
       carpeta: 'Gestión Proceso Disciplinario y juzgamiento',
       secciones: [S('Procedimientos', 'Procedimiento'), S('Formatos')] },
   ]},
 ];
 // MIPG atraviesa todos los procesos: se dibuja como banda transversal del mapa.
 const MIPG = {
-  sigla: 'MIPG', nombre: 'Modelo Integrado de Planeación y Gestión', icono: '🏛️',
+  sigla: 'MIPG', nombre: 'Modelo Integrado de Planeación y Gestión',
   carpeta: 'Modelo Integrado de Planeación y Gestión', franja: 'Transversal',
   secciones: [
     S('Políticas MIPG', 'Políticas Word MIPG'),
@@ -392,7 +392,6 @@ const NodoProceso = ({ p, irA }) => (
   <button onClick={() => irA(`proceso/${p.sigla}`)}
     aria-label={`Entrar al proceso ${p.nombre}`}
     className="nodo-proceso">
-    <span className="text-lg leading-none" aria-hidden="true">{p.icono}</span>
     <span className="flex-1 text-left leading-tight">{p.nombre}</span>
     <span className="f-mono text-[10px] font-bold opacity-70">{p.sigla}</span>
   </button>
@@ -425,7 +424,7 @@ const MapaProcesos = ({ irA }) => (
     </div>
     <button onClick={() => irA('proceso/MIPG')} className="banda-mipg"
       aria-label="Entrar al Modelo Integrado de Planeación y Gestión (MIPG)">
-      🏛️ Modelo Integrado de Planeación y Gestión — MIPG
+      Modelo Integrado de Planeación y Gestión — MIPG
       <span className="font-normal opacity-80"> · transversal a todos los procesos</span>
     </button>
     <p className="text-xs text-[#5b6b5f] text-center mt-2 no-print">
@@ -541,12 +540,9 @@ const VistaProceso = ({ sigla, irA }) => {
   return (
     <div className="max-w-3xl mx-auto">
       <button onClick={() => irA('')} className="text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
-      <div className="flex items-center gap-4 mb-1">
-        <span className="text-4xl" aria-hidden="true">{proceso.icono}</span>
-        <div>
-          <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest">{proceso.franja} · {proceso.sigla}</p>
-          <h2 className="f-display text-3xl font-extrabold leading-tight">{proceso.nombre}</h2>
-        </div>
+      <div className="mb-1">
+        <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest">{proceso.franja} · {proceso.sigla}</p>
+        <h2 className="f-display text-3xl font-extrabold leading-tight">{proceso.nombre}</h2>
       </div>
       <SeccionesProceso proceso={proceso} />
       {guias.length > 0 && (
