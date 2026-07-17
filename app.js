@@ -243,7 +243,8 @@ const GUIAS = [
         resumen: 'Las comisiones de servicio y sus viáticos se tramitan antes del desplazamiento y '
             + 'se legalizan al regresar. Los valores y plazos exactos están en GA-P02.',
         pasos: [
-            { tipo: 'inicio', titulo: 'Surge el desplazamiento', detalle: 'Una actividad institucional fuera de la sede requiere tu presencia.', rol: 'solicitante' },
+            { tipo: 'inicio', titulo: 'Surge el desplazamiento', detalle: 'Una actividad institucional fuera de la sede requiere tu presencia. Diligencia el formulario de solicitud de desplazamiento, disponible también en la intranet.', rol: 'solicitante',
+                enlace: { texto: 'Formulario de solicitud de desplazamiento (intranet)', url: 'https://forms.cloud.microsoft/pages/responsepage.aspx?id=q-KC6eoWEUGz3_OlN_jXFgwJ-8ds4nhNge4O1yk6VatUNldTM1MyUVdEVkJNNFFHSkpWWFNYUkdERS4u&route=shorturl' } },
             { tipo: 'paso', titulo: 'Solicita la comisión con anticipación', detalle: 'Diligencia la solicitud con destino, fechas, objeto de la comisión y transporte requerido, antes de viajar.', rol: 'solicitante' },
             { tipo: 'paso', titulo: 'Autorización del superior', detalle: 'Tu jefe inmediato o la Dirección avala la pertinencia y la disponibilidad para el desplazamiento.', rol: 'direccion' },
             { tipo: 'paso', titulo: 'Liquidación de viáticos', detalle: 'Gestión Administrativa y Financiera liquidan los viáticos y gastos de viaje según la tabla vigente y gestionan el pago.', rol: 'financiera' },
@@ -253,6 +254,10 @@ const GUIAS = [
             { tipo: 'fin', titulo: 'Comisión legalizada', detalle: 'El expediente queda completo y habilitas futuros desplazamientos.', rol: 'financiera' },
         ],
         docs: ['GA-P02', 'GF-P01'],
+        formatos: [
+            { codigo: 'GA-F015', nombre: 'Certificado de cumplimiento de actividades extramural',
+                url: enlaceCarpeta('Gestión Administrativa', 'Formatos') + '/' + encodeURIComponent('GA-F015 Certificado de Cumplimiento.docx') },
+        ],
     },
     {
         id: 'op', pregunta: '¿Cómo hago una orden de pedido?',
@@ -395,6 +400,10 @@ const Flujograma = ({ pasos }) => (React.createElement("div", { className: "send
                     "\u23F1 ",
                     paso.plazo))),
             React.createElement("p", { className: "text-sm text-[#3c4a40] leading-relaxed" }, paso.detalle),
+            paso.enlace && (React.createElement("a", { href: paso.enlace.url, target: "_blank", rel: "noopener", className: "mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#1E6B47] bg-[#B5E048]/25 border border-[#1E6B47]/40 rounded-lg px-3 py-1.5 hover:bg-[#B5E048]/45" },
+                "\uD83D\uDD17 ",
+                paso.enlace.texto,
+                " \u2197")),
             React.createElement("div", { className: "mt-2 flex flex-wrap items-center gap-2" },
                 React.createElement("span", { className: "inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-2.5 py-1 text-white", style: { background: rol.color } },
                     React.createElement("span", { className: "w-1.5 h-1.5 rounded-full bg-white/80" }),
@@ -422,12 +431,17 @@ const VistaGuia = ({ guia, irA }) => {
         React.createElement(Flujograma, { pasos: guia.pasos }),
         React.createElement("div", { className: "mt-4 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5" },
             React.createElement("p", { className: "f-display font-semibold mb-3" }, "Documentos oficiales de esta gu\u00EDa"),
-            React.createElement("div", { className: "space-y-2" }, docs.map((d) => (React.createElement("div", { key: d.codigo, className: "flex items-center gap-3 text-sm" },
-                React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048]" }, d.codigo),
-                React.createElement("span", { className: "flex-1 text-white/90" }, d.nombre),
-                d.estado === 'aprobacion'
-                    ? React.createElement("span", { className: "text-xs text-[#F4A93C]" }, "En aprobaci\u00F3n")
-                    : React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: enlaceDoc(d.archivo), target: "_blank", rel: "noopener" }, "Abrir \u2197"))))),
+            React.createElement("div", { className: "space-y-2" },
+                docs.map((d) => (React.createElement("div", { key: d.codigo, className: "flex items-center gap-3 text-sm" },
+                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048]" }, d.codigo),
+                    React.createElement("span", { className: "flex-1 text-white/90" }, d.nombre),
+                    d.estado === 'aprobacion'
+                        ? React.createElement("span", { className: "text-xs text-[#F4A93C]" }, "En aprobaci\u00F3n")
+                        : React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: enlaceDoc(d.archivo), target: "_blank", rel: "noopener" }, "Abrir \u2197")))),
+                (guia.formatos || []).map((f) => (React.createElement("div", { key: f.codigo || f.nombre, className: "flex items-center gap-3 text-sm" },
+                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048]" }, f.codigo || 'Formato'),
+                    React.createElement("span", { className: "flex-1 text-white/90" }, f.nombre),
+                    React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: f.url, target: "_blank", rel: "noopener" }, "Abrir \u2197"))))),
             React.createElement("p", { className: "text-xs text-white/60 mt-3" },
                 "Esta gu\u00EDa es un resumen orientativo; ante cualquier diferencia, manda el procedimiento oficial. Proceso due\u00F1o: ", proceso === null || proceso === void 0 ? void 0 :
                 proceso.nombre,
