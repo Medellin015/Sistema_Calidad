@@ -200,40 +200,114 @@ const ROLES = {
     direccion: { nombre: 'Dirección / Gerencia', color: '#14231B' },
     ti: { nombre: 'Gestión TI', color: '#0E6B6B' },
 };
+// Comparación compartida por las guías internas de CDP y RP (se muestra al
+// final de ambas).
+const COMPARACION_CDP_RP = {
+    titulo: 'Diferencia clave CDP vs RP',
+    items: [
+        'CDP = certifica que hay presupuesto disponible (primero). Pide CPC y Fuente del Presupuesto. Su número lo asigna presupuesto.',
+        'RP = compromete ese presupuesto contra un proveedor/contrato (después del CDP). Exige los datos del proveedor y del contratista; su número lo asigna presupuesto y se sincroniza solo a la OP.',
+    ],
+};
 // Guías "¿Cómo pido…?". Los pasos resumen el procedimiento fuente; los plazos
 // marcados provienen del documento oficial cuando fue posible verificarlo.
 const GUIAS = [
     {
-        id: 'rp', pregunta: '¿Cómo pido un RP?',
-        corta: 'Registro presupuestal para comprometer recursos',
+        id: 'rp', pregunta: '¿Cómo pido un RP interno?',
+        corta: 'Registro presupuestal interno (contrato ACTIVA-ACTIVA)',
         proceso: 'GF', fuente: 'GF-P03',
-        resumen: 'El RP (registro presupuestal) afecta de forma definitiva la apropiación y respalda '
-            + 'el compromiso adquirido. Siempre llega después del CDP y del compromiso perfeccionado.',
-        pasos: [
-            { tipo: 'inicio', titulo: 'Necesitas comprometer recursos', detalle: 'Hay un contrato u obligación por perfeccionar con cargo al presupuesto.', rol: 'solicitante' },
-            { tipo: 'decision', titulo: '¿Ya existe el CDP?', detalle: 'Todo RP nace de un CDP vigente que garantiza la apropiación.', rol: 'financiera',
-                si: 'Continúa con la solicitud del RP', no: 'Primero tramita el CDP (guía «¿Cómo pido un CDP?», GF-P02)' },
-            { tipo: 'paso', titulo: 'Reúne el soporte del compromiso', detalle: 'Contrato suscrito, acto administrativo u orden con valor, objeto y beneficiario definidos, citando el número del CDP.', rol: 'solicitante' },
-            { tipo: 'paso', titulo: 'Solicita el RP a Gestión Financiera', detalle: 'Remite la solicitud con los soportes por el canal institucional para su verificación.', rol: 'solicitante' },
-            { tipo: 'paso', titulo: 'Verificación y expedición', detalle: 'Financiera valida saldo del CDP, rubro y datos del beneficiario, y expide el RP con su número consecutivo.', rol: 'financiera' },
-            { tipo: 'fin', titulo: 'RP expedido', detalle: 'Guarda el número: lo necesitarás en las órdenes de pedido y en el trámite de pagos (GF-P01).', rol: 'financiera' },
-        ],
+        resumen: 'El RP interno se pide desde una OP del contrato ACTIVA-ACTIVA. Es el flujo principal; '
+            + 'también existe la variante «sin OP».',
+        instructivo: {
+            casos: [
+                {
+                    titulo: 'Caso A — RP CON OP (lo habitual)',
+                    antes: 'La OP debe estar completa. Al pedir el RP la app exige:',
+                    antesSub: [
+                        'Datos del RP: Valor aprobado, Contrato proveedor, NIT proveedor, Nombre proveedor, Nombre/Objeto (evento), Correo del solicitante, Fecha evento y CDP.',
+                        'Datos del contratista (bloque «Datos del contratista (para el RP)»): Supervisor, Cédula del supervisor, Correo del supervisor, Modalidad, Fecha de inicio y Fecha de terminación del contrato.',
+                        'Si la Modalidad ≠ «Prestación de Servicios - Persona Natural», además: Nombre y Cédula del representante legal.',
+                    ],
+                    pasos: [
+                        { texto: 'Entra al contrato ACTIVA-ACTIVA y verifica/completa esos campos en la OP (con «Editar Orden»).' },
+                        { texto: 'En la barra de acciones pulsa «Pedir RP».' },
+                        { texto: 'Escribe el número de la orden de pedido y pulsa «Ejecutar». Si falta algún campo obligatorio, la app lista exactamente cuál falta y no envía.' },
+                        { texto: 'Se abre «Confirmar antes de enviar» con toda la información del RP. Revísala.',
+                            aviso: 'Si el NIT del proveedor no está registrado, la ventana pide anexar el RUT (PDF) — es obligatorio para continuar (así queda inscrito el proveedor).' },
+                        { texto: 'Pulsa «Aceptar y enviar».' },
+                    ],
+                    flujo: 'Se disparan dos envíos: el RP (flujo «Solicitud de RP Plataforma OP») y, en paralelo, el registro del proveedor/contratista (flujo «Creación de contratos en bases de datos Proveedores», con el RUT si el NIT era nuevo). El número de RP lo asigna presupuesto en el Aplicativo RP y se llena solo en la columna RP de la OP la próxima vez que abras el contrato.',
+                    nota: 'La alerta roja «Sin RP» aparece cuando una OP tiene la fecha de ejecución en ≤ 8 días y aún no tiene número de RP — es el recordatorio para pedirlo.',
+                },
+                {
+                    titulo: 'Caso B — RP SIN OP',
+                    pasos: [
+                        { texto: 'Entra al contrato ACTIVA-ACTIVA y pulsa «Solicitar RP sin OP» (ícono ✈️).' },
+                        { texto: 'Diligencia:', sub: [
+                                'Descripción (evento).',
+                                'Contrato proveedor.',
+                                'Nombre proveedor.',
+                                'NIT proveedor (solo números, sin dígito de verificación).',
+                                'Valor aprobado.',
+                                'CDP.',
+                                'Fecha evento.',
+                                'Correo del solicitante (@activa.com.co).',
+                            ] },
+                        { texto: 'Pulsa «Continuar» → confirmación → «Aceptar y enviar».' },
+                    ],
+                    flujo: 'Viaja como «Pedir RP sin OP» (con numeroOrdenPedido: "SIN OP"). A diferencia del RP con OP, no anexa RUT ni registra proveedor.',
+                },
+            ],
+            comparacion: COMPARACION_CDP_RP,
+        },
         docs: ['GF-P03', 'GF-P02', 'GF-P01'],
     },
     {
-        id: 'cdp', pregunta: '¿Cómo pido un CDP?',
-        corta: 'Certificado de disponibilidad presupuestal',
+        id: 'cdp', pregunta: '¿Cómo pido un CDP Interno?',
+        corta: 'Certificado de disponibilidad presupuestal interno (contrato ACTIVA-ACTIVA)',
         proceso: 'GF', fuente: 'GF-P02',
-        resumen: 'El CDP certifica que existe apropiación presupuestal libre para iniciar un '
-            + 'compromiso. Es el primer paso presupuestal de cualquier contratación o gasto.',
-        pasos: [
-            { tipo: 'inicio', titulo: 'Identificas una necesidad de gasto', detalle: 'Una contratación, compra o compromiso que afectará el presupuesto de la vigencia.', rol: 'solicitante' },
-            { tipo: 'paso', titulo: 'Define objeto y valor estimado', detalle: 'Describe el objeto del gasto y su valor con la mayor precisión posible; identifica el rubro si lo conoces.', rol: 'solicitante' },
-            { tipo: 'paso', titulo: 'Radica la solicitud de CDP', detalle: 'Envía la solicitud a Gestión Financiera por el canal institucional con la justificación de la necesidad.', rol: 'solicitante' },
-            { tipo: 'decision', titulo: '¿Hay apropiación disponible?', detalle: 'Financiera verifica el saldo libre del rubro en el presupuesto vigente.', rol: 'financiera',
-                si: 'Se expide el CDP', no: 'Se requiere traslado o adición presupuestal antes de continuar' },
-            { tipo: 'fin', titulo: 'CDP expedido', detalle: 'Con el número de CDP puedes adelantar el proceso de contratación (BS-P05) y luego solicitar el RP.', rol: 'financiera' },
-        ],
+        resumen: 'El CDP interno se pide desde el contrato ACTIVA-ACTIVA. Hay dos caminos según si el '
+            + 'gasto ya tiene una Orden de Pedido (OP) creada o no.',
+        instructivo: {
+            casos: [
+                {
+                    titulo: 'Caso A — CDP CON OP (la OP ya existe)',
+                    antes: 'La OP debe estar creada y tener diligenciados Nombre/Objeto, Valor aprobado y Correo del solicitante.',
+                    pasos: [
+                        { texto: 'Entra al contrato ACTIVA-ACTIVA.' },
+                        { texto: 'En la barra de acciones (arriba del listado) pulsa «Pedir CDP» (ícono ✔️).' },
+                        { texto: 'En la ventana escribe:', sub: [
+                                'Número de la orden de pedido (el N° de la OP).',
+                                'CPC (código del producto, p. ej. 96511).',
+                                'Fuente del Presupuesto: VOLCÁN DE LODO o ACTIVA (define el Centro de costos: VOLCÁN DE LODO → CAPITALIZACIÓN; ACTIVA → ACTIVA).',
+                            ] },
+                        { texto: 'Pulsa «Ejecutar». Si a la OP le falta Nombre/Objeto, Valor aprobado o Correo del solicitante, la app te lo avisa y no envía nada.' },
+                        { texto: 'Se abre «Confirmar solicitud de CDP» con el JSON que se enviará. Revísalo.' },
+                        { texto: 'Pulsa «Aprobar y enviar».' },
+                    ],
+                    flujo: 'Se envía al flujo «Solicitud de CDP Plataforma OP» (acción interna Pedir CDP OP interna) y queda un espejo en la colección cdp del Aplicativo RP. El número de CDP lo asigna presupuesto en el Aplicativo RP.',
+                },
+                {
+                    titulo: 'Caso B — CDP SIN OP (gasto sin orden de pedido)',
+                    pasos: [
+                        { texto: 'Entra al contrato ACTIVA-ACTIVA.' },
+                        { texto: 'Pulsa «Solicitar CDP sin OP» (ícono ➕).' },
+                        { texto: 'Diligencia el formulario:', sub: [
+                                'Nombre/Objeto (obligatorio).',
+                                'Contrato proveedor (obligatorio; en el JSON viaja como «contrato cliente»).',
+                                'Valor aprobado (obligatorio; en el JSON viaja como «valor a administrar»).',
+                                'CPC (obligatorio, p. ej. 96511).',
+                                'Fuente del Presupuesto (VOLCÁN DE LODO / ACTIVA).',
+                                'Correo del solicitante (debe terminar en @activa.com.co).',
+                            ] },
+                        { texto: 'Pulsa «Continuar» → se abre la confirmación con el JSON.' },
+                        { texto: 'Pulsa «Aprobar y enviar».' },
+                    ],
+                    flujo: 'Mismo flujo de CDP; la acción viaja como «Pedir CDP sin OP» y el espejo queda con op: "SIN OP".',
+                },
+            ],
+            comparacion: COMPARACION_CDP_RP,
+        },
         docs: ['GF-P02', 'GF-P03', 'BS-P05'],
     },
     {
@@ -418,6 +492,30 @@ const Flujograma = ({ pasos }) => (React.createElement("div", { className: "send
                     " ",
                     paso.no))))));
 })));
+// Instructivo paso a paso con casos (A/B), requisitos previos, avisos y
+// comparación final. Se usa en las guías que no son un flujograma lineal.
+const Instructivo = ({ data }) => (React.createElement("div", { className: "space-y-5" },
+    data.casos.map((c, i) => (React.createElement("div", { key: i, className: "bg-white rounded-2xl border border-[#DCE5DC] p-4 sm:p-5 shadow-sm" },
+        React.createElement("h3", { className: "f-display text-lg font-bold text-[#14231B] mb-3" }, c.titulo),
+        c.antes && (React.createElement("div", { className: "mb-3 rounded-xl bg-[#DCE5DC]/40 border border-[#DCE5DC] px-3 py-2" },
+            React.createElement("p", { className: "text-sm font-semibold text-[#14231B] mb-0.5" }, "Antes de empezar"),
+            React.createElement("p", { className: "text-sm text-[#3c4a40] leading-relaxed" }, c.antes),
+            c.antesSub && (React.createElement("ul", { className: "mt-1.5 list-disc pl-5 text-sm text-[#3c4a40] space-y-1" }, c.antesSub.map((s, j) => React.createElement("li", { key: j }, s)))))),
+        React.createElement("ol", { className: "list-decimal pl-5 space-y-2 text-sm text-[#3c4a40] marker:font-bold marker:text-[#1E6B47]" }, c.pasos.map((p, j) => (React.createElement("li", { key: j, className: "leading-relaxed" },
+            p.texto,
+            p.sub && (React.createElement("ul", { className: "mt-1 list-disc pl-5 space-y-0.5 text-[#3c4a40]" }, p.sub.map((s, k) => React.createElement("li", { key: k }, s)))),
+            p.aviso && (React.createElement("p", { className: "mt-1.5 rounded-lg bg-[#F4A93C]/15 border border-[#F4A93C]/50 px-2.5 py-1.5 text-[#8A5A2C]" },
+                "\u26A0\uFE0F ",
+                p.aviso)))))),
+        c.flujo && (React.createElement("p", { className: "mt-3 rounded-xl bg-[#1E6B47]/10 border border-[#1E6B47]/25 px-3 py-2 text-sm text-[#14231B] leading-relaxed" },
+            "\u27A1\uFE0F ",
+            c.flujo)),
+        c.nota && (React.createElement("p", { className: "mt-2 rounded-xl bg-[#B5E048]/25 border border-[#B5E048]/60 px-3 py-2 text-sm text-[#14231B] leading-relaxed" },
+            "\uD83D\uDCA1 ",
+            c.nota))))),
+    data.comparacion && (React.createElement("div", { className: "bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5" },
+        React.createElement("p", { className: "f-display font-semibold mb-2" }, data.comparacion.titulo),
+        React.createElement("ul", { className: "space-y-1.5 text-sm text-white/90 list-disc pl-5" }, data.comparacion.items.map((it, i) => React.createElement("li", { key: i }, it)))))));
 const VistaGuia = ({ guia, irA }) => {
     const docs = guia.docs.map((c) => DOCUMENTOS.find((d) => d.codigo === c)).filter(Boolean);
     const proceso = PROCESOS.find((p) => p.sigla === guia.proceso);
@@ -428,7 +526,7 @@ const VistaGuia = ({ guia, irA }) => {
             guia.fuente),
         React.createElement("h2", { className: "f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-2" }, guia.pregunta),
         React.createElement("p", { className: "text-[#3c4a40] mb-6 leading-relaxed" }, guia.resumen),
-        React.createElement(Flujograma, { pasos: guia.pasos }),
+        guia.instructivo ? React.createElement(Instructivo, { data: guia.instructivo }) : React.createElement(Flujograma, { pasos: guia.pasos }),
         React.createElement("div", { className: "mt-4 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5" },
             React.createElement("p", { className: "f-display font-semibold mb-3" }, "Documentos oficiales de esta gu\u00EDa"),
             React.createElement("div", { className: "space-y-2" },
