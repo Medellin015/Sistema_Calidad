@@ -258,11 +258,11 @@ const GUIAS = [
         enlace: { texto: 'Formulario de solicitud de desplazamiento (intranet)', url: 'https://forms.cloud.microsoft/pages/responsepage.aspx?id=q-KC6eoWEUGz3_OlN_jXFgwJ-8ds4nhNge4O1yk6VatUNldTM1MyUVdEVkJNNFFHSkpWWFNYUkdERS4u&route=shorturl' } },
       { tipo: 'paso', titulo: 'Solicita la comisión con anticipación', detalle: 'Diligencia la solicitud con destino, fechas, objeto de la comisión y transporte requerido, antes de viajar.', rol: 'solicitante' },
       { tipo: 'paso', titulo: 'Autorización del superior', detalle: 'Tu jefe inmediato o la Dirección avala la pertinencia y la disponibilidad para el desplazamiento.', rol: 'direccion' },
-      { tipo: 'paso', titulo: 'Liquidación de viáticos', detalle: 'Gestión Administrativa y Financiera liquidan los viáticos y gastos de viaje según la tabla vigente y gestionan el pago.', rol: 'financiera' },
       { tipo: 'paso', titulo: 'Cumple la comisión', detalle: 'Realiza la actividad y conserva soportes: pasabordos, certificaciones de asistencia y demás evidencias.', rol: 'solicitante' },
       { tipo: 'decision', titulo: '¿Legalizaste a tiempo?', detalle: 'Al regresar, presenta el informe y los soportes dentro del plazo definido en GA-P02.', rol: 'solicitante',
         si: 'Comisión cerrada sin novedades', no: 'No podrás tramitar nuevas comisiones hasta legalizar la pendiente' },
-      { tipo: 'fin', titulo: 'Comisión legalizada', detalle: 'El expediente queda completo y habilitas futuros desplazamientos.', rol: 'financiera' },
+      { tipo: 'paso', titulo: 'Comisión legalizada', detalle: 'Con el informe y los soportes aprobados, la comisión queda legalizada en el expediente.', rol: 'financiera' },
+      { tipo: 'fin', titulo: 'Liquidación de viáticos', detalle: 'Gestión Administrativa y Financiera liquidan los viáticos y gastos de viaje según la tabla vigente y gestionan el pago, con lo que se cierra la comisión.', rol: 'financiera' },
     ],
     docs: ['GA-P02', 'GF-P01'],
     formatos: [
