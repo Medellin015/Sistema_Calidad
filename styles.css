@@ -7,8 +7,8 @@
   --papel:#F7F8F4; --niebla:#DCE5DC; --sol:#F4A93C; --arcilla:#8A5A2C;
 }
 html{scroll-behavior:smooth}
-body{background:var(--papel);color:var(--tinta);font-family:'Instrument Sans',system-ui,sans-serif}
-.f-display{font-family:'Bricolage Grotesque','Instrument Sans',system-ui,sans-serif}
+body{background:var(--papel);color:var(--tinta);font-family:'Nunito Sans',system-ui,sans-serif}
+.f-display{font-family:'Nunito','Nunito Sans',system-ui,sans-serif}
 .f-mono{font-family:'JetBrains Mono',ui-monospace,monospace}
 .tarjeta{transition:transform .18s ease, box-shadow .18s ease}
 .tarjeta:hover{transform:translateY(-2px);box-shadow:0 10px 24px -12px rgba(20,35,27,.35)}
