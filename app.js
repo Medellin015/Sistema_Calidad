@@ -30,6 +30,7 @@ const enlaceCarpeta = (carpetaProceso, subcarpeta) => encodeURI(BIBLIOTECA_SGC +
 const ICONO_SECCION = {
     'Procedimientos': '📋', 'Formatos': '📝', 'Manuales': '📘',
     'Instructivos': '🧾', 'Plantillas': '📐', 'Documentos del proceso': '🗃️',
+    'Planeación Estratégica': '🗺️',
     'Actas de Comité': '🗒️', 'Autodiagnósticos': '🩺', 'Políticas MIPG': '📜',
     'Certificados curso de integridad': '🎓',
 };
@@ -47,12 +48,13 @@ const tipoDeCodigo = (codigo) => {
 const S = (nombre, carpeta) => ({ nombre, carpeta: carpeta || nombre });
 const FRANJAS = [
     { nombre: 'Estratégicos', desc: 'Dan la dirección y la voz de la entidad', procesos: [
-            { sigla: 'OE', nombre: 'Orientación Estratégica',
+            // Orientación y Planeación se gestionan como un solo proceso estratégico.
+            // En SharePoint siguen siendo dos carpetas: la sección "Planeación
+            // Estratégica" usa `base` para enlazar la carpeta hermana completa.
+            { sigla: 'OE', nombre: 'Orientación y Planeación Estratégica',
                 carpeta: 'Orientación Estratégica',
-                secciones: [S('Procedimientos'), S('Formatos'), S('Manuales'), S('Plantillas')] },
-            { sigla: 'PE', nombre: 'Planeación Estratégica',
-                carpeta: 'Planeación Estratégica',
-                secciones: [] }, // los documentos (plan estratégico, PTEP…) están sueltos en la carpeta
+                secciones: [S('Procedimientos'), S('Formatos'), S('Manuales'), S('Plantillas'),
+                    { nombre: 'Planeación Estratégica', carpeta: '', base: 'Planeación Estratégica' }] },
         ] },
     { nombre: 'Misionales', desc: 'La razón de ser: parques y eventos', procesos: [
             { sigla: 'POL', nombre: 'Gestión Comercial',
@@ -668,7 +670,7 @@ const SeccionesProceso = ({ proceso }) => {
         React.createElement("div", { className: "flex items-baseline justify-between gap-3 mb-2" },
             React.createElement("h3", { className: "f-display text-lg font-semibold" }, "Carpetas del proceso en el repositorio"),
             React.createElement("a", { href: enlaceCarpeta(proceso.carpeta), target: "_blank", rel: "noopener", className: "text-sm font-semibold text-[#1E6B47] hover:underline whitespace-nowrap" }, "Abrir carpeta \u2197")),
-        React.createElement("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-3" }, secciones.map((s) => (React.createElement("a", { key: s.nombre, target: "_blank", rel: "noopener", href: s.carpeta ? enlaceCarpeta(proceso.carpeta, s.carpeta) : enlaceCarpeta(proceso.carpeta), className: "tarjeta bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 flex flex-col items-start gap-1" },
+        React.createElement("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-3" }, secciones.map((s) => (React.createElement("a", { key: s.nombre, target: "_blank", rel: "noopener", href: enlaceCarpeta(s.base || proceso.carpeta, s.carpeta || undefined), className: "tarjeta bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 flex flex-col items-start gap-1" },
             React.createElement("span", { className: "text-2xl", "aria-hidden": "true" }, ICONO_SECCION[s.nombre] || '📁'),
             React.createElement("span", { className: "font-semibold leading-snug" }, s.nombre),
             React.createElement("span", { className: "text-xs text-[#5b6b5f]" }, "Abrir en SharePoint \u2197")))))));
@@ -821,7 +823,8 @@ const App = () => {
         contenido = React.createElement(VistaGuia, { guia: GUIAS.find((g) => g.id === parametro), irA: irA });
     }
     else if (seccion === 'proceso' && parametro) {
-        contenido = React.createElement(VistaProceso, { sigla: parametro, irA: irA });
+        // PE se fusionó con OE; los enlaces viejos siguen funcionando.
+        contenido = React.createElement(VistaProceso, { sigla: parametro === 'PE' ? 'OE' : parametro, irA: irA });
     }
     else if (seccion === 'documentos') {
         contenido = React.createElement(VistaDocumentos, { irA: irA });
