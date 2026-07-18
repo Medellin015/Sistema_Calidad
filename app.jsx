@@ -419,6 +419,16 @@ const GUIAS = [
         url: enlaceCarpeta('Gestión Administrativa', 'Formatos') + '/' + encodeURIComponent('GA-F015 Certificado de Cumplimiento.docx') },
     ],
   },
+  {
+    id: 'certificado', pregunta: '¿Cómo solicito un certificado laboral?',
+    corta: 'Certificado laboral (formulario en línea)',
+    proceso: 'GT',
+    resumen: 'Para solicitar tu certificado laboral solo tienes que diligenciar el formulario en '
+      + 'línea. No hay que hacer nada más.',
+    instructivo: {
+      enlace: { texto: 'Diligenciar el formulario de certificado laboral', url: 'https://forms.cloud.microsoft/pages/responsepage.aspx?id=q-KC6eoWEUGz3_OlN_jXFgwJ-8ds4nhNge4O1yk6VatUNTZWTFhNUTFVRDZNMEk5TDlUQUlNMjk0WS4u&route=shorturl' },
+    },
+  },
 ];
 
 /* ===== 3. Componentes ===== */
@@ -574,7 +584,13 @@ const Instructivo = ({ data }) => (
         🔗 Abrir el aplicativo de Órdenes de Pedido ↗
       </a>
     )}
-    {data.casos.map((c, i) => (
+    {data.enlace && (
+      <a href={data.enlace.url} target="_blank" rel="noopener"
+         className="inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]">
+        🔗 {data.enlace.texto} ↗
+      </a>
+    )}
+    {(data.casos || []).map((c, i) => (
       <div key={i} className="bg-white rounded-2xl border border-[#DCE5DC] p-4 sm:p-5 shadow-sm">
         <h3 className="f-display text-lg font-bold text-[#14231B] mb-3">{c.titulo}</h3>
         {c.intro && <p className="text-sm text-[#3c4a40] leading-relaxed mb-2">{c.intro}</p>}
@@ -661,37 +677,40 @@ const Instructivo = ({ data }) => (
 );
 
 const VistaGuia = ({ guia, irA }) => {
-  const docs = guia.docs.map((c) => DOCUMENTOS.find((d) => d.codigo === c)).filter(Boolean);
+  const docs = (guia.docs || []).map((c) => DOCUMENTOS.find((d) => d.codigo === c)).filter(Boolean);
+  const formatos = guia.formatos || [];
   const proceso = PROCESOS.find((p) => p.sigla === guia.proceso);
   return (
     <div className="max-w-3xl mx-auto">
       <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
-      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1">Guía · fuente {guia.fuente}</p>
+      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1">Guía{guia.fuente ? ` · fuente ${guia.fuente}` : ''}</p>
       <h2 className="f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-2">{guia.pregunta}</h2>
       <p className="text-[#3c4a40] mb-6 leading-relaxed">{guia.resumen}</p>
       {guia.instructivo ? <Instructivo data={guia.instructivo} /> : <Flujograma pasos={guia.pasos} />}
-      <div className="mt-4 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5">
-        <p className="f-display font-semibold mb-3">Documentos oficiales de esta guía</p>
-        <div className="space-y-2">
-          {docs.map((d) => (
-            <div key={d.codigo} className="flex items-center gap-3 text-sm">
-              <span className="f-mono text-xs font-bold text-[#B5E048]">{d.codigo}</span>
-              <span className="flex-1 text-white/90">{d.nombre}</span>
-              {d.estado === 'aprobacion'
-                ? <span className="text-xs text-[#F4A93C]">En aprobación</span>
-                : <a className="font-semibold text-[#B5E048] hover:underline" href={enlaceDoc(d.archivo)} target="_blank" rel="noopener">Abrir ↗</a>}
-            </div>
-          ))}
-          {(guia.formatos || []).map((f) => (
-            <div key={f.codigo || f.nombre} className="flex items-center gap-3 text-sm">
-              <span className="f-mono text-xs font-bold text-[#B5E048]">{f.codigo || 'Formato'}</span>
-              <span className="flex-1 text-white/90">{f.nombre}</span>
-              <a className="font-semibold text-[#B5E048] hover:underline" href={f.url} target="_blank" rel="noopener">Abrir ↗</a>
-            </div>
-          ))}
+      {(docs.length > 0 || formatos.length > 0) && (
+        <div className="mt-4 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5">
+          <p className="f-display font-semibold mb-3">Documentos oficiales de esta guía</p>
+          <div className="space-y-2">
+            {docs.map((d) => (
+              <div key={d.codigo} className="flex items-center gap-3 text-sm">
+                <span className="f-mono text-xs font-bold text-[#B5E048]">{d.codigo}</span>
+                <span className="flex-1 text-white/90">{d.nombre}</span>
+                {d.estado === 'aprobacion'
+                  ? <span className="text-xs text-[#F4A93C]">En aprobación</span>
+                  : <a className="font-semibold text-[#B5E048] hover:underline" href={enlaceDoc(d.archivo)} target="_blank" rel="noopener">Abrir ↗</a>}
+              </div>
+            ))}
+            {formatos.map((f) => (
+              <div key={f.codigo || f.nombre} className="flex items-center gap-3 text-sm">
+                <span className="f-mono text-xs font-bold text-[#B5E048]">{f.codigo || 'Formato'}</span>
+                <span className="flex-1 text-white/90">{f.nombre}</span>
+                <a className="font-semibold text-[#B5E048] hover:underline" href={f.url} target="_blank" rel="noopener">Abrir ↗</a>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-white/60 mt-3">Esta guía es un resumen orientativo; ante cualquier diferencia, manda el procedimiento oficial. Proceso dueño: {proceso?.nombre}.</p>
         </div>
-        <p className="text-xs text-white/60 mt-3">Esta guía es un resumen orientativo; ante cualquier diferencia, manda el procedimiento oficial. Proceso dueño: {proceso?.nombre}.</p>
-      </div>
+      )}
     </div>
   );
 };

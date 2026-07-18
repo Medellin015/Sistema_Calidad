@@ -406,6 +406,16 @@ const GUIAS = [
                 url: enlaceCarpeta('Gestión Administrativa', 'Formatos') + '/' + encodeURIComponent('GA-F015 Certificado de Cumplimiento.docx') },
         ],
     },
+    {
+        id: 'certificado', pregunta: '¿Cómo solicito un certificado laboral?',
+        corta: 'Certificado laboral (formulario en línea)',
+        proceso: 'GT',
+        resumen: 'Para solicitar tu certificado laboral solo tienes que diligenciar el formulario en '
+            + 'línea. No hay que hacer nada más.',
+        instructivo: {
+            enlace: { texto: 'Diligenciar el formulario de certificado laboral', url: 'https://forms.cloud.microsoft/pages/responsepage.aspx?id=q-KC6eoWEUGz3_OlN_jXFgwJ-8ds4nhNge4O1yk6VatUNTZWTFhNUTFVRDZNMEk5TDlUQUlNMjk0WS4u&route=shorturl' },
+        },
+    },
 ];
 /* ===== 3. Componentes ===== */
 const Codigo = ({ children }) => children
@@ -499,7 +509,11 @@ const Flujograma = ({ pasos }) => (React.createElement("div", { className: "send
 // comparación final. Se usa en las guías que no son un flujograma lineal.
 const Instructivo = ({ data }) => (React.createElement("div", { className: "space-y-5" },
     data.enlaceApp && (React.createElement("a", { href: data.enlaceApp, target: "_blank", rel: "noopener", className: "inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]" }, "\uD83D\uDD17 Abrir el aplicativo de \u00D3rdenes de Pedido \u2197")),
-    data.casos.map((c, i) => (React.createElement("div", { key: i, className: "bg-white rounded-2xl border border-[#DCE5DC] p-4 sm:p-5 shadow-sm" },
+    data.enlace && (React.createElement("a", { href: data.enlace.url, target: "_blank", rel: "noopener", className: "inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]" },
+        "\uD83D\uDD17 ",
+        data.enlace.texto,
+        " \u2197")),
+    (data.casos || []).map((c, i) => (React.createElement("div", { key: i, className: "bg-white rounded-2xl border border-[#DCE5DC] p-4 sm:p-5 shadow-sm" },
         React.createElement("h3", { className: "f-display text-lg font-bold text-[#14231B] mb-3" }, c.titulo),
         c.intro && React.createElement("p", { className: "text-sm text-[#3c4a40] leading-relaxed mb-2" }, c.intro),
         c.antes && (React.createElement("div", { className: "mb-3 rounded-xl bg-[#DCE5DC]/40 border border-[#DCE5DC] px-3 py-2" },
@@ -537,17 +551,18 @@ const Instructivo = ({ data }) => (React.createElement("div", { className: "spac
         React.createElement("p", { className: "f-display font-semibold mb-2" }, data.comparacion.titulo),
         React.createElement("ul", { className: "space-y-1.5 text-sm text-white/90 list-disc pl-5" }, data.comparacion.items.map((it, i) => React.createElement("li", { key: i }, it)))))));
 const VistaGuia = ({ guia, irA }) => {
-    const docs = guia.docs.map((c) => DOCUMENTOS.find((d) => d.codigo === c)).filter(Boolean);
+    const docs = (guia.docs || []).map((c) => DOCUMENTOS.find((d) => d.codigo === c)).filter(Boolean);
+    const formatos = guia.formatos || [];
     const proceso = PROCESOS.find((p) => p.sigla === guia.proceso);
     return (React.createElement("div", { className: "max-w-3xl mx-auto" },
         React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
         React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1" },
-            "Gu\u00EDa \u00B7 fuente ",
-            guia.fuente),
+            "Gu\u00EDa",
+            guia.fuente ? ` · fuente ${guia.fuente}` : ''),
         React.createElement("h2", { className: "f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-2" }, guia.pregunta),
         React.createElement("p", { className: "text-[#3c4a40] mb-6 leading-relaxed" }, guia.resumen),
         guia.instructivo ? React.createElement(Instructivo, { data: guia.instructivo }) : React.createElement(Flujograma, { pasos: guia.pasos }),
-        React.createElement("div", { className: "mt-4 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5" },
+        (docs.length > 0 || formatos.length > 0) && (React.createElement("div", { className: "mt-4 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5" },
             React.createElement("p", { className: "f-display font-semibold mb-3" }, "Documentos oficiales de esta gu\u00EDa"),
             React.createElement("div", { className: "space-y-2" },
                 docs.map((d) => (React.createElement("div", { key: d.codigo, className: "flex items-center gap-3 text-sm" },
@@ -556,14 +571,14 @@ const VistaGuia = ({ guia, irA }) => {
                     d.estado === 'aprobacion'
                         ? React.createElement("span", { className: "text-xs text-[#F4A93C]" }, "En aprobaci\u00F3n")
                         : React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: enlaceDoc(d.archivo), target: "_blank", rel: "noopener" }, "Abrir \u2197")))),
-                (guia.formatos || []).map((f) => (React.createElement("div", { key: f.codigo || f.nombre, className: "flex items-center gap-3 text-sm" },
+                formatos.map((f) => (React.createElement("div", { key: f.codigo || f.nombre, className: "flex items-center gap-3 text-sm" },
                     React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048]" }, f.codigo || 'Formato'),
                     React.createElement("span", { className: "flex-1 text-white/90" }, f.nombre),
                     React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: f.url, target: "_blank", rel: "noopener" }, "Abrir \u2197"))))),
             React.createElement("p", { className: "text-xs text-white/60 mt-3" },
                 "Esta gu\u00EDa es un resumen orientativo; ante cualquier diferencia, manda el procedimiento oficial. Proceso due\u00F1o: ", proceso === null || proceso === void 0 ? void 0 :
                 proceso.nombre,
-                "."))));
+                ".")))));
 };
 // Tarjetas de sección: una por subcarpeta real del proceso en SharePoint.
 // Si el proceso no tiene subcarpetas (Planeación Estratégica), se ofrece la
