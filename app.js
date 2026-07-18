@@ -491,6 +491,9 @@ const KRIS = [
     ['KRI10', 'Obligaciones de Contraloría cumplidas a tiempo (Gestión Transparente)', '100%', '80–99%', '< 80%', 'Trimestral · Jefe CI'],
     ['KRI11', 'Reuniones del Comité de Saneamiento Contable en el año', '2 o más', '1 reunión', '0 reuniones', 'Semestral · Dir. Administrativo'],
 ];
+// Informe fuente de esta sección: documento oficial en el sitio SGC (carpeta
+// "Documentos del SGC"), no en "Documentos Word", por eso el enlace se arma aparte.
+const ENLACE_SEGUIMIENTO_RIESGOS = enlaceCarpeta('Documentos del SGC') + '/' + encodeURIComponent('Seguimiento a Mapa de Riesgos.pdf');
 /* ===== 3. Componentes ===== */
 const Codigo = ({ children }) => children
     ? React.createElement("span", { className: "f-mono text-xs font-bold px-1.5 py-0.5 rounded bg-[#14231B] text-[#B5E048]" }, children)
@@ -709,6 +712,7 @@ const VistaRiesgos = ({ irA }) => {
             ' ',
             TODOS_RIESGOS.length,
             " riesgos en 5 componentes."),
+        React.createElement("a", { href: ENLACE_SEGUIMIENTO_RIESGOS, target: "_blank", rel: "noopener", className: "mt-3 inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]" }, "\uD83D\uDCC4 Ver el informe completo de Seguimiento a Riesgos \u2197"),
         React.createElement("div", { className: "mt-5 grid grid-cols-2 sm:grid-cols-5 gap-3" }, porZona.map(({ zona, n }) => {
             const z = ZONAS_RIESGO[zona];
             return (React.createElement("div", { key: zona, className: "rounded-2xl border-2 p-3 text-center", style: { borderColor: z.color } },
@@ -758,11 +762,16 @@ const VistaRiesgos = ({ irA }) => {
                         React.createElement("td", { className: "px-3 py-2 whitespace-nowrap font-semibold text-[#B5432E]" }, k[4]),
                         React.createElement("td", { className: "px-3 py-2 text-xs text-[#5b6b5f]" }, k[5])))))))),
         React.createElement("div", { className: "mt-6 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5" },
-            React.createElement("p", { className: "f-display font-semibold mb-2" }, "Documento marco"),
-            React.createElement("div", { className: "flex items-center gap-3 text-sm" },
-                React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048]" }, "OE-M02"),
-                React.createElement("span", { className: "flex-1 text-white/90" }, "Pol\u00EDtica de administraci\u00F3n y gesti\u00F3n del riesgo"),
-                React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: enlaceDoc('OE-M02 Politica de administracion gestión del riesgo.docx'), target: "_blank", rel: "noopener" }, "Abrir \u2197")),
+            React.createElement("p", { className: "f-display font-semibold mb-2" }, "Documentos de referencia"),
+            React.createElement("div", { className: "space-y-2" },
+                React.createElement("div", { className: "flex items-center gap-3 text-sm" },
+                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap" }, "Informe"),
+                    React.createElement("span", { className: "flex-1 text-white/90" }, "Seguimiento a la Gesti\u00F3n del Riesgo \u2014 Mapa de Riesgos (vigencia 2025)"),
+                    React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: ENLACE_SEGUIMIENTO_RIESGOS, target: "_blank", rel: "noopener" }, "Abrir \u2197")),
+                React.createElement("div", { className: "flex items-center gap-3 text-sm" },
+                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap" }, "OE-M02"),
+                    React.createElement("span", { className: "flex-1 text-white/90" }, "Pol\u00EDtica de administraci\u00F3n y gesti\u00F3n del riesgo"),
+                    React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: enlaceDoc('OE-M02 Politica de administracion gestión del riesgo.docx'), target: "_blank", rel: "noopener" }, "Abrir \u2197"))),
             React.createElement("p", { className: "text-xs text-white/60 mt-3" }, "Resumen orientativo del informe de seguimiento; ante cualquier diferencia, manda el documento oficial aprobado por la Direcci\u00F3n."))));
 };
 const VistaDocumentos = ({ irA }) => {
