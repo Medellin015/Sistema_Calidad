@@ -1003,13 +1003,9 @@ const Inicio = ({ irA }) => (
     </div>
     <MapaProcesos irA={irA} />
 
-    <h2 className="f-display text-2xl sm:text-3xl font-extrabold leading-tight mt-10">
+    <h2 className="f-display text-2xl sm:text-3xl font-extrabold leading-tight mt-10 mb-4">
       ¿Cómo pido <span className="text-[#1E6B47]">lo que necesito</span>?
     </h2>
-    <p className="mt-2 mb-4 text-[#3c4a40] max-w-xl leading-relaxed">
-      Guías paso a paso con su flujograma y los {DOCUMENTOS.length} documentos
-      oficiales del SGC, con enlace directo al repositorio.
-    </p>
     <div className="flex flex-wrap gap-2 mb-6">
       {GUIAS.map((g) => (
         <button key={g.id} onClick={() => irA(`guia/${g.id}`)}
