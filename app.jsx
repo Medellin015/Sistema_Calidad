@@ -431,6 +431,83 @@ const GUIAS = [
   },
 ];
 
+// Mapa de riesgos. Fuente: "Seguimiento a la Gestión del Riesgo — Vigencia
+// 2025" (matriz actualizada al 25/02/2026, Informe CI 2022-2025 Rad.
+// 202503000143), elaborado en cumplimiento de la política OE-M02.
+// Cada riesgo: [código, proceso, descripción, zona inherente, zona residual,
+// tratamiento]. Las zonas salen de P×I (escala de la política OE-M02).
+const ZONAS_RIESGO = {
+  'BAJO':          { color: '#1E6B47', texto: '#FFFFFF', rango: '1–4' },
+  'MEDIO':         { color: '#C9A227', texto: '#14231B', rango: '5–30' },
+  'SIGNIFICATIVO': { color: '#E07B2A', texto: '#FFFFFF', rango: '31–60' },
+  'ALTO':          { color: '#B5432E', texto: '#FFFFFF', rango: '61–80' },
+  'CRÍTICO':       { color: '#7A1F1F', texto: '#FFFFFF', rango: '81–125' },
+  'N/D':           { color: '#DCE5DC', texto: '#5b6b5f', rango: '' },
+};
+
+const R = (id, proc, desc, zi, zr, trat) => ({ id, proc, desc, zi, zr, trat });
+const COMPONENTES_RIESGO = [
+  { clave: 'A', nombre: 'Corrupción', fuente: 'Matriz oficial · C01–C10', riesgos: [
+    R('C01', 'Gestión Financiera', 'Uso indebido de recursos públicos (sobrecostos, pagos indebidos)', 'SIGNIFICATIVO', 'BAJO', 'Reducir'),
+    R('C02', 'Acomp. Jurídico', 'Interpretación subjetiva o manipulada de normas para favorecer intereses particulares', 'MEDIO', 'BAJO', 'Reducir'),
+    R('C03', 'Gestión Financiera', 'Evasión fiscal (omisión de retenciones, declaraciones incorrectas)', 'SIGNIFICATIVO', 'BAJO', 'Reducir'),
+    R('C04', 'Bienes y servicios', 'Direccionamiento de cotizaciones hacia proveedores específicos', 'ALTO', 'BAJO', 'Reducir'),
+    R('C05', 'Bienes y servicios', 'Omisión o manipulación de comités de contratación', 'SIGNIFICATIVO', 'N/D', 'Reducir'),
+    R('C06', 'Bienes y servicios', 'Conflictos de interés no declarados en procesos de contratación', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+    R('C07', 'Bienes y servicios', 'Manipulación de información presentada a clientes externos en cuadros comparativos', 'MEDIO', 'BAJO', 'Reducir'),
+    R('C08', 'Bienes y servicios', 'Validación insuficiente o inexistente de proveedores no marco', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+    R('C09', 'Bienes y servicios', 'Favorecimiento indebido mediante omisión de contratos marco', 'MEDIO', 'MEDIO', 'Reducir'),
+    R('C10', 'Orient. Estratégica', 'Tráfico de influencias en asignación de contratos o decisiones institucionales', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+  ]},
+  { clave: 'B', nombre: 'Transparencia', fuente: 'Matriz oficial · T01–T06', riesgos: [
+    R('T01', 'Relac. Corporativo', 'Gestión deficiente de datos abiertos (ITA 2024: 6,1%)', 'MEDIO', 'BAJO', 'Reducir'),
+    R('T02', 'Relac. Corporativo', 'Opacidad en información de ejecución contractual publicada en SECOP', 'MEDIO', 'BAJO', 'Reducir'),
+    R('T03', 'Orient. Estratégica', 'Incumplimiento de obligaciones de transparencia activa (ITA global 59/100)', 'SIGNIFICATIVO', 'BAJO', 'Reducir'),
+    R('T04', 'Planeación', 'Ausencia de Plan de Acción institucional con la estructura requerida por ITA', 'SIGNIFICATIVO', 'BAJO', 'Reducir'),
+    R('T05', 'Relac. Corporativo', 'Inaccesibilidad del sitio web para personas con discapacidad (WCAG 2.1)', 'BAJO', 'BAJO', 'Reducir'),
+    R('T06', 'Relac. Corporativo', 'Publicación deficiente de información de la entidad (estructura, directorio, hojas de vida)', 'BAJO', 'BAJO', 'Reducir'),
+  ]},
+  { clave: 'C', nombre: 'Supervisión y Ejecución', fuente: 'Matriz oficial · S01–S03', riesgos: [
+    R('S01', 'Bienes y servicios', 'Entrega de carpeta de supervisión incompleta o tardía al supervisor designado', 'ALTO', 'MEDIO', 'Reducir'),
+    R('S02', 'Bienes y servicios', 'Supervisor designado sin perfil técnico adecuado para el objeto contractual', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+    R('S03', 'Bienes y servicios', 'Incumplimiento de obligaciones contractuales no detectado oportunamente', 'ALTO', 'SIGNIFICATIVO', 'Reducir'),
+  ]},
+  { clave: 'D', nombre: 'Complementarios', fuente: 'Matriz oficial · X01–X06', riesgos: [
+    R('X01', 'Gestión Presupuestal', 'CDP emitido antes de la aprobación del cliente externo (compromiso prematuro)', 'SIGNIFICATIVO', 'SIGNIFICATIVO', 'Reducir'),
+    R('X02', 'Op. Logística', 'Órdenes internas (POL-F10) sin aprobación formal del director de área', 'BAJO', 'BAJO', 'Reducir'),
+    R('X03', 'Exp. del Cliente', 'Contexto estratégico insuficiente en órdenes externas que genera soluciones inadecuadas', 'SIGNIFICATIVO', 'BAJO', 'Reducir'),
+    R('X04', 'Exp. del Cliente', 'Insatisfacción del cliente externo por falta de validación post-ejecución', 'BAJO', 'BAJO', 'Reducir'),
+    R('X05', 'Bienes y servicios', 'Estudios previos elaborados después de la decisión de asignación', 'BAJO', 'BAJO', 'Reducir'),
+    R('X06', 'Bienes y servicios', 'Falta de re-evaluación anual de proveedores marco', 'BAJO', 'BAJO', 'Reducir'),
+  ]},
+  { clave: 'E', nombre: 'Estratégicos, Financieros y Tecnológicos', fuente: 'GIR · M01–M08', riesgos: [
+    R('M01', 'Planeación y Gestión', 'Incumplimiento de objetivos estratégicos del Plan 2026-2029', 'ALTO', 'SIGNIFICATIVO', 'Reducir'),
+    R('M02', 'Gestión Financiera', 'Insuficiencia de ingresos propios / EBITDA negativo sostenido (margen neto -28%)', 'ALTO', 'SIGNIFICATIVO', 'Reducir / Evitar'),
+    R('M03', 'Talento Humano', 'Pérdida de conocimiento institucional por alta rotación de contratistas', 'MEDIO', 'BAJO', 'Reducir'),
+    R('M04', 'Gestión de Eventos', 'Afectación de imagen institucional por fallas operativas en eventos de alto perfil', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+    R('M05', 'Tecnología e Info.', 'Vulnerabilidad de seguridad digital: ERP SAFIX, Microsoft 365 y activos críticos', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+    R('M06', 'Gestión de Proyectos', 'Desfinanciamiento o sobrecostos en obras del Volcán de Lodo El Totumo', 'ALTO', 'ALTO', 'Reducir / Compartir'),
+    R('M07', 'Gestión de Eventos', 'Eventos climáticos extremos que afecten la operación logística al aire libre', 'MEDIO', 'BAJO', 'Asumir / Reducir'),
+    R('M08', 'Control Interno', 'Insuficiencia de capacidad técnica en Control Interno (perfil financiero requerido por Contraloría)', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+  ]},
+];
+const TODOS_RIESGOS = COMPONENTES_RIESGO.flatMap((c) => c.riesgos);
+
+// KRI 2026: [código, indicador, verde, amarillo, rojo, frecuencia/responsable]
+const KRIS = [
+  ['KRI01', 'Margen neto mensual de operaciones propias', '> 0%', '-5% a 0%', '< -5%', 'Mensual · Dir. Administrativo'],
+  ['KRI02', 'Cumplimiento de indicadores estratégicos Plan 2026-2029', '> 80%', '60–80%', '< 60%', 'Trimestral · Planeación'],
+  ['KRI03', 'Contratos interadministrativos con alertas de incumplimiento', '< 5%', '5–15%', '> 15%', 'Mensual · Dir. Jurídico'],
+  ['KRI04', 'Cuentas por pagar (CXP) sin soporte documental completo', '< 5%', '5–20%', '> 20%', 'Mensual · Jefe CI'],
+  ['KRI05', 'Hallazgos ITA 2024 cerrados o en plan de mejoramiento', '> 80%', '50–80%', '< 50%', 'Trimestral · Profesional TIC'],
+  ['KRI06', 'Incidentes de seguridad digital registrados y reportados', '0', '1–2', '> 2', 'Mensual · Profesional TIC'],
+  ['KRI07', 'Rotación de contratistas de honorarios clave', '< 10%', '10–25%', '> 25%', 'Anual · Subg. Comercial'],
+  ['KRI08', 'Avance físico obras Volcán de Lodo vs cronograma', '> 90%', '70–90%', '< 70%', 'Mensual · Dir. Administrativo'],
+  ['KRI09', 'Respuesta oportuna a PQRSDF dentro de términos legales', '> 95%', '80–95%', '< 80%', 'Mensual · Resp. PQRSDF'],
+  ['KRI10', 'Obligaciones de Contraloría cumplidas a tiempo (Gestión Transparente)', '100%', '80–99%', '< 80%', 'Trimestral · Jefe CI'],
+  ['KRI11', 'Reuniones del Comité de Saneamiento Contable en el año', '2 o más', '1 reunión', '0 reuniones', 'Semestral · Dir. Administrativo'],
+];
+
 /* ===== 3. Componentes ===== */
 
 const Codigo = ({ children }) => children
@@ -779,6 +856,123 @@ const VistaProceso = ({ sigla, irA }) => {
   );
 };
 
+const ZonaBadge = ({ zona }) => {
+  const z = ZONAS_RIESGO[zona] || ZONAS_RIESGO['N/D'];
+  return (
+    <span className="inline-block text-[10px] font-bold rounded-full px-2 py-0.5 whitespace-nowrap"
+      style={{ background: z.color, color: z.texto }}>{zona}</span>
+  );
+};
+
+const VistaRiesgos = ({ irA }) => {
+  // Conteo por zona inherente para las fichas del resumen
+  const porZona = Object.keys(ZONAS_RIESGO).filter((z) => z !== 'N/D')
+    .map((z) => ({ zona: z, n: TODOS_RIESGOS.filter((r) => r.zi === z).length }));
+  return (
+    <div className="max-w-4xl mx-auto">
+      <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
+      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1">Gestión del riesgo · Vigencia 2025</p>
+      <h2 className="f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-2">Mapa de riesgos</h2>
+      <p className="text-[#3c4a40] leading-relaxed max-w-2xl">
+        Seguimiento a la gestión del riesgo con la matriz actualizada al 25/02/2026
+        (Informe CI 2022-2025, Rad. 202503000143), en cumplimiento de la política OE-M02.
+        {' '}{TODOS_RIESGOS.length} riesgos en 5 componentes.
+      </p>
+
+      {/* Resumen por zona inherente */}
+      <div className="mt-5 grid grid-cols-2 sm:grid-cols-5 gap-3">
+        {porZona.map(({ zona, n }) => {
+          const z = ZONAS_RIESGO[zona];
+          return (
+            <div key={zona} className="rounded-2xl border-2 p-3 text-center" style={{ borderColor: z.color }}>
+              <p className="f-display text-3xl font-extrabold" style={{ color: z.color }}>{n}</p>
+              <p className="text-[11px] font-bold uppercase tracking-wide" style={{ color: z.color }}>{zona}</p>
+              <p className="f-mono text-[10px] text-[#5b6b5f]">P×I {z.rango}</p>
+            </div>
+          );
+        })}
+      </div>
+      <p className="text-xs text-[#5b6b5f] mt-2">
+        Zona inherente (antes de controles). La escala P×I es la de la política OE-M02:
+        probabilidad 1–5 e impacto 1–25. Los riesgos en zona Significativo, Alto o Crítico
+        exigen plan de acción en el formato MA-F01.
+      </p>
+
+      {/* Componentes A–E */}
+      {COMPONENTES_RIESGO.map((c) => (
+        <section key={c.clave} className="mt-8">
+          <div className="flex items-baseline gap-3 mb-2">
+            <span className="f-mono text-xs font-bold bg-[#14231B] text-[#B5E048] rounded px-1.5 py-0.5">{c.clave}</span>
+            <h3 className="f-display text-xl font-bold">{c.nombre}</h3>
+            <span className="text-xs text-[#5b6b5f]">{c.fuente}</span>
+          </div>
+          <div className="space-y-2">
+            {c.riesgos.map((r) => (
+              <div key={r.id} className="tarjeta bg-white rounded-xl border border-[#DCE5DC] px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                <span className="f-mono text-xs font-bold text-[#1E6B47] w-9">{r.id}</span>
+                <div className="flex-1 min-w-[14rem]">
+                  <p className="text-sm font-medium leading-snug">{r.desc}</p>
+                  <p className="text-xs text-[#5b6b5f]">{r.proc} · Tratamiento: {r.trat}</p>
+                </div>
+                <span className="flex items-center gap-1.5 text-xs text-[#5b6b5f]">
+                  <ZonaBadge zona={r.zi} /> → <ZonaBadge zona={r.zr} />
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+      <p className="text-xs text-[#5b6b5f] mt-2">Inherente → Residual (después de controles). N/D: sin calificación residual en la matriz.</p>
+
+      {/* Indicadores clave de riesgo */}
+      <section className="mt-8">
+        <h3 className="f-display text-xl font-bold mb-1">Indicadores clave de riesgo (KRI) 2026</h3>
+        <p className="text-sm text-[#3c4a40] mb-3 max-w-2xl">
+          Alertas tempranas: si un indicador entra en amarillo, el líder notifica a Control
+          Interno en máximo 5 días hábiles; en rojo, escala al Comité Institucional de
+          Gestión y Desempeño.
+        </p>
+        <div className="overflow-x-auto rounded-2xl border border-[#DCE5DC] bg-white">
+          <table className="w-full text-sm border-collapse min-w-[38rem]">
+            <thead>
+              <tr className="bg-[#DCE5DC]/50 text-left">
+                <th className="px-3 py-2 font-semibold">KRI</th>
+                <th className="px-3 py-2 font-semibold">Indicador</th>
+                <th className="px-3 py-2 font-semibold text-[#1E6B47]">Verde</th>
+                <th className="px-3 py-2 font-semibold text-[#8A5A2C]">Amarillo</th>
+                <th className="px-3 py-2 font-semibold text-[#B5432E]">Rojo</th>
+                <th className="px-3 py-2 font-semibold">Frecuencia · Responsable</th>
+              </tr>
+            </thead>
+            <tbody>
+              {KRIS.map((k) => (
+                <tr key={k[0]} className="border-t border-[#F0F3EE]">
+                  <td className="px-3 py-2 f-mono text-xs font-bold text-[#1E6B47]">{k[0]}</td>
+                  <td className="px-3 py-2">{k[1]}</td>
+                  <td className="px-3 py-2 whitespace-nowrap font-semibold text-[#1E6B47]">{k[2]}</td>
+                  <td className="px-3 py-2 whitespace-nowrap text-[#8A5A2C]">{k[3]}</td>
+                  <td className="px-3 py-2 whitespace-nowrap font-semibold text-[#B5432E]">{k[4]}</td>
+                  <td className="px-3 py-2 text-xs text-[#5b6b5f]">{k[5]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div className="mt-6 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5">
+        <p className="f-display font-semibold mb-2">Documento marco</p>
+        <div className="flex items-center gap-3 text-sm">
+          <span className="f-mono text-xs font-bold text-[#B5E048]">OE-M02</span>
+          <span className="flex-1 text-white/90">Política de administración y gestión del riesgo</span>
+          <a className="font-semibold text-[#B5E048] hover:underline" href={enlaceDoc('OE-M02 Politica de administracion gestión del riesgo.docx')} target="_blank" rel="noopener">Abrir ↗</a>
+        </div>
+        <p className="text-xs text-white/60 mt-3">Resumen orientativo del informe de seguimiento; ante cualquier diferencia, manda el documento oficial aprobado por la Dirección.</p>
+      </div>
+    </div>
+  );
+};
+
 const VistaDocumentos = ({ irA }) => {
   const [filtro, setFiltro] = useState('todos');
   const docs = DOCUMENTOS.filter((d) => filtro === 'todos' || tipoDeCodigo(d.codigo) === filtro)
@@ -825,7 +1019,10 @@ const Inicio = ({ irA }) => (
       ))}
     </div>
     <Buscador irA={irA} />
-    <div className="mt-3 text-right">
+    <div className="mt-3 flex justify-end gap-5">
+      <button onClick={() => irA('riesgos')} className="text-sm font-semibold text-[#1E6B47] hover:underline">
+        Mapa de riesgos →
+      </button>
       <button onClick={() => irA('documentos')} className="text-sm font-semibold text-[#1E6B47] hover:underline">
         Ver todos los documentos →
       </button>
@@ -855,6 +1052,8 @@ const App = () => {
     contenido = <VistaProceso sigla={parametro} irA={irA} />;
   } else if (seccion === 'documentos') {
     contenido = <VistaDocumentos irA={irA} />;
+  } else if (seccion === 'riesgos') {
+    contenido = <VistaRiesgos irA={irA} />;
   } else {
     contenido = <Inicio irA={irA} />;
   }
@@ -869,6 +1068,7 @@ const App = () => {
           </button>
           <nav className="ml-auto flex gap-4 text-sm font-semibold">
             <button onClick={() => irA('')} className="hover:text-[#1E6B47]">Inicio</button>
+            <button onClick={() => irA('riesgos')} className="hover:text-[#1E6B47]">Riesgos</button>
             <button onClick={() => irA('documentos')} className="hover:text-[#1E6B47]">Documentos</button>
           </nav>
         </div>
