@@ -35,6 +35,7 @@ const enlaceCarpeta = (carpetaProceso, subcarpeta) =>
 const ICONO_SECCION = {
   'Procedimientos': '📋', 'Formatos': '📝', 'Manuales': '📘',
   'Instructivos': '🧾', 'Plantillas': '📐', 'Documentos del proceso': '🗃️',
+  'Planeación Estratégica': '🗺️',
   'Actas de Comité': '🗒️', 'Autodiagnósticos': '🩺', 'Políticas MIPG': '📜',
   'Certificados curso de integridad': '🎓',
 };
@@ -55,12 +56,13 @@ const tipoDeCodigo = (codigo) => {
 const S = (nombre, carpeta) => ({ nombre, carpeta: carpeta || nombre });
 const FRANJAS = [
   { nombre: 'Estratégicos', desc: 'Dan la dirección y la voz de la entidad', procesos: [
-    { sigla: 'OE', nombre: 'Orientación Estratégica',
+    // Orientación y Planeación se gestionan como un solo proceso estratégico.
+    // En SharePoint siguen siendo dos carpetas: la sección "Planeación
+    // Estratégica" usa `base` para enlazar la carpeta hermana completa.
+    { sigla: 'OE', nombre: 'Orientación y Planeación Estratégica',
       carpeta: 'Orientación Estratégica',
-      secciones: [S('Procedimientos'), S('Formatos'), S('Manuales'), S('Plantillas')] },
-    { sigla: 'PE', nombre: 'Planeación Estratégica',
-      carpeta: 'Planeación Estratégica',
-      secciones: [] }, // los documentos (plan estratégico, PTEP…) están sueltos en la carpeta
+      secciones: [S('Procedimientos'), S('Formatos'), S('Manuales'), S('Plantillas'),
+        { nombre: 'Planeación Estratégica', carpeta: '', base: 'Planeación Estratégica' }] },
   ]},
   { nombre: 'Misionales', desc: 'La razón de ser: parques y eventos', procesos: [
     { sigla: 'POL', nombre: 'Gestión Comercial',
@@ -814,7 +816,7 @@ const SeccionesProceso = ({ proceso }) => {
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {secciones.map((s) => (
           <a key={s.nombre} target="_blank" rel="noopener"
-             href={s.carpeta ? enlaceCarpeta(proceso.carpeta, s.carpeta) : enlaceCarpeta(proceso.carpeta)}
+             href={enlaceCarpeta(s.base || proceso.carpeta, s.carpeta || undefined)}
              className="tarjeta bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 flex flex-col items-start gap-1">
             <span className="text-2xl" aria-hidden="true">{ICONO_SECCION[s.nombre] || '📁'}</span>
             <span className="font-semibold leading-snug">{s.nombre}</span>
@@ -1061,7 +1063,8 @@ const App = () => {
   if (seccion === 'guia' && GUIAS.some((g) => g.id === parametro)) {
     contenido = <VistaGuia guia={GUIAS.find((g) => g.id === parametro)} irA={irA} />;
   } else if (seccion === 'proceso' && parametro) {
-    contenido = <VistaProceso sigla={parametro} irA={irA} />;
+    // PE se fusionó con OE; los enlaces viejos siguen funcionando.
+    contenido = <VistaProceso sigla={parametro === 'PE' ? 'OE' : parametro} irA={irA} />;
   } else if (seccion === 'documentos') {
     contenido = <VistaDocumentos irA={irA} />;
   } else if (seccion === 'riesgos') {
