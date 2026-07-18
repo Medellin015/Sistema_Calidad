@@ -200,6 +200,8 @@ const ROLES = {
     direccion: { nombre: 'Dirección / Gerencia', color: '#14231B' },
     ti: { nombre: 'Gestión TI', color: '#0E6B6B' },
 };
+// Aplicativo interno de Órdenes de Pedido (crea OP internas y pide CDP/RP).
+const APP_OP = 'https://medellin015.github.io/Ordenes-Pedido-Activa';
 // Comparación compartida por las guías internas de CDP y RP (se muestra al
 // final de ambas).
 const COMPARACION_CDP_RP = {
@@ -213,12 +215,13 @@ const COMPARACION_CDP_RP = {
 // marcados provienen del documento oficial cuando fue posible verificarlo.
 const GUIAS = [
     {
-        id: 'op', pregunta: '¿Cómo hago una orden de pedido Interno?',
+        id: 'op', pregunta: '¿Cómo hago una orden de pedido interna?',
         corta: 'Crear una OP interna (contrato ACTIVA-ACTIVA)',
         proceso: 'GA', fuente: 'GA-P01',
         resumen: 'Las OP internas son las órdenes de pedido de la propia ACTIVA. Se crean dentro del '
             + 'contrato ACTIVA-ACTIVA y su número es un consecutivo automático.',
         instructivo: {
+            enlaceApp: APP_OP,
             casos: [
                 {
                     titulo: 'Paso 1 — Entrar al contrato',
@@ -287,6 +290,7 @@ const GUIAS = [
         resumen: 'El CDP interno se pide desde el contrato ACTIVA-ACTIVA. Hay dos caminos según si el '
             + 'gasto ya tiene una Orden de Pedido (OP) creada o no.',
         instructivo: {
+            enlaceApp: APP_OP,
             casos: [
                 {
                     titulo: 'Caso A — CDP CON OP (la OP ya existe)',
@@ -335,6 +339,7 @@ const GUIAS = [
         resumen: 'El RP interno se pide desde una OP del contrato ACTIVA-ACTIVA. Es el flujo principal; '
             + 'también existe la variante «sin OP».',
         instructivo: {
+            enlaceApp: APP_OP,
             casos: [
                 {
                     titulo: 'Caso A — RP CON OP (lo habitual)',
@@ -493,6 +498,7 @@ const Flujograma = ({ pasos }) => (React.createElement("div", { className: "send
 // Instructivo paso a paso con casos (A/B), requisitos previos, avisos y
 // comparación final. Se usa en las guías que no son un flujograma lineal.
 const Instructivo = ({ data }) => (React.createElement("div", { className: "space-y-5" },
+    data.enlaceApp && (React.createElement("a", { href: data.enlaceApp, target: "_blank", rel: "noopener", className: "inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]" }, "\uD83D\uDD17 Abrir el aplicativo de \u00D3rdenes de Pedido \u2197")),
     data.casos.map((c, i) => (React.createElement("div", { key: i, className: "bg-white rounded-2xl border border-[#DCE5DC] p-4 sm:p-5 shadow-sm" },
         React.createElement("h3", { className: "f-display text-lg font-bold text-[#14231B] mb-3" }, c.titulo),
         c.intro && React.createElement("p", { className: "text-sm text-[#3c4a40] leading-relaxed mb-2" }, c.intro),
