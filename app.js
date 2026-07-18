@@ -417,6 +417,80 @@ const GUIAS = [
         },
     },
 ];
+// Mapa de riesgos. Fuente: "Seguimiento a la Gestión del Riesgo — Vigencia
+// 2025" (matriz actualizada al 25/02/2026, Informe CI 2022-2025 Rad.
+// 202503000143), elaborado en cumplimiento de la política OE-M02.
+// Cada riesgo: [código, proceso, descripción, zona inherente, zona residual,
+// tratamiento]. Las zonas salen de P×I (escala de la política OE-M02).
+const ZONAS_RIESGO = {
+    'BAJO': { color: '#1E6B47', texto: '#FFFFFF', rango: '1–4' },
+    'MEDIO': { color: '#C9A227', texto: '#14231B', rango: '5–30' },
+    'SIGNIFICATIVO': { color: '#E07B2A', texto: '#FFFFFF', rango: '31–60' },
+    'ALTO': { color: '#B5432E', texto: '#FFFFFF', rango: '61–80' },
+    'CRÍTICO': { color: '#7A1F1F', texto: '#FFFFFF', rango: '81–125' },
+    'N/D': { color: '#DCE5DC', texto: '#5b6b5f', rango: '' },
+};
+const R = (id, proc, desc, zi, zr, trat) => ({ id, proc, desc, zi, zr, trat });
+const COMPONENTES_RIESGO = [
+    { clave: 'A', nombre: 'Corrupción', fuente: 'Matriz oficial · C01–C10', riesgos: [
+            R('C01', 'Gestión Financiera', 'Uso indebido de recursos públicos (sobrecostos, pagos indebidos)', 'SIGNIFICATIVO', 'BAJO', 'Reducir'),
+            R('C02', 'Acomp. Jurídico', 'Interpretación subjetiva o manipulada de normas para favorecer intereses particulares', 'MEDIO', 'BAJO', 'Reducir'),
+            R('C03', 'Gestión Financiera', 'Evasión fiscal (omisión de retenciones, declaraciones incorrectas)', 'SIGNIFICATIVO', 'BAJO', 'Reducir'),
+            R('C04', 'Bienes y servicios', 'Direccionamiento de cotizaciones hacia proveedores específicos', 'ALTO', 'BAJO', 'Reducir'),
+            R('C05', 'Bienes y servicios', 'Omisión o manipulación de comités de contratación', 'SIGNIFICATIVO', 'N/D', 'Reducir'),
+            R('C06', 'Bienes y servicios', 'Conflictos de interés no declarados en procesos de contratación', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+            R('C07', 'Bienes y servicios', 'Manipulación de información presentada a clientes externos en cuadros comparativos', 'MEDIO', 'BAJO', 'Reducir'),
+            R('C08', 'Bienes y servicios', 'Validación insuficiente o inexistente de proveedores no marco', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+            R('C09', 'Bienes y servicios', 'Favorecimiento indebido mediante omisión de contratos marco', 'MEDIO', 'MEDIO', 'Reducir'),
+            R('C10', 'Orient. Estratégica', 'Tráfico de influencias en asignación de contratos o decisiones institucionales', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+        ] },
+    { clave: 'B', nombre: 'Transparencia', fuente: 'Matriz oficial · T01–T06', riesgos: [
+            R('T01', 'Relac. Corporativo', 'Gestión deficiente de datos abiertos (ITA 2024: 6,1%)', 'MEDIO', 'BAJO', 'Reducir'),
+            R('T02', 'Relac. Corporativo', 'Opacidad en información de ejecución contractual publicada en SECOP', 'MEDIO', 'BAJO', 'Reducir'),
+            R('T03', 'Orient. Estratégica', 'Incumplimiento de obligaciones de transparencia activa (ITA global 59/100)', 'SIGNIFICATIVO', 'BAJO', 'Reducir'),
+            R('T04', 'Planeación', 'Ausencia de Plan de Acción institucional con la estructura requerida por ITA', 'SIGNIFICATIVO', 'BAJO', 'Reducir'),
+            R('T05', 'Relac. Corporativo', 'Inaccesibilidad del sitio web para personas con discapacidad (WCAG 2.1)', 'BAJO', 'BAJO', 'Reducir'),
+            R('T06', 'Relac. Corporativo', 'Publicación deficiente de información de la entidad (estructura, directorio, hojas de vida)', 'BAJO', 'BAJO', 'Reducir'),
+        ] },
+    { clave: 'C', nombre: 'Supervisión y Ejecución', fuente: 'Matriz oficial · S01–S03', riesgos: [
+            R('S01', 'Bienes y servicios', 'Entrega de carpeta de supervisión incompleta o tardía al supervisor designado', 'ALTO', 'MEDIO', 'Reducir'),
+            R('S02', 'Bienes y servicios', 'Supervisor designado sin perfil técnico adecuado para el objeto contractual', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+            R('S03', 'Bienes y servicios', 'Incumplimiento de obligaciones contractuales no detectado oportunamente', 'ALTO', 'SIGNIFICATIVO', 'Reducir'),
+        ] },
+    { clave: 'D', nombre: 'Complementarios', fuente: 'Matriz oficial · X01–X06', riesgos: [
+            R('X01', 'Gestión Presupuestal', 'CDP emitido antes de la aprobación del cliente externo (compromiso prematuro)', 'SIGNIFICATIVO', 'SIGNIFICATIVO', 'Reducir'),
+            R('X02', 'Op. Logística', 'Órdenes internas (POL-F10) sin aprobación formal del director de área', 'BAJO', 'BAJO', 'Reducir'),
+            R('X03', 'Exp. del Cliente', 'Contexto estratégico insuficiente en órdenes externas que genera soluciones inadecuadas', 'SIGNIFICATIVO', 'BAJO', 'Reducir'),
+            R('X04', 'Exp. del Cliente', 'Insatisfacción del cliente externo por falta de validación post-ejecución', 'BAJO', 'BAJO', 'Reducir'),
+            R('X05', 'Bienes y servicios', 'Estudios previos elaborados después de la decisión de asignación', 'BAJO', 'BAJO', 'Reducir'),
+            R('X06', 'Bienes y servicios', 'Falta de re-evaluación anual de proveedores marco', 'BAJO', 'BAJO', 'Reducir'),
+        ] },
+    { clave: 'E', nombre: 'Estratégicos, Financieros y Tecnológicos', fuente: 'GIR · M01–M08', riesgos: [
+            R('M01', 'Planeación y Gestión', 'Incumplimiento de objetivos estratégicos del Plan 2026-2029', 'ALTO', 'SIGNIFICATIVO', 'Reducir'),
+            R('M02', 'Gestión Financiera', 'Insuficiencia de ingresos propios / EBITDA negativo sostenido (margen neto -28%)', 'ALTO', 'SIGNIFICATIVO', 'Reducir / Evitar'),
+            R('M03', 'Talento Humano', 'Pérdida de conocimiento institucional por alta rotación de contratistas', 'MEDIO', 'BAJO', 'Reducir'),
+            R('M04', 'Gestión de Eventos', 'Afectación de imagen institucional por fallas operativas en eventos de alto perfil', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+            R('M05', 'Tecnología e Info.', 'Vulnerabilidad de seguridad digital: ERP SAFIX, Microsoft 365 y activos críticos', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+            R('M06', 'Gestión de Proyectos', 'Desfinanciamiento o sobrecostos en obras del Volcán de Lodo El Totumo', 'ALTO', 'ALTO', 'Reducir / Compartir'),
+            R('M07', 'Gestión de Eventos', 'Eventos climáticos extremos que afecten la operación logística al aire libre', 'MEDIO', 'BAJO', 'Asumir / Reducir'),
+            R('M08', 'Control Interno', 'Insuficiencia de capacidad técnica en Control Interno (perfil financiero requerido por Contraloría)', 'SIGNIFICATIVO', 'MEDIO', 'Reducir'),
+        ] },
+];
+const TODOS_RIESGOS = COMPONENTES_RIESGO.flatMap((c) => c.riesgos);
+// KRI 2026: [código, indicador, verde, amarillo, rojo, frecuencia/responsable]
+const KRIS = [
+    ['KRI01', 'Margen neto mensual de operaciones propias', '> 0%', '-5% a 0%', '< -5%', 'Mensual · Dir. Administrativo'],
+    ['KRI02', 'Cumplimiento de indicadores estratégicos Plan 2026-2029', '> 80%', '60–80%', '< 60%', 'Trimestral · Planeación'],
+    ['KRI03', 'Contratos interadministrativos con alertas de incumplimiento', '< 5%', '5–15%', '> 15%', 'Mensual · Dir. Jurídico'],
+    ['KRI04', 'Cuentas por pagar (CXP) sin soporte documental completo', '< 5%', '5–20%', '> 20%', 'Mensual · Jefe CI'],
+    ['KRI05', 'Hallazgos ITA 2024 cerrados o en plan de mejoramiento', '> 80%', '50–80%', '< 50%', 'Trimestral · Profesional TIC'],
+    ['KRI06', 'Incidentes de seguridad digital registrados y reportados', '0', '1–2', '> 2', 'Mensual · Profesional TIC'],
+    ['KRI07', 'Rotación de contratistas de honorarios clave', '< 10%', '10–25%', '> 25%', 'Anual · Subg. Comercial'],
+    ['KRI08', 'Avance físico obras Volcán de Lodo vs cronograma', '> 90%', '70–90%', '< 70%', 'Mensual · Dir. Administrativo'],
+    ['KRI09', 'Respuesta oportuna a PQRSDF dentro de términos legales', '> 95%', '80–95%', '< 80%', 'Mensual · Resp. PQRSDF'],
+    ['KRI10', 'Obligaciones de Contraloría cumplidas a tiempo (Gestión Transparente)', '100%', '80–99%', '< 80%', 'Trimestral · Jefe CI'],
+    ['KRI11', 'Reuniones del Comité de Saneamiento Contable en el año', '2 o más', '1 reunión', '0 reuniones', 'Semestral · Dir. Administrativo'],
+];
 /* ===== 3. Componentes ===== */
 const Codigo = ({ children }) => children
     ? React.createElement("span", { className: "f-mono text-xs font-bold px-1.5 py-0.5 rounded bg-[#14231B] text-[#B5E048]" }, children)
@@ -618,6 +692,79 @@ const VistaProceso = ({ sigla, irA }) => {
             React.createElement("h3", { className: "f-display text-lg font-semibold mb-2" }, "Documentos del inventario (Word)"),
             React.createElement("div", { className: "space-y-2" }, docs.map((d) => React.createElement(FilaDocumento, { key: d.codigo + d.nombre, doc: d })))))));
 };
+const ZonaBadge = ({ zona }) => {
+    const z = ZONAS_RIESGO[zona] || ZONAS_RIESGO['N/D'];
+    return (React.createElement("span", { className: "inline-block text-[10px] font-bold rounded-full px-2 py-0.5 whitespace-nowrap", style: { background: z.color, color: z.texto } }, zona));
+};
+const VistaRiesgos = ({ irA }) => {
+    // Conteo por zona inherente para las fichas del resumen
+    const porZona = Object.keys(ZONAS_RIESGO).filter((z) => z !== 'N/D')
+        .map((z) => ({ zona: z, n: TODOS_RIESGOS.filter((r) => r.zi === z).length }));
+    return (React.createElement("div", { className: "max-w-4xl mx-auto" },
+        React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
+        React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1" }, "Gesti\u00F3n del riesgo \u00B7 Vigencia 2025"),
+        React.createElement("h2", { className: "f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-2" }, "Mapa de riesgos"),
+        React.createElement("p", { className: "text-[#3c4a40] leading-relaxed max-w-2xl" },
+            "Seguimiento a la gesti\u00F3n del riesgo con la matriz actualizada al 25/02/2026 (Informe CI 2022-2025, Rad. 202503000143), en cumplimiento de la pol\u00EDtica OE-M02.",
+            ' ',
+            TODOS_RIESGOS.length,
+            " riesgos en 5 componentes."),
+        React.createElement("div", { className: "mt-5 grid grid-cols-2 sm:grid-cols-5 gap-3" }, porZona.map(({ zona, n }) => {
+            const z = ZONAS_RIESGO[zona];
+            return (React.createElement("div", { key: zona, className: "rounded-2xl border-2 p-3 text-center", style: { borderColor: z.color } },
+                React.createElement("p", { className: "f-display text-3xl font-extrabold", style: { color: z.color } }, n),
+                React.createElement("p", { className: "text-[11px] font-bold uppercase tracking-wide", style: { color: z.color } }, zona),
+                React.createElement("p", { className: "f-mono text-[10px] text-[#5b6b5f]" },
+                    "P\u00D7I ",
+                    z.rango)));
+        })),
+        React.createElement("p", { className: "text-xs text-[#5b6b5f] mt-2" }, "Zona inherente (antes de controles). La escala P\u00D7I es la de la pol\u00EDtica OE-M02: probabilidad 1\u20135 e impacto 1\u201325. Los riesgos en zona Significativo, Alto o Cr\u00EDtico exigen plan de acci\u00F3n en el formato MA-F01."),
+        COMPONENTES_RIESGO.map((c) => (React.createElement("section", { key: c.clave, className: "mt-8" },
+            React.createElement("div", { className: "flex items-baseline gap-3 mb-2" },
+                React.createElement("span", { className: "f-mono text-xs font-bold bg-[#14231B] text-[#B5E048] rounded px-1.5 py-0.5" }, c.clave),
+                React.createElement("h3", { className: "f-display text-xl font-bold" }, c.nombre),
+                React.createElement("span", { className: "text-xs text-[#5b6b5f]" }, c.fuente)),
+            React.createElement("div", { className: "space-y-2" }, c.riesgos.map((r) => (React.createElement("div", { key: r.id, className: "tarjeta bg-white rounded-xl border border-[#DCE5DC] px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1.5" },
+                React.createElement("span", { className: "f-mono text-xs font-bold text-[#1E6B47] w-9" }, r.id),
+                React.createElement("div", { className: "flex-1 min-w-[14rem]" },
+                    React.createElement("p", { className: "text-sm font-medium leading-snug" }, r.desc),
+                    React.createElement("p", { className: "text-xs text-[#5b6b5f]" },
+                        r.proc,
+                        " \u00B7 Tratamiento: ",
+                        r.trat)),
+                React.createElement("span", { className: "flex items-center gap-1.5 text-xs text-[#5b6b5f]" },
+                    React.createElement(ZonaBadge, { zona: r.zi }),
+                    " \u2192 ",
+                    React.createElement(ZonaBadge, { zona: r.zr }))))))))),
+        React.createElement("p", { className: "text-xs text-[#5b6b5f] mt-2" }, "Inherente \u2192 Residual (despu\u00E9s de controles). N/D: sin calificaci\u00F3n residual en la matriz."),
+        React.createElement("section", { className: "mt-8" },
+            React.createElement("h3", { className: "f-display text-xl font-bold mb-1" }, "Indicadores clave de riesgo (KRI) 2026"),
+            React.createElement("p", { className: "text-sm text-[#3c4a40] mb-3 max-w-2xl" }, "Alertas tempranas: si un indicador entra en amarillo, el l\u00EDder notifica a Control Interno en m\u00E1ximo 5 d\u00EDas h\u00E1biles; en rojo, escala al Comit\u00E9 Institucional de Gesti\u00F3n y Desempe\u00F1o."),
+            React.createElement("div", { className: "overflow-x-auto rounded-2xl border border-[#DCE5DC] bg-white" },
+                React.createElement("table", { className: "w-full text-sm border-collapse min-w-[38rem]" },
+                    React.createElement("thead", null,
+                        React.createElement("tr", { className: "bg-[#DCE5DC]/50 text-left" },
+                            React.createElement("th", { className: "px-3 py-2 font-semibold" }, "KRI"),
+                            React.createElement("th", { className: "px-3 py-2 font-semibold" }, "Indicador"),
+                            React.createElement("th", { className: "px-3 py-2 font-semibold text-[#1E6B47]" }, "Verde"),
+                            React.createElement("th", { className: "px-3 py-2 font-semibold text-[#8A5A2C]" }, "Amarillo"),
+                            React.createElement("th", { className: "px-3 py-2 font-semibold text-[#B5432E]" }, "Rojo"),
+                            React.createElement("th", { className: "px-3 py-2 font-semibold" }, "Frecuencia \u00B7 Responsable"))),
+                    React.createElement("tbody", null, KRIS.map((k) => (React.createElement("tr", { key: k[0], className: "border-t border-[#F0F3EE]" },
+                        React.createElement("td", { className: "px-3 py-2 f-mono text-xs font-bold text-[#1E6B47]" }, k[0]),
+                        React.createElement("td", { className: "px-3 py-2" }, k[1]),
+                        React.createElement("td", { className: "px-3 py-2 whitespace-nowrap font-semibold text-[#1E6B47]" }, k[2]),
+                        React.createElement("td", { className: "px-3 py-2 whitespace-nowrap text-[#8A5A2C]" }, k[3]),
+                        React.createElement("td", { className: "px-3 py-2 whitespace-nowrap font-semibold text-[#B5432E]" }, k[4]),
+                        React.createElement("td", { className: "px-3 py-2 text-xs text-[#5b6b5f]" }, k[5])))))))),
+        React.createElement("div", { className: "mt-6 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5" },
+            React.createElement("p", { className: "f-display font-semibold mb-2" }, "Documento marco"),
+            React.createElement("div", { className: "flex items-center gap-3 text-sm" },
+                React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048]" }, "OE-M02"),
+                React.createElement("span", { className: "flex-1 text-white/90" }, "Pol\u00EDtica de administraci\u00F3n y gesti\u00F3n del riesgo"),
+                React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: enlaceDoc('OE-M02 Politica de administracion gestión del riesgo.docx'), target: "_blank", rel: "noopener" }, "Abrir \u2197")),
+            React.createElement("p", { className: "text-xs text-white/60 mt-3" }, "Resumen orientativo del informe de seguimiento; ante cualquier diferencia, manda el documento oficial aprobado por la Direcci\u00F3n."))));
+};
 const VistaDocumentos = ({ irA }) => {
     const [filtro, setFiltro] = useState('todos');
     const docs = DOCUMENTOS.filter((d) => filtro === 'todos' || tipoDeCodigo(d.codigo) === filtro)
@@ -648,7 +795,8 @@ const Inicio = ({ irA }) => (React.createElement("div", { className: "max-w-4xl 
         " documentos oficiales del SGC, con enlace directo al repositorio."),
     React.createElement("div", { className: "flex flex-wrap gap-2 mb-6" }, GUIAS.map((g) => (React.createElement("button", { key: g.id, onClick: () => irA(`guia/${g.id}`), className: "tarjeta text-sm font-semibold bg-[#B5E048] text-[#14231B] rounded-full px-4 py-2" }, g.pregunta)))),
     React.createElement(Buscador, { irA: irA }),
-    React.createElement("div", { className: "mt-3 text-right" },
+    React.createElement("div", { className: "mt-3 flex justify-end gap-5" },
+        React.createElement("button", { onClick: () => irA('riesgos'), className: "text-sm font-semibold text-[#1E6B47] hover:underline" }, "Mapa de riesgos \u2192"),
         React.createElement("button", { onClick: () => irA('documentos'), className: "text-sm font-semibold text-[#1E6B47] hover:underline" }, "Ver todos los documentos \u2192"))));
 /* ===== 4. Aplicación y enrutado por hash ===== */
 const rutaActual = () => decodeURIComponent((window.location.hash || '#/').replace(/^#\/?/, ''));
@@ -673,6 +821,9 @@ const App = () => {
     else if (seccion === 'documentos') {
         contenido = React.createElement(VistaDocumentos, { irA: irA });
     }
+    else if (seccion === 'riesgos') {
+        contenido = React.createElement(VistaRiesgos, { irA: irA });
+    }
     else {
         contenido = React.createElement(Inicio, { irA: irA });
     }
@@ -684,6 +835,7 @@ const App = () => {
                     "SGC ACTIVA"),
                 React.createElement("nav", { className: "ml-auto flex gap-4 text-sm font-semibold" },
                     React.createElement("button", { onClick: () => irA(''), className: "hover:text-[#1E6B47]" }, "Inicio"),
+                    React.createElement("button", { onClick: () => irA('riesgos'), className: "hover:text-[#1E6B47]" }, "Riesgos"),
                     React.createElement("button", { onClick: () => irA('documentos'), className: "hover:text-[#1E6B47]" }, "Documentos")))),
         React.createElement("main", { className: "flex-1 px-4 py-6" }, contenido),
         React.createElement("footer", { className: "border-t border-[#DCE5DC] bg-white" },
