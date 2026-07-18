@@ -508,6 +508,11 @@ const KRIS = [
   ['KRI11', 'Reuniones del Comité de Saneamiento Contable en el año', '2 o más', '1 reunión', '0 reuniones', 'Semestral · Dir. Administrativo'],
 ];
 
+// Informe fuente de esta sección: documento oficial en el sitio SGC (carpeta
+// "Documentos del SGC"), no en "Documentos Word", por eso el enlace se arma aparte.
+const ENLACE_SEGUIMIENTO_RIESGOS =
+  enlaceCarpeta('Documentos del SGC') + '/' + encodeURIComponent('Seguimiento a Mapa de Riesgos.pdf');
+
 /* ===== 3. Componentes ===== */
 
 const Codigo = ({ children }) => children
@@ -878,6 +883,10 @@ const VistaRiesgos = ({ irA }) => {
         (Informe CI 2022-2025, Rad. 202503000143), en cumplimiento de la política OE-M02.
         {' '}{TODOS_RIESGOS.length} riesgos en 5 componentes.
       </p>
+      <a href={ENLACE_SEGUIMIENTO_RIESGOS} target="_blank" rel="noopener"
+         className="mt-3 inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]">
+        📄 Ver el informe completo de Seguimiento a Riesgos ↗
+      </a>
 
       {/* Resumen por zona inherente */}
       <div className="mt-5 grid grid-cols-2 sm:grid-cols-5 gap-3">
@@ -961,11 +970,18 @@ const VistaRiesgos = ({ irA }) => {
       </section>
 
       <div className="mt-6 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5">
-        <p className="f-display font-semibold mb-2">Documento marco</p>
-        <div className="flex items-center gap-3 text-sm">
-          <span className="f-mono text-xs font-bold text-[#B5E048]">OE-M02</span>
-          <span className="flex-1 text-white/90">Política de administración y gestión del riesgo</span>
-          <a className="font-semibold text-[#B5E048] hover:underline" href={enlaceDoc('OE-M02 Politica de administracion gestión del riesgo.docx')} target="_blank" rel="noopener">Abrir ↗</a>
+        <p className="f-display font-semibold mb-2">Documentos de referencia</p>
+        <div className="space-y-2">
+          <div className="flex items-center gap-3 text-sm">
+            <span className="f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap">Informe</span>
+            <span className="flex-1 text-white/90">Seguimiento a la Gestión del Riesgo — Mapa de Riesgos (vigencia 2025)</span>
+            <a className="font-semibold text-[#B5E048] hover:underline" href={ENLACE_SEGUIMIENTO_RIESGOS} target="_blank" rel="noopener">Abrir ↗</a>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <span className="f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap">OE-M02</span>
+            <span className="flex-1 text-white/90">Política de administración y gestión del riesgo</span>
+            <a className="font-semibold text-[#B5E048] hover:underline" href={enlaceDoc('OE-M02 Politica de administracion gestión del riesgo.docx')} target="_blank" rel="noopener">Abrir ↗</a>
+          </div>
         </div>
         <p className="text-xs text-white/60 mt-3">Resumen orientativo del informe de seguimiento; ante cualquier diferencia, manda el documento oficial aprobado por la Dirección.</p>
       </div>
