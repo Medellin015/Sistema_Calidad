@@ -1508,12 +1508,26 @@ const VistaRiesgos = ({ irA }) => {
 
 const VistaDocumentos = ({ irA }) => {
   const [filtro, setFiltro] = useState('todos');
+  const [q, setQ] = useState('');
+  const t = q.trim().toLowerCase();
   const docs = DOCUMENTOS.filter((d) => filtro === 'todos' || tipoDeCodigo(d.codigo) === filtro)
+    .filter((d) => t === '' || (d.codigo || '').toLowerCase().includes(t) || (d.nombre || '').toLowerCase().includes(t)
+      || (d.proceso || '').toLowerCase().includes(t))
     .slice().sort((a, b) => (a.codigo || 'ZZ').localeCompare(b.codigo || 'ZZ'));
   return (
     <div className="max-w-3xl mx-auto">
       <button onClick={() => irA('')} className="text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
       <h2 className="f-display text-3xl font-extrabold mb-4">Todos los documentos <span className="text-[#5b6b5f] text-xl font-semibold">({docs.length})</span></h2>
+      <div className="relative mb-4">
+        <input value={q} onChange={(e) => setQ(e.target.value)}
+          placeholder="Buscar por código o nombre…"
+          aria-label="Buscar en el listado de documentos"
+          className="w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-3 text-base shadow-[3px_3px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" />
+        {q && (
+          <button onClick={() => setQ('')} aria-label="Limpiar búsqueda"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5b6b5f] hover:text-[#14231B] text-lg font-bold">×</button>
+        )}
+      </div>
       <div className="flex flex-wrap gap-2 mb-4">
         {['todos', ...Object.values(TIPOS)].map((f) => (
           <button key={f} onClick={() => setFiltro(f)}
@@ -1522,7 +1536,11 @@ const VistaDocumentos = ({ irA }) => {
           </button>
         ))}
       </div>
-      <div className="space-y-2">{docs.map((d) => <FilaDocumento key={d.codigo + d.nombre} doc={d} />)}</div>
+      {docs.length > 0 ? (
+        <div className="space-y-2">{docs.map((d) => <FilaDocumento key={d.codigo + d.nombre} doc={d} />)}</div>
+      ) : (
+        <p className="text-sm text-[#5b6b5f] py-8 text-center">Sin resultados para «{q}». Prueba con otro código, nombre o categoría.</p>
+      )}
     </div>
   );
 };
@@ -1687,9 +1705,9 @@ const App = () => {
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-30 bg-[#F7F8F4]/90 backdrop-blur border-b border-[#DCE5DC]">
         <div className="max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1">
-          <button onClick={() => irA('')} className="f-display font-extrabold text-lg tracking-tight flex items-center gap-2 shrink-0">
-            <span className="w-7 h-7 rounded-lg bg-[#1E6B47] text-[#B5E048] flex items-center justify-center text-sm">A</span>
-            SGC ACTIVA
+          <button onClick={() => irA('')} className="f-display font-extrabold tracking-tight flex items-center gap-2 shrink-0 text-left">
+            <span className="w-7 h-7 rounded-lg bg-[#1E6B47] text-[#B5E048] flex items-center justify-center text-sm shrink-0" aria-hidden="true">A</span>
+            <span className="text-[12px] sm:text-[13px] leading-tight max-w-[14rem] sm:max-w-[22rem]">Sistema de Gestión de Calidad - Empresa de Parques y Eventos de Antioquia ACTIVA</span>
           </button>
           <nav className="w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-semibold">
             <button onClick={() => irA('')} className="hover:text-[#1E6B47]">Inicio</button>
