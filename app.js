@@ -20,7 +20,6 @@ const { useState, useMemo, useEffect } = React;
 const SITIO_SGC = 'https://activaparquesyeventos.sharepoint.com/sites/SistemadeGestindeCalidad';
 const BIBLIOTECA_SGC = SITIO_SGC + '/Documentos compartidos';
 const CARPETA_SGC_DEFAULT = BIBLIOTECA_SGC + '/Documentos Word/';
-const FECHA_CORTE_DEFAULT = '11/07/2026';
 // El porqué: los nombres de archivo traen tildes y espacios; el enlace se
 // construye codificando solo el nombre para no romper la ruta de la carpeta.
 const enlaceDoc = (archivo) => encodeURI(CARPETA_SGC_DEFAULT) + encodeURIComponent(archivo);
@@ -1334,10 +1333,6 @@ const App = () => {
                 React.createElement("p", null,
                     "Los enlaces abren el ",
                     React.createElement("a", { className: "font-semibold text-[#1E6B47] hover:underline", href: CARPETA_SGC_DEFAULT, target: "_blank", rel: "noopener" }, "repositorio oficial en SharePoint"),
-                    " y requieren sesi\u00F3n Microsoft institucional."),
-                React.createElement("p", { className: "f-mono text-xs" },
-                    "Inventario al corte ",
-                    FECHA_CORTE_DEFAULT,
-                    " \u00B7 Los flujogramas resumen el procedimiento fuente.")))));
+                    " y requieren sesi\u00F3n Microsoft institucional.")))));
 };
 ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App, null));
