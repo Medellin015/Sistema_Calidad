@@ -575,7 +575,7 @@ const CARACTERIZACIONES = {
     },
     GP: {
         codigo: 'GP-C01', version: '01', estado: 'oficial',
-        proceso: 'Gestión de Parques', lider: 'Director(a) Administrativo(a) y Financiero(a)',
+        proceso: 'Gestión de Parques', lider: 'Subgerente Comercial',
         objetivo: 'Administrar los parques y espacios recreativos asignados a la entidad, asegurando la optimización de los recursos, la implementación de políticas y procedimientos operativos estándar, y la planificación y ejecución de los contratos correspondientes.',
         alcance: 'Desde la recepción o asignación del parque o espacio recreativo hasta su operación, mantenimiento, atención de visitantes y rendición de informes del contrato.',
         resultado: 'Parques en funcionamiento operados de forma segura y sostenible — Receptores: visitantes, entidades contratantes y la comunidad.',
@@ -656,7 +656,7 @@ const CARACTERIZACIONES = {
     GD: {
         codigo: 'GD-C01', version: '01', estado: 'oficial',
         archivo: ['Gestión Documental', 'GD-C01 Caracterización Programa de Gestión Documental.xlsx'],
-        proceso: 'Gestión Documental', lider: 'Gestor administrativo',
+        proceso: 'Gestión Documental', lider: 'Director(a) Administrativo(a) y Financiero(a)',
         objetivo: 'Administrar el flujo documental y establecer la organización de los documentos siguiendo los lineamientos correspondientes del Programa de Gestión Documental en torno a la normativa vigente.',
         alcance: 'Inicia con los requerimientos de gestión documental presentados por usuarios internos y externos, continúa con la radicación y reparto de los mismos y finaliza con la custodia de la documentación teniendo en cuenta las Tablas de Retención Documental y la normatividad archivística vigente.',
         resultado: 'Organización, control, seguridad, accesibilidad y conservación de los expedientes generados en la entidad — Receptores: todos los procesos.',
@@ -684,7 +684,7 @@ const CARACTERIZACIONES = {
     GT: {
         codigo: 'GT-C01', version: '01', estado: 'oficial',
         archivo: ['Gestión del Talento Humano', 'GT-C01 Caracterización Gestión del Talento Humano.xlsx'],
-        proceso: 'Gestión de Talentos', lider: 'Gestora en Talento Humano',
+        proceso: 'Gestión de Talentos', lider: 'Director(a) Administrativo(a) y Financiero(a)',
         objetivo: 'Desarrollar y asegurar PERSONAS con alto desempeño, competentes y satisfechas.',
         alcance: 'Inicia con la selección, sostenimiento y finaliza con el retiro del funcionario.',
         resultado: 'Personas con alto desempeño, competentes y satisfechas — Receptores: todos los procesos.',
@@ -771,7 +771,7 @@ const CARACTERIZACIONES = {
     MA: {
         codigo: 'MA-C01', version: '01', estado: 'oficial',
         archivo: ['Gestión de Procesos y Mejoramiento Continuo', 'MA-C01 Caracterizacion Mejoramiento Activo.xlsx'],
-        proceso: 'Mejoramiento Activo', lider: 'Jefe de Oficina de Planeación o quien haga sus veces',
+        proceso: 'Mejoramiento Activo', lider: 'Director(a) Administrativo(a) y Financiero(a)',
         objetivo: 'Implementar acciones encaminadas a la medición, análisis, evaluación y mejora del Sistema de Gestión mediante el diseño y la aplicación de lineamientos y metodologías que permitan la conformidad de productos y servicios, optimizar la gestión institucional y la satisfacción de las partes interesadas y grupos de valor.',
         alcance: 'Inicia con la definición e implementación de lineamientos y metodologías, continúa con la formulación de acciones de mejora, y finaliza con la optimización de los procesos y la satisfacción de las partes interesadas y grupos de valor.',
         resultado: 'Ambiente de mejoramiento continuo con seguimiento a planes de mejora, cambios y evaluaciones, generando mejora a los procesos internos del SGC — Receptores: todos los procesos.',
