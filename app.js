@@ -1233,6 +1233,16 @@ const Inicio = ({ irA }) => (React.createElement("div", { className: "max-w-4xl 
     React.createElement("div", { className: "mt-3 flex justify-end gap-5" },
         React.createElement("button", { onClick: () => irA('riesgos'), className: "text-sm font-semibold text-[#1E6B47] hover:underline" }, "Mapa de riesgos \u2192"),
         React.createElement("button", { onClick: () => irA('documentos'), className: "text-sm font-semibold text-[#1E6B47] hover:underline" }, "Ver todos los documentos \u2192"))));
+// Organigrama oficial de ACTIVA: se muestra la imagen institucional tal cual.
+const VistaOrganigrama = ({ irA }) => (React.createElement("div", { className: "max-w-4xl mx-auto" },
+    React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
+    React.createElement("div", { className: "mb-4" },
+        React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest" }, "Estructura organizacional"),
+        React.createElement("h2", { className: "f-display text-3xl font-extrabold leading-tight" }, "Organigrama")),
+    React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-3 sm:p-5" },
+        React.createElement("a", { href: "organigrama.png", target: "_blank", rel: "noopener", title: "Abrir el organigrama en tama\u00F1o completo" },
+            React.createElement("img", { src: "organigrama.png", alt: "Organigrama de ACTIVA: Junta Directiva, Gerente General y sus equipos (Subgerencia Comercial, Direcci\u00F3n Jur\u00EDdica, Direcci\u00F3n Administrativa y Financiera, Oficina de Control Interno e Instrucci\u00F3n CID)", className: "w-full h-auto rounded-xl" })),
+        React.createElement("p", { className: "text-xs text-[#5b6b5f] mt-2 text-right" }, "Haz clic en la imagen para verla en tama\u00F1o completo."))));
 /* ===== 4. Aplicación y enrutado por hash ===== */
 const rutaActual = () => decodeURIComponent((window.location.hash || '#/').replace(/^#\/?/, ''));
 const App = () => {
@@ -1260,6 +1270,9 @@ const App = () => {
     else if (seccion === 'riesgos') {
         contenido = React.createElement(VistaRiesgos, { irA: irA });
     }
+    else if (seccion === 'organigrama') {
+        contenido = React.createElement(VistaOrganigrama, { irA: irA });
+    }
     else {
         contenido = React.createElement(Inicio, { irA: irA });
     }
@@ -1271,6 +1284,7 @@ const App = () => {
                     "SGC ACTIVA"),
                 React.createElement("nav", { className: "ml-auto flex gap-4 text-sm font-semibold" },
                     React.createElement("button", { onClick: () => irA(''), className: "hover:text-[#1E6B47]" }, "Inicio"),
+                    React.createElement("button", { onClick: () => irA('organigrama'), className: "hover:text-[#1E6B47]" }, "Organigrama"),
                     React.createElement("button", { onClick: () => irA('riesgos'), className: "hover:text-[#1E6B47]" }, "Riesgos"),
                     React.createElement("button", { onClick: () => irA('documentos'), className: "hover:text-[#1E6B47]" }, "Documentos")))),
         React.createElement("main", { className: "flex-1 px-4 py-6" }, contenido),
