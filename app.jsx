@@ -1671,12 +1671,12 @@ const App = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-30 bg-[#F7F8F4]/90 backdrop-blur border-b border-[#DCE5DC]">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
-          <button onClick={() => irA('')} className="f-display font-extrabold text-lg tracking-tight flex items-center gap-2">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+          <button onClick={() => irA('')} className="f-display font-extrabold text-lg tracking-tight flex items-center gap-2 shrink-0">
             <span className="w-7 h-7 rounded-lg bg-[#1E6B47] text-[#B5E048] flex items-center justify-center text-sm">A</span>
             SGC ACTIVA
           </button>
-          <nav className="ml-auto flex gap-4 text-sm font-semibold">
+          <nav className="w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-semibold">
             <button onClick={() => irA('')} className="hover:text-[#1E6B47]">Inicio</button>
             <button onClick={() => irA('organigrama')} className="hover:text-[#1E6B47]">Organigrama</button>
             <button onClick={() => irA('indicadores')} className="hover:text-[#1E6B47]">Indicadores</button>
