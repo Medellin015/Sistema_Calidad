@@ -508,6 +508,48 @@ const KRIS = [
   ['KRI11', 'Reuniones del Comité de Saneamiento Contable en el año', '2 o más', '1 reunión', '0 reuniones', 'Semestral · Dir. Administrativo'],
 ];
 
+// Indicadores del Plan Estratégico 2025-2027, transcritos del documento oficial
+// "Indicadores para Plan Estratégico" (sitio Plan Estratégico en SharePoint).
+const ENLACE_INDICADORES_PLAN = encodeURI('https://activaparquesyeventos.sharepoint.com/sites/PlanEstratgico/Documentos compartidos/Indicadores para Plan Estratégico.pdf');
+const LINEAS_INDICADORES = [
+  {
+    linea: 'Línea Administración de Parques', lema: 'Espacios que conectan',
+    indicadores: [
+      ['Número de Parques en Funcionamiento', '1', '2', '3'],
+    ],
+  },
+  {
+    linea: 'Línea Eventos Propios', lema: 'Experiencias que trascienden',
+    indicadores: [
+      ['Realizar Eventos Propios durante la Anualidad', '0', '1', '2'],
+    ],
+  },
+  {
+    linea: 'Línea Operación Logística', lema: 'Soluciones integrales para el desarrollo',
+    indicadores: [
+      ['Nivel de Satisfacción del cliente medida a través de encuesta', '80%', '85%', '90%'],
+      ['Cumplimiento del presupuesto de ventas', '100%', '100%', '100%'],
+      ['Cumplimiento del presupuesto de honorarios', '100%', '100%', '100%'],
+    ],
+  },
+  {
+    linea: 'Línea Transversal', lema: 'Impulsando nuestro crecimiento',
+    indicadores: [
+      ['Responder el 100% de los requerimientos de Información recibidos en los términos de ley', '100%', '100%', '100%'],
+      ['Incremento del EBITDA', '> 0', 'Aumento de 10% con respecto a 2025', 'Aumento de 10% con respecto a 2026'],
+      ['Margen Neto de Utilidad', '> 0', 'Aumento de 5% con respecto a 2025', 'Aumento de 10% con respecto a 2026'],
+      ['Automatizar los procesos de la empresa', '20% de los procesos automatizados', '30% de los procesos automatizados', '50% de los procesos automatizados'],
+      ['Porcentaje de implementación de ERP', '90%', '100%', '100%'],
+      ['Actualizar manuales y procedimientos de la Entidad', '30%', '50%', '90%'],
+      ['Porcentaje Implementación de Programa de Facturación Electrónica', '100%', '100%', '100%'],
+      ['Porcentaje de implementación de la Estrategia Cero Papel', '90%', '100%', '100%'],
+      ['Tableros de Power BI Implementados', '3', '3', '4'],
+      ['Índice de Desempeño Institucional', '80%', '85%', '90%'],
+      ['Ejecución Plan Anual de Auditoría', '100%', '100%', '100%'],
+    ],
+  },
+];
+
 // Informe fuente de esta sección: documento oficial en el sitio SGC (carpeta
 // "Documentos del SGC"), no en "Documentos Word", por eso el enlace se arma aparte.
 const ENLACE_SEGUIMIENTO_RIESGOS =
@@ -1328,6 +1370,36 @@ const ZonaBadge = ({ zona }) => {
   );
 };
 
+// Tabla de KRI compartida entre la vista de riesgos y la de indicadores.
+const TablaKris = () => (
+  <div className="overflow-x-auto rounded-2xl border border-[#DCE5DC] bg-white">
+    <table className="w-full text-sm border-collapse min-w-[38rem]">
+      <thead>
+        <tr className="bg-[#DCE5DC]/50 text-left">
+          <th className="px-3 py-2 font-semibold">KRI</th>
+          <th className="px-3 py-2 font-semibold">Indicador</th>
+          <th className="px-3 py-2 font-semibold text-[#1E6B47]">Verde</th>
+          <th className="px-3 py-2 font-semibold text-[#8A5A2C]">Amarillo</th>
+          <th className="px-3 py-2 font-semibold text-[#B5432E]">Rojo</th>
+          <th className="px-3 py-2 font-semibold">Frecuencia · Responsable</th>
+        </tr>
+      </thead>
+      <tbody>
+        {KRIS.map((k) => (
+          <tr key={k[0]} className="border-t border-[#F0F3EE]">
+            <td className="px-3 py-2 f-mono text-xs font-bold text-[#1E6B47]">{k[0]}</td>
+            <td className="px-3 py-2">{k[1]}</td>
+            <td className="px-3 py-2 whitespace-nowrap font-semibold text-[#1E6B47]">{k[2]}</td>
+            <td className="px-3 py-2 whitespace-nowrap text-[#8A5A2C]">{k[3]}</td>
+            <td className="px-3 py-2 whitespace-nowrap font-semibold text-[#B5432E]">{k[4]}</td>
+            <td className="px-3 py-2 text-xs text-[#5b6b5f]">{k[5]}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
 const VistaRiesgos = ({ irA }) => {
   // Conteo por zona inherente para las fichas del resumen
   const porZona = Object.keys(ZONAS_RIESGO).filter((z) => z !== 'N/D')
@@ -1400,32 +1472,7 @@ const VistaRiesgos = ({ irA }) => {
           Interno en máximo 5 días hábiles; en rojo, escala al Comité Institucional de
           Gestión y Desempeño.
         </p>
-        <div className="overflow-x-auto rounded-2xl border border-[#DCE5DC] bg-white">
-          <table className="w-full text-sm border-collapse min-w-[38rem]">
-            <thead>
-              <tr className="bg-[#DCE5DC]/50 text-left">
-                <th className="px-3 py-2 font-semibold">KRI</th>
-                <th className="px-3 py-2 font-semibold">Indicador</th>
-                <th className="px-3 py-2 font-semibold text-[#1E6B47]">Verde</th>
-                <th className="px-3 py-2 font-semibold text-[#8A5A2C]">Amarillo</th>
-                <th className="px-3 py-2 font-semibold text-[#B5432E]">Rojo</th>
-                <th className="px-3 py-2 font-semibold">Frecuencia · Responsable</th>
-              </tr>
-            </thead>
-            <tbody>
-              {KRIS.map((k) => (
-                <tr key={k[0]} className="border-t border-[#F0F3EE]">
-                  <td className="px-3 py-2 f-mono text-xs font-bold text-[#1E6B47]">{k[0]}</td>
-                  <td className="px-3 py-2">{k[1]}</td>
-                  <td className="px-3 py-2 whitespace-nowrap font-semibold text-[#1E6B47]">{k[2]}</td>
-                  <td className="px-3 py-2 whitespace-nowrap text-[#8A5A2C]">{k[3]}</td>
-                  <td className="px-3 py-2 whitespace-nowrap font-semibold text-[#B5432E]">{k[4]}</td>
-                  <td className="px-3 py-2 text-xs text-[#5b6b5f]">{k[5]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <TablaKris />
       </section>
 
       <div className="mt-6 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5">
@@ -1501,6 +1548,73 @@ const Inicio = ({ irA }) => (
   </div>
 );
 
+// Indicadores del Plan Estratégico 2025-2027 + KRI, solo de los documentos oficiales.
+const VistaIndicadores = ({ irA }) => (
+  <div className="max-w-4xl mx-auto">
+    <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
+    <div className="mb-4">
+      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest">Seguimiento y medición</p>
+      <h2 className="f-display text-3xl font-extrabold leading-tight">Indicadores</h2>
+      <p className="text-sm text-[#3c4a40] mt-2 max-w-2xl">
+        Metas 2025–2027 del Plan Estratégico de ACTIVA, por línea estratégica, e indicadores
+        clave de riesgo (KRI) del seguimiento al mapa de riesgos.
+      </p>
+    </div>
+    {LINEAS_INDICADORES.map((l) => (
+      <section key={l.linea} className="mb-6">
+        <h3 className="f-display text-xl font-bold">{l.linea}</h3>
+        <p className="text-sm text-[#5b6b5f] italic mb-3">{l.lema}</p>
+        <div className="overflow-x-auto rounded-2xl border border-[#DCE5DC] bg-white">
+          <table className="w-full text-sm border-collapse min-w-[34rem]">
+            <thead>
+              <tr className="bg-[#DCE5DC]/50 text-left">
+                <th className="px-3 py-2 font-semibold">Indicador</th>
+                <th className="px-3 py-2 font-semibold whitespace-nowrap">Meta 2025</th>
+                <th className="px-3 py-2 font-semibold whitespace-nowrap">Meta 2026</th>
+                <th className="px-3 py-2 font-semibold whitespace-nowrap">Meta 2027</th>
+              </tr>
+            </thead>
+            <tbody>
+              {l.indicadores.map((i) => (
+                <tr key={i[0]} className="border-t border-[#F0F3EE]">
+                  <td className="px-3 py-2">{i[0]}</td>
+                  <td className="px-3 py-2 font-semibold text-[#1E6B47]">{i[1]}</td>
+                  <td className="px-3 py-2 font-semibold text-[#1E6B47]">{i[2]}</td>
+                  <td className="px-3 py-2 font-semibold text-[#1E6B47]">{i[3]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    ))}
+    <section className="mt-8">
+      <h3 className="f-display text-xl font-bold mb-1">Indicadores clave de riesgo (KRI) 2026</h3>
+      <p className="text-sm text-[#3c4a40] mb-3 max-w-2xl">
+        Alertas tempranas del seguimiento al mapa de riesgos. El detalle de los riesgos que
+        vigilan está en la <button onClick={() => irA('riesgos')} className="font-semibold text-[#1E6B47] hover:underline">sección de riesgos</button>.
+      </p>
+      <TablaKris />
+    </section>
+    <div className="mt-6 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5">
+      <p className="f-display font-semibold mb-2">Documentos de referencia</p>
+      <div className="space-y-2">
+        <div className="flex items-center gap-3 text-sm">
+          <span className="f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap">Plan</span>
+          <span className="flex-1 text-white/90">Indicadores para Plan Estratégico (sitio Plan Estratégico)</span>
+          <a className="font-semibold text-[#B5E048] hover:underline" href={ENLACE_INDICADORES_PLAN} target="_blank" rel="noopener">Abrir ↗</a>
+        </div>
+        <div className="flex items-center gap-3 text-sm">
+          <span className="f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap">Informe</span>
+          <span className="flex-1 text-white/90">Seguimiento a la Gestión del Riesgo — Mapa de Riesgos (vigencia 2025)</span>
+          <a className="font-semibold text-[#B5E048] hover:underline" href={ENLACE_SEGUIMIENTO_RIESGOS} target="_blank" rel="noopener">Abrir ↗</a>
+        </div>
+      </div>
+      <p className="text-xs text-white/60 mt-3">Transcripción de los documentos oficiales; ante cualquier diferencia, mandan los documentos aprobados por la Dirección.</p>
+    </div>
+  </div>
+);
+
 // Organigrama oficial de ACTIVA: se muestra la imagen institucional tal cual.
 const VistaOrganigrama = ({ irA }) => (
   <div className="max-w-4xl mx-auto">
@@ -1546,6 +1660,8 @@ const App = () => {
     contenido = <VistaRiesgos irA={irA} />;
   } else if (seccion === 'organigrama') {
     contenido = <VistaOrganigrama irA={irA} />;
+  } else if (seccion === 'indicadores') {
+    contenido = <VistaIndicadores irA={irA} />;
   } else {
     contenido = <Inicio irA={irA} />;
   }
@@ -1561,6 +1677,7 @@ const App = () => {
           <nav className="ml-auto flex gap-4 text-sm font-semibold">
             <button onClick={() => irA('')} className="hover:text-[#1E6B47]">Inicio</button>
             <button onClick={() => irA('organigrama')} className="hover:text-[#1E6B47]">Organigrama</button>
+            <button onClick={() => irA('indicadores')} className="hover:text-[#1E6B47]">Indicadores</button>
             <button onClick={() => irA('riesgos')} className="hover:text-[#1E6B47]">Riesgos</button>
             <button onClick={() => irA('documentos')} className="hover:text-[#1E6B47]">Documentos</button>
           </nav>
