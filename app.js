@@ -202,6 +202,8 @@ const ROLES = {
 };
 // Aplicativo interno de Órdenes de Pedido (crea OP internas y pide CDP/RP).
 const APP_OP = 'https://medellin015.github.io/Ordenes-Pedido-Activa';
+// Normograma de ACTIVA (matriz de normatividad aplicable), alojado aparte.
+const ENLACE_NORMOGRAMA = 'https://medellin015.github.io/Normograma-Activa/';
 // Comparación compartida por las guías internas de CDP y RP (se muestra al
 // final de ambas).
 const COMPARACION_CDP_RP = {
@@ -1375,7 +1377,10 @@ const App = () => {
                     React.createElement("button", { onClick: () => irA('organigrama'), className: "hover:text-[#1E6B47]" }, "Organigrama"),
                     React.createElement("button", { onClick: () => irA('indicadores'), className: "hover:text-[#1E6B47]" }, "Indicadores"),
                     React.createElement("button", { onClick: () => irA('riesgos'), className: "hover:text-[#1E6B47]" }, "Riesgos"),
-                    React.createElement("button", { onClick: () => irA('documentos'), className: "hover:text-[#1E6B47]" }, "Documentos")))),
+                    React.createElement("button", { onClick: () => irA('documentos'), className: "hover:text-[#1E6B47]" }, "Documentos"),
+                    React.createElement("a", { href: ENLACE_NORMOGRAMA, target: "_blank", rel: "noopener", className: "hover:text-[#1E6B47] inline-flex items-center gap-1" },
+                        "Normograma ",
+                        React.createElement("span", { "aria-hidden": "true" }, "\u2197"))))),
         React.createElement("main", { className: "flex-1 px-4 py-6" }, contenido),
         React.createElement("footer", { className: "border-t border-[#DCE5DC] bg-white" },
             React.createElement("div", { className: "max-w-4xl mx-auto px-4 py-5 text-sm text-[#5b6b5f] space-y-1" },

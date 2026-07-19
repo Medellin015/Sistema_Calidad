@@ -213,6 +213,8 @@ const ROLES = {
 
 // Aplicativo interno de Órdenes de Pedido (crea OP internas y pide CDP/RP).
 const APP_OP = 'https://medellin015.github.io/Ordenes-Pedido-Activa';
+// Normograma de ACTIVA (matriz de normatividad aplicable), alojado aparte.
+const ENLACE_NORMOGRAMA = 'https://medellin015.github.io/Normograma-Activa/';
 
 // Comparación compartida por las guías internas de CDP y RP (se muestra al
 // final de ambas).
@@ -1680,6 +1682,7 @@ const App = () => {
             <button onClick={() => irA('indicadores')} className="hover:text-[#1E6B47]">Indicadores</button>
             <button onClick={() => irA('riesgos')} className="hover:text-[#1E6B47]">Riesgos</button>
             <button onClick={() => irA('documentos')} className="hover:text-[#1E6B47]">Documentos</button>
+            <a href={ENLACE_NORMOGRAMA} target="_blank" rel="noopener" className="hover:text-[#1E6B47] inline-flex items-center gap-1">Normograma <span aria-hidden="true">↗</span></a>
           </nav>
         </div>
       </header>
