@@ -917,11 +917,16 @@ const Buscador = ({ irA }) => {
         return DOCUMENTOS.filter((d) => d.codigo.toLowerCase().includes(t) || d.nombre.toLowerCase().includes(t)).slice(0, 8);
     }, [q]);
     return (React.createElement("div", { className: "relative" },
-        React.createElement("input", { value: q, onChange: (e) => setQ(e.target.value), placeholder: "Busca por c\u00F3digo o nombre: GF-P03, vi\u00E1ticos, PQRS\u2026", "aria-label": "Buscar documento del SGC", className: "w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-4 text-base shadow-[4px_4px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" }),
+        React.createElement("input", { value: q, onChange: (e) => setQ(e.target.value), placeholder: "Buscar por c\u00F3digo o nombre\u2026", "aria-label": "Buscar documento del SGC", className: "w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-4 text-base shadow-[4px_4px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" }),
         resultados.length > 0 && (React.createElement("div", { className: "absolute z-20 mt-2 w-full bg-white border border-[#DCE5DC] rounded-2xl shadow-xl overflow-hidden" }, resultados.map((d) => (React.createElement("button", { key: d.codigo + d.nombre, onClick: () => { setQ(''); irA(`proceso/${d.proceso}`); }, className: "w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0" },
             React.createElement(Codigo, null, d.codigo),
             React.createElement("span", { className: "text-sm" }, d.nombre))))))));
 };
+// Envuelve una tabla ancha con desplazamiento horizontal y, en móvil, una
+// sombra en el borde derecho + micro-etiqueta que avisan que se puede deslizar.
+const TablaScroll = ({ className = '', children }) => (React.createElement("div", { className: "tabla-scroll" },
+    React.createElement("div", { className: `tabla-scroll-vp overflow-x-auto ${className}` }, children),
+    React.createElement("span", { className: "tabla-hint", "aria-hidden": "true" }, "Desliza para ver todo \u2192")));
 // El mapa de procesos como diagrama clásico y clicable: franjas horizontales,
 // flechas laterales de entrada (necesidades) y salida (satisfacción), y la
 // banda transversal del MIPG. Cada nodo navega a la vista del proceso.
@@ -1002,7 +1007,7 @@ const Instructivo = ({ data }) => (React.createElement("div", { className: "spac
                     "\u26A0\uFE0F ",
                     paso.aviso))));
         }))),
-        c.tabla && (React.createElement("div", { className: "mt-2 overflow-x-auto" },
+        c.tabla && (React.createElement(TablaScroll, { className: "mt-2" },
             React.createElement("table", { className: "w-full text-sm border-collapse" },
                 React.createElement("thead", null,
                     React.createElement("tr", null, c.tabla.columnas.map((col, k) => (React.createElement("th", { key: k, className: "text-left font-semibold text-[#14231B] bg-[#DCE5DC]/50 border border-[#DCE5DC] px-2.5 py-1.5" }, col))))),
@@ -1066,7 +1071,7 @@ const SeccionesProceso = ({ proceso }) => {
             React.createElement("a", { href: enlaceCarpeta(proceso.carpeta), target: "_blank", rel: "noopener", className: "text-sm font-semibold text-[#1E6B47] hover:underline whitespace-nowrap" }, "Abrir carpeta \u2197")),
         React.createElement("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-3" }, secciones.map((s) => (React.createElement("a", { key: s.nombre, target: "_blank", rel: "noopener", href: enlaceCarpeta(s.base || proceso.carpeta, s.carpeta || undefined), className: "tarjeta bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 flex flex-col items-start gap-1" },
             React.createElement("span", { className: "text-2xl", "aria-hidden": "true" }, ICONO_SECCION[s.nombre] || '📁'),
-            React.createElement("span", { className: "font-semibold leading-snug" }, s.nombre),
+            React.createElement("span", { className: "font-semibold leading-snug break-words hyphens-auto w-full" }, s.nombre),
             React.createElement("span", { className: "text-xs text-[#5b6b5f]" }, "Abrir en SharePoint \u2197")))))));
 };
 // Primera página de cada proceso: su caracterización.
@@ -1094,7 +1099,7 @@ const VistaCaracterizacion = ({ proceso, c }) => (React.createElement("div", nul
                 React.createElement("span", { className: "flex-1 text-[#3c4a40]" }, a[1])))))),
         React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-4" },
             React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-2" }, "Ciclo PHVA"),
-            React.createElement("div", { className: "overflow-x-auto" },
+            React.createElement(TablaScroll, null,
                 React.createElement("table", { className: "w-full text-xs border-collapse min-w-[52rem]" },
                     React.createElement("thead", null,
                         React.createElement("tr", { className: "bg-[#DCE5DC]/50 text-left" },
@@ -1173,7 +1178,7 @@ const ZonaBadge = ({ zona }) => {
     return (React.createElement("span", { className: "inline-block text-[10px] font-bold rounded-full px-2 py-0.5 whitespace-nowrap", style: { background: z.color, color: z.texto } }, zona));
 };
 // Tabla de KRI compartida entre la vista de riesgos y la de indicadores.
-const TablaKris = () => (React.createElement("div", { className: "overflow-x-auto rounded-2xl border border-[#DCE5DC] bg-white" },
+const TablaKris = () => (React.createElement(TablaScroll, { className: "rounded-2xl border border-[#DCE5DC] bg-white" },
     React.createElement("table", { className: "w-full text-sm border-collapse min-w-[38rem]" },
         React.createElement("thead", null,
             React.createElement("tr", { className: "bg-[#DCE5DC]/50 text-left" },
@@ -1288,16 +1293,16 @@ const VistaIndicadores = ({ irA }) => (React.createElement("div", { className: "
     LINEAS_INDICADORES.map((l) => (React.createElement("section", { key: l.linea, className: "mb-6" },
         React.createElement("h3", { className: "f-display text-xl font-bold" }, l.linea),
         React.createElement("p", { className: "text-sm text-[#5b6b5f] italic mb-3" }, l.lema),
-        React.createElement("div", { className: "overflow-x-auto rounded-2xl border border-[#DCE5DC] bg-white" },
-            React.createElement("table", { className: "w-full text-sm border-collapse min-w-[34rem]" },
+        React.createElement(TablaScroll, { className: "rounded-2xl border border-[#DCE5DC] bg-white" },
+            React.createElement("table", { className: "w-full text-sm border-collapse min-w-[36rem]" },
                 React.createElement("thead", null,
                     React.createElement("tr", { className: "bg-[#DCE5DC]/50 text-left" },
-                        React.createElement("th", { className: "px-3 py-2 font-semibold" }, "Indicador"),
+                        React.createElement("th", { className: "px-3 py-2 font-semibold min-w-[13rem]" }, "Indicador"),
                         React.createElement("th", { className: "px-3 py-2 font-semibold whitespace-nowrap" }, "Meta 2025"),
                         React.createElement("th", { className: "px-3 py-2 font-semibold whitespace-nowrap" }, "Meta 2026"),
                         React.createElement("th", { className: "px-3 py-2 font-semibold whitespace-nowrap" }, "Meta 2027"))),
                 React.createElement("tbody", null, l.indicadores.map((i) => (React.createElement("tr", { key: i[0], className: "border-t border-[#F0F3EE]" },
-                    React.createElement("td", { className: "px-3 py-2" }, i[0]),
+                    React.createElement("td", { className: "px-3 py-2 min-w-[13rem]" }, i[0]),
                     React.createElement("td", { className: "px-3 py-2 font-semibold text-[#1E6B47]" }, i[1]),
                     React.createElement("td", { className: "px-3 py-2 font-semibold text-[#1E6B47]" }, i[2]),
                     React.createElement("td", { className: "px-3 py-2 font-semibold text-[#1E6B47]" }, i[3])))))))))),
@@ -1329,7 +1334,9 @@ const VistaOrganigrama = ({ irA }) => (React.createElement("div", { className: "
     React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-3 sm:p-5" },
         React.createElement("a", { href: "organigrama.png", target: "_blank", rel: "noopener", title: "Abrir el organigrama en tama\u00F1o completo" },
             React.createElement("img", { src: "organigrama.png", alt: "Organigrama de ACTIVA: Junta Directiva, Gerente General y sus equipos (Subgerencia Comercial, Direcci\u00F3n Jur\u00EDdica, Direcci\u00F3n Administrativa y Financiera, Oficina de Control Interno e Instrucci\u00F3n CID)", className: "w-full h-auto rounded-xl" })),
-        React.createElement("p", { className: "text-xs text-[#5b6b5f] mt-2 text-right" }, "Haz clic en la imagen para verla en tama\u00F1o completo."))));
+        React.createElement("div", { className: "mt-3 flex flex-wrap items-center justify-between gap-2" },
+            React.createElement("p", { className: "text-xs text-[#5b6b5f]" }, "En el celular, \u00E1brelo en pantalla completa para leer los cargos."),
+            React.createElement("a", { href: "organigrama.png", target: "_blank", rel: "noopener", className: "text-sm font-semibold text-white bg-[#1E6B47] rounded-full px-4 py-2 hover:bg-[#144D33] whitespace-nowrap" }, "Ver en pantalla completa \u2197")))));
 /* ===== 4. Aplicación y enrutado por hash ===== */
 const rutaActual = () => decodeURIComponent((window.location.hash || '#/').replace(/^#\/?/, ''));
 const App = () => {

@@ -942,7 +942,7 @@ const Buscador = ({ irA }) => {
   return (
     <div className="relative">
       <input value={q} onChange={(e) => setQ(e.target.value)}
-        placeholder="Busca por código o nombre: GF-P03, viáticos, PQRS…"
+        placeholder="Buscar por código o nombre…"
         aria-label="Buscar documento del SGC"
         className="w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-4 text-base shadow-[4px_4px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" />
       {resultados.length > 0 && (
@@ -958,6 +958,15 @@ const Buscador = ({ irA }) => {
     </div>
   );
 };
+
+// Envuelve una tabla ancha con desplazamiento horizontal y, en móvil, una
+// sombra en el borde derecho + micro-etiqueta que avisan que se puede deslizar.
+const TablaScroll = ({ className = '', children }) => (
+  <div className="tabla-scroll">
+    <div className={`tabla-scroll-vp overflow-x-auto ${className}`}>{children}</div>
+    <span className="tabla-hint" aria-hidden="true">Desliza para ver todo →</span>
+  </div>
+);
 
 // El mapa de procesos como diagrama clásico y clicable: franjas horizontales,
 // flechas laterales de entrada (necesidades) y salida (satisfacción), y la
@@ -1106,7 +1115,7 @@ const Instructivo = ({ data }) => (
           </ol>
         )}
         {c.tabla && (
-          <div className="mt-2 overflow-x-auto">
+          <TablaScroll className="mt-2">
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr>
@@ -1125,7 +1134,7 @@ const Instructivo = ({ data }) => (
                 ))}
               </tbody>
             </table>
-          </div>
+          </TablaScroll>
         )}
         {c.pie && <p className="mt-1.5 text-xs text-[#5b6b5f]">{c.pie}</p>}
         {c.aviso && (
@@ -1215,7 +1224,7 @@ const SeccionesProceso = ({ proceso }) => {
              href={enlaceCarpeta(s.base || proceso.carpeta, s.carpeta || undefined)}
              className="tarjeta bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 flex flex-col items-start gap-1">
             <span className="text-2xl" aria-hidden="true">{ICONO_SECCION[s.nombre] || '📁'}</span>
-            <span className="font-semibold leading-snug">{s.nombre}</span>
+            <span className="font-semibold leading-snug break-words hyphens-auto w-full">{s.nombre}</span>
             <span className="text-xs text-[#5b6b5f]">Abrir en SharePoint ↗</span>
           </a>
         ))}
@@ -1254,7 +1263,7 @@ const VistaCaracterizacion = ({ proceso, c }) => (
       </div>
       <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4">
         <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-2">Ciclo PHVA</p>
-        <div className="overflow-x-auto">
+        <TablaScroll>
           <table className="w-full text-xs border-collapse min-w-[52rem]">
             <thead>
               <tr className="bg-[#DCE5DC]/50 text-left">
@@ -1279,7 +1288,7 @@ const VistaCaracterizacion = ({ proceso, c }) => (
               ))}
             </tbody>
           </table>
-        </div>
+        </TablaScroll>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4">
@@ -1374,7 +1383,7 @@ const ZonaBadge = ({ zona }) => {
 
 // Tabla de KRI compartida entre la vista de riesgos y la de indicadores.
 const TablaKris = () => (
-  <div className="overflow-x-auto rounded-2xl border border-[#DCE5DC] bg-white">
+  <TablaScroll className="rounded-2xl border border-[#DCE5DC] bg-white">
     <table className="w-full text-sm border-collapse min-w-[38rem]">
       <thead>
         <tr className="bg-[#DCE5DC]/50 text-left">
@@ -1399,7 +1408,7 @@ const TablaKris = () => (
         ))}
       </tbody>
     </table>
-  </div>
+  </TablaScroll>
 );
 
 const VistaRiesgos = ({ irA }) => {
@@ -1566,11 +1575,11 @@ const VistaIndicadores = ({ irA }) => (
       <section key={l.linea} className="mb-6">
         <h3 className="f-display text-xl font-bold">{l.linea}</h3>
         <p className="text-sm text-[#5b6b5f] italic mb-3">{l.lema}</p>
-        <div className="overflow-x-auto rounded-2xl border border-[#DCE5DC] bg-white">
-          <table className="w-full text-sm border-collapse min-w-[34rem]">
+        <TablaScroll className="rounded-2xl border border-[#DCE5DC] bg-white">
+          <table className="w-full text-sm border-collapse min-w-[36rem]">
             <thead>
               <tr className="bg-[#DCE5DC]/50 text-left">
-                <th className="px-3 py-2 font-semibold">Indicador</th>
+                <th className="px-3 py-2 font-semibold min-w-[13rem]">Indicador</th>
                 <th className="px-3 py-2 font-semibold whitespace-nowrap">Meta 2025</th>
                 <th className="px-3 py-2 font-semibold whitespace-nowrap">Meta 2026</th>
                 <th className="px-3 py-2 font-semibold whitespace-nowrap">Meta 2027</th>
@@ -1579,7 +1588,7 @@ const VistaIndicadores = ({ irA }) => (
             <tbody>
               {l.indicadores.map((i) => (
                 <tr key={i[0]} className="border-t border-[#F0F3EE]">
-                  <td className="px-3 py-2">{i[0]}</td>
+                  <td className="px-3 py-2 min-w-[13rem]">{i[0]}</td>
                   <td className="px-3 py-2 font-semibold text-[#1E6B47]">{i[1]}</td>
                   <td className="px-3 py-2 font-semibold text-[#1E6B47]">{i[2]}</td>
                   <td className="px-3 py-2 font-semibold text-[#1E6B47]">{i[3]}</td>
@@ -1587,7 +1596,7 @@ const VistaIndicadores = ({ irA }) => (
               ))}
             </tbody>
           </table>
-        </div>
+        </TablaScroll>
       </section>
     ))}
     <section className="mt-8">
@@ -1630,7 +1639,13 @@ const VistaOrganigrama = ({ irA }) => (
         <img src="organigrama.png" alt="Organigrama de ACTIVA: Junta Directiva, Gerente General y sus equipos (Subgerencia Comercial, Dirección Jurídica, Dirección Administrativa y Financiera, Oficina de Control Interno e Instrucción CID)"
           className="w-full h-auto rounded-xl" />
       </a>
-      <p className="text-xs text-[#5b6b5f] mt-2 text-right">Haz clic en la imagen para verla en tamaño completo.</p>
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+        <p className="text-xs text-[#5b6b5f]">En el celular, ábrelo en pantalla completa para leer los cargos.</p>
+        <a href="organigrama.png" target="_blank" rel="noopener"
+          className="text-sm font-semibold text-white bg-[#1E6B47] rounded-full px-4 py-2 hover:bg-[#144D33] whitespace-nowrap">
+          Ver en pantalla completa ↗
+        </a>
+      </div>
     </div>
   </div>
 );

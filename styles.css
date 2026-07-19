@@ -77,3 +77,18 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--lima);outline-offse
   .mapa-marco{box-shadow:none}
   .nodo-proceso:hover{transform:none}
 }
+
+/* ===== Tablas anchas: pista de desplazamiento horizontal en móvil ===== */
+.tabla-scroll{position:relative}
+.tabla-hint{display:none}
+/* sombra al borde derecho + micro-etiqueta: solo donde la tabla suele exceder la pantalla.
+   El bloque va DESPUÉS de la regla base para que gane en orden de fuente (los @media no suman especificidad). */
+@media (max-width:768px){
+  .tabla-scroll::after{content:'';position:absolute;top:2px;right:2px;bottom:2px;width:2.1rem;
+    border-radius:0 1rem 1rem 0;pointer-events:none;
+    background:linear-gradient(to left,rgba(20,35,27,.18),rgba(20,35,27,0))}
+  .tabla-scroll>.tabla-scroll-vp{scrollbar-width:thin;scrollbar-color:var(--bosque) transparent}
+  .tabla-scroll>.tabla-scroll-vp::-webkit-scrollbar{height:6px}
+  .tabla-scroll>.tabla-scroll-vp::-webkit-scrollbar-thumb{background:var(--bosque);border-radius:6px}
+  .tabla-hint{display:block;font-size:.7rem;color:var(--bosque);font-weight:600;margin-top:.35rem;text-align:right}
+}
