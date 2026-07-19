@@ -21,7 +21,6 @@ const SITIO_SGC =
   'https://activaparquesyeventos.sharepoint.com/sites/SistemadeGestindeCalidad';
 const BIBLIOTECA_SGC = SITIO_SGC + '/Documentos compartidos';
 const CARPETA_SGC_DEFAULT = BIBLIOTECA_SGC + '/Documentos Word/';
-const FECHA_CORTE_DEFAULT = '11/07/2026';
 
 // El porqué: los nombres de archivo traen tildes y espacios; el enlace se
 // construye codificando solo el nombre para no romper la ruta de la carpeta.
@@ -1613,7 +1612,6 @@ const App = () => {
         <div className="max-w-4xl mx-auto px-4 py-5 text-sm text-[#5b6b5f] space-y-1">
           <p>Empresa de Parques y Eventos de Antioquia — ACTIVA · Portal de consulta del SGC.</p>
           <p>Los enlaces abren el <a className="font-semibold text-[#1E6B47] hover:underline" href={CARPETA_SGC_DEFAULT} target="_blank" rel="noopener">repositorio oficial en SharePoint</a> y requieren sesión Microsoft institucional.</p>
-          <p className="f-mono text-xs">Inventario al corte {FECHA_CORTE_DEFAULT} · Los flujogramas resumen el procedimiento fuente.</p>
         </div>
       </footer>
     </div>
