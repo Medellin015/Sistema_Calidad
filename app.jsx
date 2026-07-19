@@ -71,6 +71,9 @@ const FRANJAS = [
     { sigla: 'GOP', nombre: 'Gestión de Operaciones',
       carpeta: 'Gestión de Operaciones',
       secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
+    // Proceso nuevo: aún no tiene carpeta en SharePoint ni documentos.
+    { sigla: 'GP', nombre: 'Gestión de Parques', enConstruccion: true,
+      carpeta: '', secciones: [] },
   ]},
   { nombre: 'De apoyo', desc: 'Hacen posible la operación', procesos: [
     { sigla: 'GF', nombre: 'Gestión Financiera',
@@ -833,6 +836,16 @@ const VistaProceso = ({ sigla, irA }) => {
   const docs = DOCUMENTOS.filter((d) => d.proceso === sigla);
   const guias = GUIAS.filter((g) => g.proceso === sigla);
   if (!proceso) return <p className="text-center py-10">Proceso no encontrado. <button className="text-[#1E6B47] font-semibold" onClick={() => irA('')}>Volver</button></p>;
+  if (proceso.enConstruccion) return (
+    <div className="max-w-3xl mx-auto text-center py-10">
+      <button onClick={() => irA('')} className="block text-left text-sm font-semibold text-[#1E6B47] mb-8">← Volver al inicio</button>
+      <p className="text-6xl mb-4" aria-hidden="true">🚧</p>
+      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1">{proceso.franja} · {proceso.sigla}</p>
+      <h2 className="f-display text-3xl font-extrabold leading-tight mb-3">{proceso.nombre}</h2>
+      <p className="text-xl font-semibold text-[#8A5A2C]">En construcción</p>
+      <p className="text-sm text-[#5b6b5f] mt-2 max-w-md mx-auto">Este proceso está en estructuración: pronto tendrá su carpeta en el repositorio y sus documentos oficiales.</p>
+    </div>
+  );
   return (
     <div className="max-w-3xl mx-auto">
       <button onClick={() => irA('')} className="text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
