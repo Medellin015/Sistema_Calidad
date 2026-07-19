@@ -142,7 +142,6 @@ const DOCUMENTOS = [
   { codigo: 'POL-I01', nombre: 'Instructivo Comité de Asignaciones', archivo: 'POL-I01 Comité de Asignaciones.docx', proceso: 'POL' },
   { codigo: 'POL-I02', nombre: 'Políticas comerciales', archivo: 'POL-I02 Políticas comerciales.docx', proceso: 'POL' },
   { codigo: 'POL-P01', nombre: 'Procedimiento de ejecución de contratos de clientes', archivo: 'POL-P01 Procedimiento ejecucion de contratos clientes.docx', proceso: 'POL', destacado: true },
-  { codigo: 'POL-P02', nombre: 'Procedimiento de gestión comercial', archivo: '', proceso: 'POL', estado: 'aprobacion' },
   // — Eventos propios: operación misional. Auditorías: evaluación (EV = Evaluación
   //   independiente en la caracterización EV-C01 de Control Interno).
   { codigo: 'EV-P01', nombre: 'Procedimiento de eventos propios', archivo: 'EV-P01 Procedimiento Eventos Propios.docx', proceso: 'GOP', destacado: true },
@@ -159,7 +158,6 @@ const DOCUMENTOS = [
   { codigo: 'GF-P06', nombre: 'Facturación y cobro de cartera', archivo: 'GF-P06 Procedimiento de facturacion y cobro de cartera.docx', proceso: 'GF' },
   { codigo: 'GF-P07', nombre: 'Autorización de pagos desde cuenta supervisada', archivo: 'GF-P07 Procedimiento de autorización pagos desde cuenta supervisada.docx', proceso: 'GF' },
   // — Administrativa
-  { codigo: 'GA-P01', nombre: 'Procedimiento de órdenes de pedido (OP)', archivo: '', proceso: 'GA', estado: 'aprobacion', destacado: true },
   { codigo: 'GA-P02', nombre: 'Viáticos y gastos de viaje (comisiones)', archivo: 'GA-P02 Procedimiento de Viáticos y Gastos de Viaje.docx', proceso: 'GA', destacado: true },
   { codigo: 'GA-P03', nombre: 'Gestión de inventarios', archivo: 'GA-P03 Procedimiento gestión de inventarios.docx', proceso: 'GA' },
   { codigo: 'GA-I01', nombre: 'Instructivo Gestión Transparente — contratos', archivo: 'GA-I01 Instructivo Gestion Transparente Contratos.docx', proceso: 'GA' },
@@ -182,7 +180,6 @@ const DOCUMENTOS = [
   { codigo: 'GT-I01', nombre: 'Concertación de acuerdos de gestión', archivo: 'GT-I01 Instructivo para la concertación de acuerdos de gestión.docx', proceso: 'GT' },
   // — Tecnologías de la Información
   { codigo: 'GTI-P01', nombre: 'Proceso de gestión tecnológica', archivo: 'GTI-P01 Proceso de Gestión Tecnológica.docx', proceso: 'GTI' },
-  { codigo: 'GTI-P02', nombre: 'Copias de respaldo y restauración de información', archivo: '', proceso: 'GTI', estado: 'aprobacion' },
   { codigo: 'GTI-I02', nombre: 'Instructivo Mesa de Ayuda', archivo: 'GTI-I02 Instructivo Mesa de Ayuda.docx', proceso: 'GTI', destacado: true },
   { codigo: 'GTI-I3', nombre: 'Creación de contratos en SAFIX', archivo: 'GTI-I3 Instructivo creación de contratos en SAFIX.docx', proceso: 'GTI' },
   { codigo: 'GTI-I4', nombre: 'Aprobación de informe de evidencias — clientes', archivo: 'GTI-I4 Aprobación informe de Evidencias CLIENTES.docx', proceso: 'GTI' },
@@ -199,7 +196,6 @@ const DOCUMENTOS = [
   { codigo: 'BS-P09', nombre: 'Publicación en SECOP', archivo: 'BS-P09 Procedimiento Publicación SECOP.docx', proceso: 'BS' },
   // — Mejora Continua
   { codigo: 'MA-P01', nombre: 'Gestión de mejoras', archivo: 'MA-P01 procedimiento de Gestión de mejoras.doc', proceso: 'MA' },
-  { codigo: 'MA-P02', nombre: 'Control de documentos del SGC', archivo: '', proceso: 'MA', estado: 'aprobacion', destacado: true },
   // — Disciplinarios
   { codigo: 'PD-P01', nombre: 'Instrucción de control interno disciplinario', archivo: 'PD-P01 Procedimiento Instrucción Control Interno Disciplinario.docx', proceso: 'PD' },
 ];
@@ -544,8 +540,8 @@ const CARACTERIZACIONES = {
       ['V', 'Todos los procesos', 'Hojas de vida de indicadores; registros del proceso', 'Medir indicadores', 'Hojas de vida de indicadores; informes de gestión', 'Todos los procesos; partes interesadas'],
       ['A', 'Orientación Estratégica', 'Informes de gestión; hojas de vida de indicadores; matriz de riesgos', 'Gestionar mejoras al proceso y el sistema', 'Planes de mejoramiento', 'Gestión Administrativa; Evaluación Independiente'],
     ],
-    indicadores: ['Ejecución presupuestal', 'Punto de equilibrio', 'Satisfacción del cliente'],
-    riesgos: ['Reducción extrema de los márgenes del sector', 'Cambios en la tecnología', 'Competidor fuera de serie', 'Cambio de prioridades del cliente', 'Fracaso del nuevo proyecto', 'Estancamiento de mercado', 'Cambios en condiciones tributarias', 'Cambios normativos', 'Recortes presupuestales'],
+    indicadores: ['Índice de Desempeño Institucional (Plan Estratégico)', 'KRI02 — Cumplimiento de indicadores estratégicos del Plan 2026-2029'],
+    riesgos: ['C10 — Tráfico de influencias en asignación de contratos o decisiones institucionales', 'T01 — Gestión deficiente de datos abiertos', 'T02 — Opacidad en información de ejecución contractual publicada en SECOP', 'T03 — Incumplimiento de obligaciones de transparencia activa', 'T04 — Ausencia de Plan de Acción institucional con estructura ITA', 'T05 — Inaccesibilidad del sitio web para personas con discapacidad (WCAG 2.1)', 'T06 — Publicación deficiente de información de la entidad', 'M01 — Incumplimiento de objetivos estratégicos del Plan 2026-2029'],
     recursos: { humanos: 'Gerente General; Subgerente Comercial; Director Administrativo y Financiero; Jefe de Oficina de Control Interno; Director Jurídico', fisicos: 'Herramientas ofimáticas; espacios de trabajo y equipos de oficina' },
     documentos: 'Listado maestro de documentos y registros',
     requisitosISO: '4 Contexto de la organización · 5 Liderazgo · 6 Planificación · 7.3 Toma de conciencia · 7.4 Comunicación · 7.5 Información documentada · 9.1 Seguimiento, medición, análisis y evaluación · 9.3 Revisión por la dirección',
@@ -568,15 +564,15 @@ const CARACTERIZACIONES = {
       ['V', 'Proyectos de operación logística', 'Plan de acción de mercadeo y ventas; registros del proceso', 'Medir indicadores', 'Hojas de vida de indicadores', 'Orientación Estratégica; Desarrollo de la Experiencia del Cliente; cliente'],
       ['A', 'Desarrollo de la Experiencia del Cliente; Proyectos de Operación Logística', 'Informes de gestión; hojas de vida de indicadores', 'Gestionar mejoras al proceso', 'Planes de mejoramiento', 'Desarrollo de la Experiencia del Cliente; Proyectos de Operación Logística; Evaluación Independiente'],
     ],
-    indicadores: ['Satisfacción de clientes', 'Satisfacción con proveedores de insumos'],
-    riesgos: ['Insumos inoportunos', 'Insumos no disponibles', 'Insumos inadecuados', 'Servicios que no cumplen características contratadas', 'Solicitudes urgentes por parte de los clientes', 'Proveedores deficientes', 'Productos que perjudican a los clientes'],
+    indicadores: ['Cumplimiento del presupuesto de ventas (Plan Estratégico)', 'Nivel de satisfacción del cliente medido a través de encuesta (Plan Estratégico)'],
+    riesgos: ['X03 — Contexto estratégico insuficiente en órdenes externas que genera soluciones inadecuadas', 'X04 — Insatisfacción del cliente externo por falta de validación post-ejecución'],
     recursos: { humanos: 'Subgerente Comercial; Gestor de Mercadeo y Ventas; Ejecutivo Comercial; Profesional de operación logística de eventos; prestadores de servicios asociados', fisicos: 'SIESA; herramientas ofimáticas; espacios de trabajo y equipos de oficina' },
     documentos: 'Listado maestro de documentos y registros',
     requisitosISO: '7.1.5 Recursos de seguimiento y medición · 8.1 Planificación y control operacional · 8.2 Requisitos para los productos y servicios · 8.4 Control de procesos, productos y servicios suministrados externamente · 8.5.1–8.5.4 Producción y provisión del servicio · 8.6 Liberación · 9.1 Seguimiento, medición, análisis y evaluación',
   },
   GOP: {
-    codigo: 'GOP-C01', version: 'Propuesta', estado: 'propuesta',
-    proceso: 'Gestión de Operaciones', lider: 'Subgerente Comercial / Gestor de Operaciones',
+    codigo: 'GOP-C01', version: '01', estado: 'oficial',
+    proceso: 'Gestión de Operaciones', lider: 'Gestor de Operaciones',
     objetivo: 'Planear y ejecutar la operación logística de eventos y los eventos propios institucionales y comerciales, garantizando el cumplimiento de los requisitos y expectativas de clientes, socios, aliados y asistentes.',
     alcance: 'Desde la recepción de la orden de pedido o la aprobación del evento propio hasta la entrega del servicio, el informe de supervisión y el cierre con la validación de satisfacción.',
     resultado: 'Eventos y operaciones logísticas ejecutados a satisfacción — Receptores: clientes, asistentes y todos los procesos.',
@@ -590,15 +586,15 @@ const CARACTERIZACIONES = {
       ['V', 'Gestión de Operaciones', 'Informes de supervisión; encuestas post-servicio', 'Supervisar la ejecución y validar la satisfacción del cliente', 'Informe final de supervisión; resultado de satisfacción', 'Gestión Comercial; Gestión Financiera'],
       ['A', 'Gestión de Operaciones', 'Informes de gestión; hojas de vida de indicadores', 'Gestionar mejoras al proceso', 'Planes de mejoramiento (MA-F01)', 'Mejoramiento Continuo; Control Interno'],
     ],
-    indicadores: ['Nivel de satisfacción del cliente medido por encuesta (Plan Estratégico)', 'Eventos propios realizados en la anualidad (Plan Estratégico)'],
-    riesgos: ['M04 — Afectación de imagen por fallas operativas en eventos de alto perfil', 'M07 — Eventos climáticos extremos que afecten la operación al aire libre', 'X03 — Contexto estratégico insuficiente en órdenes externas'],
+    indicadores: ['Realizar eventos propios durante la anualidad (Plan Estratégico)', 'Nivel de satisfacción del cliente medido a través de encuesta (Plan Estratégico)'],
+    riesgos: ['X02 — Órdenes internas (POL-F10) sin aprobación formal del director de área', 'M04 — Afectación de imagen institucional por fallas operativas en eventos de alto perfil', 'M07 — Eventos climáticos extremos que afecten la operación logística al aire libre'],
     recursos: { humanos: 'Gestor de Operaciones; profesionales y contratistas de operación logística', fisicos: 'Aplicativo de Órdenes de Pedido; herramientas ofimáticas; equipos e infraestructura de eventos' },
     documentos: 'GOP-P10 Soluciones para el suministro de bienes y servicios; EV-P01 Procedimiento de eventos propios; GOP-I05 Instructivo Comité de Asignación',
     requisitosISO: '8.1 Planificación y control operacional · 8.2 Requisitos para los productos y servicios · 8.5 Producción y provisión del servicio · 9.1.2 Satisfacción del cliente',
   },
   GP: {
-    codigo: 'GP-C01', version: 'Propuesta', estado: 'propuesta',
-    proceso: 'Gestión de Parques', lider: '[Por definir por la Dirección]',
+    codigo: 'GP-C01', version: '01', estado: 'oficial',
+    proceso: 'Gestión de Parques', lider: 'Director(a) Administrativo(a) y Financiero(a)',
     objetivo: 'Administrar los parques y espacios recreativos asignados a la entidad, asegurando la optimización de los recursos, la implementación de políticas y procedimientos operativos estándar, y la planificación y ejecución de los contratos correspondientes.',
     alcance: 'Desde la recepción o asignación del parque o espacio recreativo hasta su operación, mantenimiento, atención de visitantes y rendición de informes del contrato.',
     resultado: 'Parques en funcionamiento operados de forma segura y sostenible — Receptores: visitantes, entidades contratantes y la comunidad.',
@@ -612,8 +608,8 @@ const CARACTERIZACIONES = {
       ['V', 'Gestión de Parques', 'Registros de operación; PQRSFD; informes de supervisión', 'Hacer seguimiento a la operación y a la satisfacción de los visitantes', 'Informes de operación y de contrato', 'Entidad contratante; Orientación y Planeación Estratégica'],
       ['A', 'Gestión de Parques', 'Informes de gestión; hojas de vida de indicadores', 'Gestionar mejoras al proceso', 'Planes de mejoramiento (MA-F01)', 'Mejoramiento Continuo; Control Interno'],
     ],
-    indicadores: ['Número de parques en funcionamiento (Plan Estratégico: 2 en 2026, 3 en 2027)'],
-    riesgos: ['M06 — Desfinanciamiento o sobrecostos en obras del Volcán de Lodo El Totumo', 'M07 — Eventos climáticos extremos'],
+    indicadores: ['Número de parques en funcionamiento (Plan Estratégico)', 'KRI08 — Avance físico de obras Volcán de Lodo vs cronograma'],
+    riesgos: ['M06 — Desfinanciamiento o sobrecostos en obras del Volcán de Lodo El Totumo'],
     recursos: { humanos: '[Por definir: equipo de operación del parque]', fisicos: 'Infraestructura de los parques; herramientas ofimáticas' },
     documentos: '[Por definir: procedimientos operativos del parque — el proceso está en estructuración]',
     requisitosISO: '8.1 Planificación y control operacional · 8.5 Producción y provisión del servicio · 9.1.2 Satisfacción del cliente',
@@ -642,8 +638,8 @@ const CARACTERIZACIONES = {
       ['A', 'Gestión Financiera', 'Informes; estados financieros', 'Hacer saneamiento contable', 'Informe de saneamiento contable', 'Gestión Financiera; Evaluación Independiente'],
       ['A', 'Gestión Financiera', 'Informes de gestión; hojas de vida de indicadores', 'Gestión de mejoras al proceso', 'Planes de mejoramiento', 'Gestión Financiera; Evaluación Independiente'],
     ],
-    indicadores: ['Margen EBITDA compuesto', 'Margen neto', '% cumplimiento del presupuesto de ventas (Comercial)', '% cartera vencida', '% ejecución financiera cliente', '% ejecución financiera proveedores', '% oportunidad en el pago a proveedores (inferior a 30 días calendario)', '# de eventos de corrupción identificados'],
-    riesgos: ['Ver matriz de riesgos del proceso (C01, C03, M02, X01, entre otros)'],
+    indicadores: ['Incremento del EBITDA (Plan Estratégico)', 'Margen neto de utilidad (Plan Estratégico)', 'Cumplimiento del presupuesto de honorarios (Plan Estratégico)', 'Implementación del Programa de Facturación Electrónica (Plan Estratégico)', 'KRI01 — Margen neto mensual de operaciones propias', 'KRI04 — Cuentas por pagar sin soporte documental completo', 'KRI11 — Reuniones del Comité de Saneamiento Contable'],
+    riesgos: ['C01 — Uso indebido de recursos públicos (sobrecostos, pagos indebidos)', 'C03 — Evasión fiscal (omisión de retenciones, declaraciones incorrectas)', 'X01 — CDP emitido antes de la aprobación del cliente externo', 'M02 — Insuficiencia de ingresos propios / EBITDA negativo sostenido'],
     recursos: { humanos: 'Director Administrativo y Financiero; Gestor Financiero; Gestor Contable; Gestor de Tesorería', fisicos: 'SIESA (gestión financiera); herramientas ofimáticas; espacios de trabajo y equipos de oficina' },
     documentos: 'Listado maestro de documentos',
     requisitosISO: '4.1 Comprensión de la organización y su contexto · 4.2 Necesidades y expectativas de las partes interesadas · 6.1 Acciones para abordar riesgos y oportunidades · 7.1 Recursos',
@@ -651,7 +647,7 @@ const CARACTERIZACIONES = {
   GA: {
     codigo: 'GA-C01', version: '01', estado: 'oficial',
     archivo: ['Gestión Administrativa', 'GA-C01 Caracterización Gestión Administrativa.xls'],
-    proceso: 'Gestión administrativa', lider: 'Director(a) Administrativo(a) y Gestor TI',
+    proceso: 'Gestión administrativa', lider: 'Director(a) Administrativo(a) y Financiero(a)',
     objetivo: 'Facilitar la disponibilidad de recursos físicos, tecnológicos, de infraestructura, transporte, documentales y de ambiente de trabajo, idóneos y oportunos.',
     alcance: 'Desde la recepción de la necesidad manifiesta por los diferentes procesos hasta la verificación de la ejecución de planes, la medición de indicadores y las actividades de mejoramiento continuo.',
     resultado: 'Disponibilidad de recursos físicos, tecnológicos, de infraestructura, transporte, documentales y de ambiente de trabajo, idóneos y oportunos — Receptores: todos los procesos.',
@@ -670,8 +666,8 @@ const CARACTERIZACIONES = {
       ['V', 'Gestión Administrativa', 'Registros del proceso', 'Medir indicadores', 'Hojas de vida de indicadores', 'Orientación Estratégica; Gestión Administrativa'],
       ['A', 'Gestión Administrativa', 'Informes de gestión; hojas de vida de indicadores', 'Gestionar mejoras al proceso', 'Planes de mejoramiento', 'Gestión Administrativa; Evaluación Independiente'],
     ],
-    indicadores: ['Oportunidad en la resolución de tickets o casos', 'Seguridad de la información', 'Evaluación de bienestar'],
-    riesgos: ['Espacios de trabajo deficientes', 'Fallas tecnológicas', 'Pérdida de información', 'Robo de información', 'Daño de información', 'Fallas de infraestructura', 'Demoras'],
+    indicadores: ['Sin indicadores asignados a este proceso en los documentos vigentes'],
+    riesgos: ['Sin riesgos asignados a este proceso en la matriz vigente (corte 25/02/2026)'],
     recursos: { humanos: 'Director Administrativo y Financiero; Gestor en Tecnología e Información; Gestor de Área Administrativa; Profesional de Suministro de Bienes y Servicios', fisicos: 'SIESA (gestión de activos); herramientas ofimáticas; espacios de trabajo y equipos de oficina' },
     documentos: 'Listado maestro de documentos y registros',
     requisitosISO: '7.1.3 Infraestructura · 7.1.4 Ambiente para la operación de los procesos',
@@ -698,8 +694,8 @@ const CARACTERIZACIONES = {
       ['V', 'Gestión Documental', 'Plan de acción anual', 'Verificación del seguimiento de acciones a corto, mediano y largo plazo conforme a la organización de los documentos y su ciclo vital', 'Indicadores de desempeño; planes de mejoramiento', 'Todos los procesos'],
       ['A', 'Gestión Documental', 'Indicadores de desempeño', 'Estipulación de planes de acción, identificando factores de riesgo y aplicando los criterios archivísticos', 'Indicadores de desempeño; planes de mejoramiento', 'Todos los procesos'],
     ],
-    indicadores: ['[Pendiente en el documento oficial]'],
-    riesgos: ['[Pendiente en el documento oficial]'],
+    indicadores: ['Responder el 100% de los requerimientos de información en los términos de ley (Plan Estratégico)', 'Implementación de la Estrategia Cero Papel (Plan Estratégico)', 'KRI09 — Respuesta oportuna a PQRSDF dentro de los términos legales'],
+    riesgos: ['Sin riesgos asignados a este proceso en la matriz vigente (corte 25/02/2026)'],
     recursos: { humanos: 'Líder de Archivo; Director Administrativo y Financiero; Gestor en Tecnología e Información; Gestor de Área Administrativa', fisicos: 'Área de archivo; computador' },
     documentos: 'Cronograma de planeación; planes de acción; PGD; Programa de Gestión Documental; PINAR',
     requisitosISO: '7.5.2 Creación y actualización · 7.5.3 Control de la información documentada',
@@ -731,14 +727,14 @@ const CARACTERIZACIONES = {
       ['V', 'Gestión de Talentos', 'Registros del proceso', 'Medir indicadores', 'Hojas de vida de indicadores', 'Orientación Estratégica; Gestión de Talentos'],
       ['A', 'Gestión Administrativa', 'Informes de gestión; hojas de vida de indicadores', 'Gestionar mejoras al proceso', 'Planes de mejoramiento', 'Gestión Administrativa; Evaluación Independiente'],
     ],
-    indicadores: ['Evaluación del desempeño (alto desempeño)', 'Nivel de acuerdos de gestión (competentes)'],
-    riesgos: ['Contratación de personal no idóneo para el cargo', 'Errores en la liquidación de nóminas y pago de seguridad social fuera del tiempo legal (controlado con el programa SIESA)'],
+    indicadores: ['KRI07 — Rotación de contratistas de honorarios clave'],
+    riesgos: ['M03 — Pérdida de conocimiento institucional por alta rotación de contratistas'],
     recursos: { humanos: 'Gestora en Talento Humano', fisicos: 'Herramientas ofimáticas; espacios de trabajo' },
     documentos: 'Listado maestro de documentos y registros',
     requisitosISO: '7.1.2 Personas · 7.1.4 Ambiente para la operación de los procesos',
   },
   GTI: {
-    codigo: 'GTI-C01', version: 'Propuesta', estado: 'propuesta',
+    codigo: 'GTI-C01', version: '01', estado: 'oficial',
     proceso: 'Gestión de Tecnologías de la Información', lider: 'Profesional TIC',
     objetivo: 'Garantizar la disponibilidad, el soporte y la seguridad de los servicios y activos tecnológicos de la entidad (ERP SAFIX, Microsoft 365 y aplicativos institucionales), gestionando los incidentes y solicitudes a través de la Mesa de Ayuda.',
     alcance: 'Desde la identificación de la necesidad o incidente tecnológico hasta su solución verificada, incluida la administración de activos de información, la seguridad digital y el soporte a los aplicativos institucionales.',
@@ -754,8 +750,8 @@ const CARACTERIZACIONES = {
       ['V', 'Gestión de TI', 'Registros de la Mesa de Ayuda; reportes de incidentes', 'Hacer seguimiento a los indicadores del servicio y a los incidentes de seguridad digital (KRI06)', 'Informes de gestión; reporte de incidentes', 'Control Interno; Comité de Gestión y Desempeño'],
       ['A', 'Gestión de TI', 'Informes de gestión; hallazgos ITA', 'Gestionar mejoras al proceso y al MSPI', 'Planes de mejoramiento (MA-F01)', 'Mejoramiento Continuo; Control Interno'],
     ],
-    indicadores: ['Oportunidad en la resolución de tickets (Mesa de Ayuda)', 'KRI06 — Incidentes de seguridad digital registrados y reportados', '% de implementación de ERP (Plan Estratégico)'],
-    riesgos: ['M05 — Vulnerabilidad de seguridad digital: ERP SAFIX, Microsoft 365 y activos críticos'],
+    indicadores: ['Automatización de los procesos de la empresa (Plan Estratégico)', 'Implementación de ERP (Plan Estratégico)', 'Tableros de Power BI implementados (Plan Estratégico)', 'KRI05 — Hallazgos ITA 2024 cerrados o en plan de mejoramiento', 'KRI06 — Incidentes de seguridad digital registrados y reportados'],
+    riesgos: ['M05 — Vulnerabilidad de seguridad digital: ERP SAFIX, Microsoft 365 y activos de información críticos'],
     recursos: { humanos: 'Profesional TIC', fisicos: 'ERP SAFIX; Microsoft 365; aplicativos institucionales; infraestructura tecnológica' },
     documentos: 'GTI-P01 Proceso de Gestión Tecnológica; GTI-I02 Instructivo Mesa de Ayuda; Política de Uso Aceptable de Recursos Tecnológicos; Política de Seguridad Digital V2',
     requisitosISO: '7.1.3 Infraestructura · 7.5 Información documentada · 8.1 Planificación y control operacional',
@@ -763,7 +759,7 @@ const CARACTERIZACIONES = {
   BS: {
     codigo: 'SBS-C01', version: '01', estado: 'oficial',
     archivo: ['Proceso de Contratación', 'SBS- C01 Caracterización Proceso de Contratación.xls'],
-    proceso: 'Proceso de Contratación', lider: 'Director(a) Administrativo(a) y Financiero(a) y Director(a) Jurídico(a)',
+    proceso: 'Proceso de Contratación', lider: 'Director(a) Jurídico(a)',
     objetivo: 'Adquirir los bienes y servicios requeridos para la operación de los procesos de ACTIVA de forma oportuna, eficiente e idónea.',
     alcance: 'Desde la recepción de la necesidad de adquisición de bienes y servicios manifiesta desde los diferentes procesos hasta la verificación de la ejecución del plan anual de adquisiciones, evaluación de proveedores, la medición de indicadores y las actividades de mejoramiento continuo.',
     resultado: 'Bienes y servicios comprados de forma oportuna, eficiente e idónea — Receptores: todos los procesos.',
@@ -785,8 +781,8 @@ const CARACTERIZACIONES = {
       ['V', 'Suministro de Bienes y Servicios', 'Registros del proceso', 'Medir indicadores', 'Hojas de vida de indicadores', 'Orientación Estratégica; Suministro de Bienes y Servicios'],
       ['A', 'Suministro de Bienes y Servicios', 'Informes de gestión; hojas de vida de indicadores', 'Gestionar mejoras al proceso', 'Planes de mejoramiento', 'Suministro de Bienes y Servicios; Evaluación Independiente'],
     ],
-    indicadores: ['Oportunidad en compras', 'Eficiencia en las compras', 'Recibo a satisfacción de bienes y servicios comprados'],
-    riesgos: ['Ver matriz de riesgos del proceso (C04–C09, S01–S03, X05, X06, entre otros)'],
+    indicadores: ['KRI03 — Contratos interadministrativos con alertas de incumplimiento'],
+    riesgos: ['C02 — Interpretación subjetiva o manipulada de normas para favorecer intereses particulares', 'C04 — Direccionamiento de cotizaciones hacia proveedores específicos', 'C05 — Omisión o manipulación de comités de contratación', 'C06 — Conflictos de interés no declarados en procesos de contratación', 'C07 — Manipulación de información presentada a clientes externos en cuadros comparativos', 'C08 — Validación insuficiente o inexistente de proveedores no marco', 'C09 — Favorecimiento indebido mediante omisión de contratos marco', 'S01 — Entrega de carpeta de supervisión incompleta o tardía', 'S02 — Supervisor designado sin perfil técnico adecuado', 'S03 — Incumplimiento de obligaciones contractuales no detectado oportunamente', 'X05 — Estudios previos elaborados después de la decisión de asignación', 'X06 — Falta de re-evaluación anual de proveedores marco'],
     recursos: { humanos: 'Director Administrativo y Financiero; Director Jurídico; Profesional de Suministro de Bienes y Servicios; Gestor de Área Administrativa; Gestor Jurídico; interesado en la compra', fisicos: 'Herramientas ofimáticas; espacios de trabajo y equipos de oficina' },
     documentos: 'Listado maestro de documentos',
     requisitosISO: '6.1 Riesgos · 7.1.6 Conocimiento · 7.5 Información documentada · 8.1 Planificación · 8.4 Control de productos y servicios externos · 8.5.3 Propiedad de proveedores · 9.1.3 Análisis y evaluación · 10 Mejora',
@@ -813,8 +809,8 @@ const CARACTERIZACIONES = {
       ['V', 'Todos los procesos', 'Registros del proceso', 'Medir indicadores', 'Hojas de vida de indicadores', 'Orientación Estratégica; Mejoramiento Activo'],
       ['A', 'Todos los procesos', 'Informes de gestión; hojas de vida de indicadores', 'Gestionar mejoras al proceso', 'Planes de mejoramiento', 'Mejoramiento Activo; Evaluación Independiente'],
     ],
-    indicadores: ['Número de auditorías internas realizadas', '% de acciones de mejora cerradas', 'Evaluación de la satisfacción del cliente'],
-    riesgos: ['Auditorías mal ejecutadas', 'Acciones de mejora no efectivas', 'Clientes insatisfechos', 'Cambios que afecten la misión de la entidad'],
+    indicadores: ['Actualización de manuales y procedimientos de la Entidad (Plan Estratégico)'],
+    riesgos: ['Sin riesgos asignados a este proceso en la matriz vigente (corte 25/02/2026)'],
     recursos: { humanos: 'Jefe de Planeación o quien haga sus veces (Director Administrativo y Financiero); apoyo del SGC', fisicos: 'Herramientas ofimáticas; espacios de trabajo y equipos de oficina' },
     documentos: 'Listado maestro de documentos y registros',
     requisitosISO: '4.1 Conocimiento de la organización y su contexto · 6.1 Acciones para abordar riesgos y oportunidades · 6.3 Planificación de los cambios · 7.1.1 Generalidades · 7.1.2 Personas',
@@ -839,7 +835,7 @@ const CARACTERIZACIONES = {
       ['A', 'Evaluación Independiente', 'Informes de gestión; hojas de vida de indicadores', 'Gestionar mejoras al proceso', 'Planes de mejoramiento', 'Todos los procesos; partes interesadas'],
       ['A', 'Todos los procesos', 'Registros del proceso', 'Medir indicadores', 'Hojas de vida de indicadores; informes de gestión', 'Todos los procesos'],
     ],
-    indicadores: ['Eficacia en acciones de mejoramiento', 'Cumplimiento del Plan Anual de Auditorías, Seguimientos e Informes de Control Interno'],
+    indicadores: ['Ejecución del Plan Anual de Auditoría (Plan Estratégico)', 'KRI10 — Obligaciones de Contraloría cumplidas a tiempo (Gestión Transparente)'],
     riesgos: ['M08 — Insuficiencia de capacidad técnica en Control Interno (perfil financiero requerido por Contraloría)'],
     recursos: { humanos: 'Jefe de Oficina de Control Interno', fisicos: 'Espacios de trabajo y equipos de oficina; herramientas ofimáticas (Microsoft Office)' },
     documentos: 'Procedimiento de control interno',
@@ -863,8 +859,8 @@ const CARACTERIZACIONES = {
       ['V', 'Proceso Control Disciplinario; Atención a la Ciudadanía; Evaluación Independiente; Procuraduría', 'Resultados de gestión; PQRSD; informes de auditoría', 'Gestionar PQRSD; seguimiento a partes interesadas; seguimiento y medición; seguimiento a riesgos; análisis de hallazgos; verificación de eficacia de acciones', 'PQRSD gestionadas; partes interesadas actualizadas; indicadores analizados; riesgos gestionados; hallazgos analizados; eficacia verificada', 'Instrucción de Control Interno Disciplinario; Mejoramiento Continuo; Atención a la Ciudadanía'],
       ['A', 'Mejoramiento Continuo', 'Indicadores y riesgos analizados; PQRSD gestionadas; hallazgos de auditoría; procedimiento de acciones correctivas', 'Tomar acciones para la mejora (con base en indicadores, riesgos y PQRSD)', 'Planes de mejoramiento implementados', 'Instrucción de Control Interno Disciplinario; Evaluación Independiente; Mejoramiento Continuo; Procuraduría'],
     ],
-    indicadores: ['Impulso procesal de expedientes', 'Capacitación de servidores públicos', 'Recepción y radicación de quejas e informes'],
-    riesgos: ['Vencimiento de términos que genere prescripción', 'Pérdida de documentación', 'Hechos de favorecimiento dentro de los procesos'],
+    indicadores: ['Sin indicadores asignados a este proceso en los documentos vigentes'],
+    riesgos: ['Sin riesgos asignados a este proceso en la matriz vigente (corte 25/02/2026)'],
     recursos: { humanos: 'Jefe de Oficina de Control Interno Disciplinario', fisicos: 'Espacios de trabajo y equipos de oficina; instalaciones, hardware, software e internet' },
     documentos: 'Procedimiento de Instrucción de Control Interno Disciplinario y sus formatos; Constitución Política; Código Disciplinario Único; CPACA; códigos Penal, General del Proceso, Sustantivo y Procesal del Trabajo, y de Comercio',
     requisitosISO: '4 Contexto · 5.3 Roles y responsabilidades · 6 Planificación · 7.1.2 Personas · 7.2 Competencias · 7.3 Toma de conciencia · 7.4 Comunicación · 7.5 Información documentada · 9 Evaluación del desempeño · 10 Mejora',
@@ -1184,71 +1180,13 @@ const SeccionesProceso = ({ proceso }) => {
   );
 };
 
-// Exporta la caracterización a Excel (xlsx-js-style por CDN); si la librería
-// no cargó, cae a CSV para no dejar al usuario sin descarga.
-const exportarCaracterizacion = (proceso, c) => {
-  const filas = [
-    ['CARACTERIZACIÓN DE PROCESO — ' + proceso.nombre.toUpperCase()],
-    ['Código', c.codigo, '', 'Versión', c.version],
-    ['Proceso/Subproceso', c.proceso],
-    ['Cargo líder del proceso', c.lider],
-    ['Estado', c.estado === 'oficial' ? 'Oficial (transcrita del repositorio)' : 'PROPUESTA — pendiente de validación'],
-    [],
-    ['OBJETIVO', c.objetivo],
-    ['ALCANCE', c.alcance],
-    ['RESULTADO RELEVANTE', c.resultado],
-    [],
-    ['ACUERDOS DE SERVICIO (Atributo)', 'CRITERIO DE ACEPTABILIDAD'],
-    ...c.acuerdos.map((a) => [a[0], a[1]]),
-    [],
-    ['PHVA', 'Proveedor (¿quién suministra?)', 'Entrada / recurso', 'Actividades', 'Producto / salida', 'Receptor (¿quién recibe?)'],
-    ...c.phva.map((f) => [...f]),
-    [],
-    ['INDICADORES', c.indicadores.join(' · ')],
-    ['RIESGOS', c.riesgos.join(' · ')],
-    ['RECURSOS HUMANOS', c.recursos.humanos],
-    ['RECURSOS FÍSICOS', c.recursos.fisicos],
-    ['DOCUMENTOS ASOCIADOS', c.documentos],
-    ['REQUISITOS ISO 9001:2015', c.requisitosISO],
-  ];
-  const nombre = `${c.codigo} Caracterización ${proceso.nombre}`;
-  if (typeof XLSX !== 'undefined') {
-    const ws = XLSX.utils.aoa_to_sheet(filas);
-    ws['!cols'] = [{ wch: 10 }, { wch: 40 }, { wch: 45 }, { wch: 55 }, { wch: 45 }, { wch: 40 }];
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, c.codigo);
-    XLSX.writeFile(wb, nombre + '.xlsx');
-  } else {
-    const csv = filas.map((f) => f.map((x) => `"${String(x == null ? '' : x).replace(/"/g, '""')}"`).join(';')).join('\n');
-    const enlace = document.createElement('a');
-    enlace.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
-    enlace.download = nombre + '.csv';
-    enlace.click();
-  }
-};
-
-// Primera página de cada proceso: su caracterización (oficial o propuesta).
+// Primera página de cada proceso: su caracterización.
 const VistaCaracterizacion = ({ proceso, c }) => (
   <div>
-    {c.estado === 'propuesta' && (
-      <div className="mb-4 rounded-xl bg-[#F4A93C]/15 border-2 border-[#F4A93C] px-4 py-3">
-        <p className="font-bold text-[#8A5A2C]">⚠️ Propuesta de caracterización</p>
-        <p className="text-sm text-[#8A5A2C]">Este proceso aún no tiene caracterización en el repositorio. Este es un borrador para validación del líder del proceso y la Oficina de Calidad.</p>
-      </div>
-    )}
     <div className="flex flex-wrap items-center gap-2 mb-4">
       <span className="f-mono text-xs font-bold px-2 py-1 rounded bg-[#14231B] text-[#B5E048]">{c.codigo}</span>
       <span className="text-xs font-semibold text-[#5b6b5f]">Versión: {c.version}</span>
-      <span className="text-xs text-[#5b6b5f]">· Líder: {c.lider}</span>
-      <span className="flex-1"></span>
-      <button onClick={() => exportarCaracterizacion(proceso, c)}
-        className="no-print text-sm font-bold bg-[#1E6B47] text-white rounded-xl px-4 py-2 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]">
-        ⬇️ Descargar Excel
-      </button>
-      {c.archivo && (
-        <a href={enlaceCarpeta(c.archivo[0]) + '/' + encodeURIComponent(c.archivo[1])} target="_blank" rel="noopener"
-           className="no-print text-sm font-semibold text-[#1E6B47] hover:underline">Original ↗</a>
-      )}
+      <span className="text-xs text-[#5b6b5f]">· Líder del proceso: {c.lider}</span>
     </div>
     <div className="space-y-3">
       <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4">
