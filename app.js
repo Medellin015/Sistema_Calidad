@@ -1256,7 +1256,11 @@ const VistaRiesgos = ({ irA }) => {
 };
 const VistaDocumentos = ({ irA }) => {
     const [filtro, setFiltro] = useState('todos');
+    const [q, setQ] = useState('');
+    const t = q.trim().toLowerCase();
     const docs = DOCUMENTOS.filter((d) => filtro === 'todos' || tipoDeCodigo(d.codigo) === filtro)
+        .filter((d) => t === '' || (d.codigo || '').toLowerCase().includes(t) || (d.nombre || '').toLowerCase().includes(t)
+        || (d.proceso || '').toLowerCase().includes(t))
         .slice().sort((a, b) => (a.codigo || 'ZZ').localeCompare(b.codigo || 'ZZ'));
     return (React.createElement("div", { className: "max-w-3xl mx-auto" },
         React.createElement("button", { onClick: () => irA(''), className: "text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
@@ -1266,8 +1270,14 @@ const VistaDocumentos = ({ irA }) => {
                 "(",
                 docs.length,
                 ")")),
+        React.createElement("div", { className: "relative mb-4" },
+            React.createElement("input", { value: q, onChange: (e) => setQ(e.target.value), placeholder: "Buscar por c\u00F3digo o nombre\u2026", "aria-label": "Buscar en el listado de documentos", className: "w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-3 text-base shadow-[3px_3px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" }),
+            q && (React.createElement("button", { onClick: () => setQ(''), "aria-label": "Limpiar b\u00FAsqueda", className: "absolute right-3 top-1/2 -translate-y-1/2 text-[#5b6b5f] hover:text-[#14231B] text-lg font-bold" }, "\u00D7"))),
         React.createElement("div", { className: "flex flex-wrap gap-2 mb-4" }, ['todos', ...Object.values(TIPOS)].map((f) => (React.createElement("button", { key: f, onClick: () => setFiltro(f), className: `text-sm font-semibold rounded-full px-4 py-1.5 border-2 ${filtro === f ? 'bg-[#14231B] text-[#B5E048] border-[#14231B]' : 'bg-white border-[#DCE5DC] hover:border-[#1E6B47]'}` }, f === 'todos' ? 'Todos' : f)))),
-        React.createElement("div", { className: "space-y-2" }, docs.map((d) => React.createElement(FilaDocumento, { key: d.codigo + d.nombre, doc: d })))));
+        docs.length > 0 ? (React.createElement("div", { className: "space-y-2" }, docs.map((d) => React.createElement(FilaDocumento, { key: d.codigo + d.nombre, doc: d })))) : (React.createElement("p", { className: "text-sm text-[#5b6b5f] py-8 text-center" },
+            "Sin resultados para \u00AB",
+            q,
+            "\u00BB. Prueba con otro c\u00F3digo, nombre o categor\u00EDa."))));
 };
 const Inicio = ({ irA }) => (React.createElement("div", { className: "max-w-4xl mx-auto" },
     React.createElement("div", { className: "pt-6 pb-4 text-center" },
@@ -1376,9 +1386,9 @@ const App = () => {
     return (React.createElement("div", { className: "min-h-screen flex flex-col" },
         React.createElement("header", { className: "sticky top-0 z-30 bg-[#F7F8F4]/90 backdrop-blur border-b border-[#DCE5DC]" },
             React.createElement("div", { className: "max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1" },
-                React.createElement("button", { onClick: () => irA(''), className: "f-display font-extrabold text-lg tracking-tight flex items-center gap-2 shrink-0" },
-                    React.createElement("span", { className: "w-7 h-7 rounded-lg bg-[#1E6B47] text-[#B5E048] flex items-center justify-center text-sm" }, "A"),
-                    "SGC ACTIVA"),
+                React.createElement("button", { onClick: () => irA(''), className: "f-display font-extrabold tracking-tight flex items-center gap-2 shrink-0 text-left" },
+                    React.createElement("span", { className: "w-7 h-7 rounded-lg bg-[#1E6B47] text-[#B5E048] flex items-center justify-center text-sm shrink-0", "aria-hidden": "true" }, "A"),
+                    React.createElement("span", { className: "text-[12px] sm:text-[13px] leading-tight max-w-[14rem] sm:max-w-[22rem]" }, "Sistema de Gesti\u00F3n de Calidad - Empresa de Parques y Eventos de Antioquia ACTIVA")),
                 React.createElement("nav", { className: "w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-semibold" },
                     React.createElement("button", { onClick: () => irA(''), className: "hover:text-[#1E6B47]" }, "Inicio"),
                     React.createElement("button", { onClick: () => irA('organigrama'), className: "hover:text-[#1E6B47]" }, "Organigrama"),
