@@ -63,6 +63,9 @@ const FRANJAS = [
             { sigla: 'GOP', nombre: 'Gestión de Operaciones',
                 carpeta: 'Gestión de Operaciones',
                 secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
+            // Proceso nuevo: aún no tiene carpeta en SharePoint ni documentos.
+            { sigla: 'GP', nombre: 'Gestión de Parques', enConstruccion: true,
+                carpeta: '', secciones: [] },
         ] },
     { nombre: 'De apoyo', desc: 'Hacen posible la operación', procesos: [
             { sigla: 'GF', nombre: 'Gestión Financiera',
@@ -683,6 +686,17 @@ const VistaProceso = ({ sigla, irA }) => {
         return React.createElement("p", { className: "text-center py-10" },
             "Proceso no encontrado. ",
             React.createElement("button", { className: "text-[#1E6B47] font-semibold", onClick: () => irA('') }, "Volver"));
+    if (proceso.enConstruccion)
+        return (React.createElement("div", { className: "max-w-3xl mx-auto text-center py-10" },
+            React.createElement("button", { onClick: () => irA(''), className: "block text-left text-sm font-semibold text-[#1E6B47] mb-8" }, "\u2190 Volver al inicio"),
+            React.createElement("p", { className: "text-6xl mb-4", "aria-hidden": "true" }, "\uD83D\uDEA7"),
+            React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1" },
+                proceso.franja,
+                " \u00B7 ",
+                proceso.sigla),
+            React.createElement("h2", { className: "f-display text-3xl font-extrabold leading-tight mb-3" }, proceso.nombre),
+            React.createElement("p", { className: "text-xl font-semibold text-[#8A5A2C]" }, "En construcci\u00F3n"),
+            React.createElement("p", { className: "text-sm text-[#5b6b5f] mt-2 max-w-md mx-auto" }, "Este proceso est\u00E1 en estructuraci\u00F3n: pronto tendr\u00E1 su carpeta en el repositorio y sus documentos oficiales.")));
     return (React.createElement("div", { className: "max-w-3xl mx-auto" },
         React.createElement("button", { onClick: () => irA(''), className: "text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
         React.createElement("div", { className: "mb-1" },
