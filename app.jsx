@@ -1501,6 +1501,24 @@ const Inicio = ({ irA }) => (
   </div>
 );
 
+// Organigrama oficial de ACTIVA: se muestra la imagen institucional tal cual.
+const VistaOrganigrama = ({ irA }) => (
+  <div className="max-w-4xl mx-auto">
+    <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
+    <div className="mb-4">
+      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest">Estructura organizacional</p>
+      <h2 className="f-display text-3xl font-extrabold leading-tight">Organigrama</h2>
+    </div>
+    <div className="bg-white rounded-2xl border border-[#DCE5DC] p-3 sm:p-5">
+      <a href="organigrama.png" target="_blank" rel="noopener" title="Abrir el organigrama en tamaño completo">
+        <img src="organigrama.png" alt="Organigrama de ACTIVA: Junta Directiva, Gerente General y sus equipos (Subgerencia Comercial, Dirección Jurídica, Dirección Administrativa y Financiera, Oficina de Control Interno e Instrucción CID)"
+          className="w-full h-auto rounded-xl" />
+      </a>
+      <p className="text-xs text-[#5b6b5f] mt-2 text-right">Haz clic en la imagen para verla en tamaño completo.</p>
+    </div>
+  </div>
+);
+
 /* ===== 4. Aplicación y enrutado por hash ===== */
 const rutaActual = () => decodeURIComponent((window.location.hash || '#/').replace(/^#\/?/, ''));
 
@@ -1526,6 +1544,8 @@ const App = () => {
     contenido = <VistaDocumentos irA={irA} />;
   } else if (seccion === 'riesgos') {
     contenido = <VistaRiesgos irA={irA} />;
+  } else if (seccion === 'organigrama') {
+    contenido = <VistaOrganigrama irA={irA} />;
   } else {
     contenido = <Inicio irA={irA} />;
   }
@@ -1540,6 +1560,7 @@ const App = () => {
           </button>
           <nav className="ml-auto flex gap-4 text-sm font-semibold">
             <button onClick={() => irA('')} className="hover:text-[#1E6B47]">Inicio</button>
+            <button onClick={() => irA('organigrama')} className="hover:text-[#1E6B47]">Organigrama</button>
             <button onClick={() => irA('riesgos')} className="hover:text-[#1E6B47]">Riesgos</button>
             <button onClick={() => irA('documentos')} className="hover:text-[#1E6B47]">Documentos</button>
           </nav>
