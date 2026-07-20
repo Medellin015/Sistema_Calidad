@@ -1924,6 +1924,63 @@ const TablaKris = () => (React.createElement(TablaScroll, { className: "rounded-
             React.createElement("td", { className: "px-3 py-2 whitespace-nowrap text-[#8A5A2C]" }, k[3]),
             React.createElement("td", { className: "px-3 py-2 whitespace-nowrap font-semibold text-[#B5432E]" }, k[4]),
             React.createElement("td", { className: "px-3 py-2 text-xs text-[#5b6b5f]" }, k[5]))))))));
+// Mapa de calor de migración: cuántos riesgos pasaron de cada zona inherente
+// (fila) a cada zona residual (columna) tras los controles. El color de la
+// celda es una escala secuencial de un solo tono (claro → oscuro = más
+// riesgos); el número es la etiqueta directa y el tooltip lista los códigos.
+const CALOR_ZONAS = ['BAJO', 'MEDIO', 'SIGNIFICATIVO', 'ALTO', 'CRÍTICO'];
+const pasoCalor = (n) => n >= 7 ? { fondo: '#1E6B47', texto: '#FFFFFF' }
+    : n >= 5 ? { fondo: '#4E9770', texto: '#FFFFFF' }
+        : n >= 3 ? { fondo: '#C2DEC9', texto: '#14231B' }
+            : { fondo: '#EAF3EC', texto: '#14231B' };
+const MapaCalorRiesgos = () => {
+    const columnas = [...CALOR_ZONAS, 'N/D'];
+    const celda = {};
+    TODOS_RIESGOS.forEach((r) => { (celda[r.zi + '|' + r.zr] = celda[r.zi + '|' + r.zr] || []).push(r.id); });
+    // Lectura clave, derivada de la matriz (no del resumen del informe)
+    const idx = (z) => CALOR_ZONAS.indexOf(z);
+    const bajaron = TODOS_RIESGOS.filter((r) => r.zr !== 'N/D' && idx(r.zr) < idx(r.zi)).length;
+    const iguales = TODOS_RIESGOS.filter((r) => r.zr === r.zi).length;
+    const subieron = TODOS_RIESGOS.filter((r) => r.zr !== 'N/D' && idx(r.zr) > idx(r.zi)).length;
+    const sinDato = TODOS_RIESGOS.filter((r) => r.zr === 'N/D').length;
+    return (React.createElement("section", { className: "mt-8" },
+        React.createElement("h3", { className: "f-display text-xl font-bold mb-1" }, "Mapa de calor: de la zona inherente a la residual"),
+        React.createElement("p", { className: "text-sm text-[#3c4a40] mb-3 max-w-2xl" },
+            "Cada celda cuenta los riesgos que estaban en la zona de la fila (antes de controles) y quedaron en la de la columna (despu\u00E9s). ",
+            bajaron,
+            " de ",
+            TODOS_RIESGOS.length,
+            " riesgos bajaron de zona, ",
+            iguales,
+            " permanecieron",
+            subieron > 0 ? `, ${subieron} subieron` : ' y ninguno subió',
+            sinDato > 0 ? `; ${sinDato} sin calificación residual` : '',
+            "."),
+        React.createElement(TablaScroll, { className: "rounded-2xl border border-[#DCE5DC] bg-white" },
+            React.createElement("table", { className: "w-full text-xs border-collapse min-w-[36rem]" },
+                React.createElement("thead", null,
+                    React.createElement("tr", { className: "bg-[#DCE5DC]/50" },
+                        React.createElement("th", { className: "px-2 py-2 text-left font-semibold align-bottom" },
+                            "Inherente \u2193",
+                            React.createElement("span", { className: "block font-normal text-[10px] text-[#5b6b5f]" }, "Residual \u2192")),
+                        columnas.map((z) => (React.createElement("th", { key: z, className: "px-1.5 py-2 text-center" },
+                            React.createElement(ZonaBadge, { zona: z })))))),
+                React.createElement("tbody", null, CALOR_ZONAS.map((zi) => (React.createElement("tr", { key: zi, className: "border-t border-[#F0F3EE]" },
+                    React.createElement("th", { className: "px-2 py-1.5 text-left" },
+                        React.createElement(ZonaBadge, { zona: zi })),
+                    columnas.map((zr) => {
+                        const ids = celda[zi + '|' + zr] || [];
+                        const n = ids.length;
+                        const diagonal = zi === zr;
+                        if (n === 0) {
+                            return React.createElement("td", { key: zr, className: `px-1.5 py-1.5 text-center text-[#b9c4bb] ${diagonal ? 'border-2 border-dashed border-[#9db3a2]' : ''}` }, "\u00B7");
+                        }
+                        const paso = pasoCalor(n);
+                        return (React.createElement("td", { key: zr, title: `${zi} → ${zr}: ${ids.join(', ')}`, className: `px-1.5 py-1.5 text-center ${diagonal ? 'border-2 border-dashed border-[#14231B]/60' : ''}`, style: { background: paso.fondo } },
+                            React.createElement("span", { className: "font-bold", style: { color: paso.texto } }, n)));
+                    }))))))),
+        React.createElement("p", { className: "text-xs text-[#5b6b5f] mt-2 max-w-2xl" }, "A la izquierda de la diagonal punteada, el riesgo baj\u00F3 de zona gracias a los controles; sobre la diagonal, permaneci\u00F3 igual. Color m\u00E1s oscuro = m\u00E1s riesgos en la celda; pasa el cursor (o mant\u00E9n pulsado) para ver los c\u00F3digos.")));
+};
 const VistaRiesgos = ({ irA }) => {
     // Conteo por zona inherente para las fichas del resumen
     const porZona = Object.keys(ZONAS_RIESGO).filter((z) => z !== 'N/D')
@@ -1948,6 +2005,7 @@ const VistaRiesgos = ({ irA }) => {
                     z.rango)));
         })),
         React.createElement("p", { className: "text-xs text-[#5b6b5f] mt-2" }, "Zona inherente (antes de controles). La escala P\u00D7I es la de la pol\u00EDtica OE-M02: probabilidad 1\u20135 e impacto 1\u201325. Los riesgos en zona Significativo, Alto o Cr\u00EDtico exigen plan de acci\u00F3n en el formato MA-F01."),
+        React.createElement(MapaCalorRiesgos, null),
         COMPONENTES_RIESGO.map((c) => (React.createElement("section", { key: c.clave, className: "mt-8" },
             React.createElement("div", { className: "flex items-baseline gap-3 mb-2" },
                 React.createElement("span", { className: "f-mono text-xs font-bold bg-[#14231B] text-[#B5E048] rounded px-1.5 py-0.5" }, c.clave),

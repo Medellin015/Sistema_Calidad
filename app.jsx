@@ -2145,6 +2145,81 @@ const TablaKris = () => (
   </TablaScroll>
 );
 
+// Mapa de calor de migración: cuántos riesgos pasaron de cada zona inherente
+// (fila) a cada zona residual (columna) tras los controles. El color de la
+// celda es una escala secuencial de un solo tono (claro → oscuro = más
+// riesgos); el número es la etiqueta directa y el tooltip lista los códigos.
+const CALOR_ZONAS = ['BAJO', 'MEDIO', 'SIGNIFICATIVO', 'ALTO', 'CRÍTICO'];
+const pasoCalor = (n) => n >= 7 ? { fondo: '#1E6B47', texto: '#FFFFFF' }
+  : n >= 5 ? { fondo: '#4E9770', texto: '#FFFFFF' }
+  : n >= 3 ? { fondo: '#C2DEC9', texto: '#14231B' }
+  : { fondo: '#EAF3EC', texto: '#14231B' };
+
+const MapaCalorRiesgos = () => {
+  const columnas = [...CALOR_ZONAS, 'N/D'];
+  const celda = {};
+  TODOS_RIESGOS.forEach((r) => { (celda[r.zi + '|' + r.zr] = celda[r.zi + '|' + r.zr] || []).push(r.id); });
+  // Lectura clave, derivada de la matriz (no del resumen del informe)
+  const idx = (z) => CALOR_ZONAS.indexOf(z);
+  const bajaron = TODOS_RIESGOS.filter((r) => r.zr !== 'N/D' && idx(r.zr) < idx(r.zi)).length;
+  const iguales = TODOS_RIESGOS.filter((r) => r.zr === r.zi).length;
+  const subieron = TODOS_RIESGOS.filter((r) => r.zr !== 'N/D' && idx(r.zr) > idx(r.zi)).length;
+  const sinDato = TODOS_RIESGOS.filter((r) => r.zr === 'N/D').length;
+  return (
+    <section className="mt-8">
+      <h3 className="f-display text-xl font-bold mb-1">Mapa de calor: de la zona inherente a la residual</h3>
+      <p className="text-sm text-[#3c4a40] mb-3 max-w-2xl">
+        Cada celda cuenta los riesgos que estaban en la zona de la fila (antes de
+        controles) y quedaron en la de la columna (después). {bajaron} de {TODOS_RIESGOS.length} riesgos
+        bajaron de zona, {iguales} permanecieron{subieron > 0 ? `, ${subieron} subieron` : ' y ninguno subió'}
+        {sinDato > 0 ? `; ${sinDato} sin calificación residual` : ''}.
+      </p>
+      <TablaScroll className="rounded-2xl border border-[#DCE5DC] bg-white">
+        <table className="w-full text-xs border-collapse min-w-[36rem]">
+          <thead>
+            <tr className="bg-[#DCE5DC]/50">
+              <th className="px-2 py-2 text-left font-semibold align-bottom">
+                Inherente ↓<span className="block font-normal text-[10px] text-[#5b6b5f]">Residual →</span>
+              </th>
+              {columnas.map((z) => (
+                <th key={z} className="px-1.5 py-2 text-center"><ZonaBadge zona={z} /></th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {CALOR_ZONAS.map((zi) => (
+              <tr key={zi} className="border-t border-[#F0F3EE]">
+                <th className="px-2 py-1.5 text-left"><ZonaBadge zona={zi} /></th>
+                {columnas.map((zr) => {
+                  const ids = celda[zi + '|' + zr] || [];
+                  const n = ids.length;
+                  const diagonal = zi === zr;
+                  if (n === 0) {
+                    return <td key={zr} className={`px-1.5 py-1.5 text-center text-[#b9c4bb] ${diagonal ? 'border-2 border-dashed border-[#9db3a2]' : ''}`}>·</td>;
+                  }
+                  const paso = pasoCalor(n);
+                  return (
+                    <td key={zr} title={`${zi} → ${zr}: ${ids.join(', ')}`}
+                      className={`px-1.5 py-1.5 text-center ${diagonal ? 'border-2 border-dashed border-[#14231B]/60' : ''}`}
+                      style={{ background: paso.fondo }}>
+                      <span className="font-bold" style={{ color: paso.texto }}>{n}</span>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </TablaScroll>
+      <p className="text-xs text-[#5b6b5f] mt-2 max-w-2xl">
+        A la izquierda de la diagonal punteada, el riesgo bajó de zona gracias a los
+        controles; sobre la diagonal, permaneció igual. Color más oscuro = más riesgos
+        en la celda; pasa el cursor (o mantén pulsado) para ver los códigos.
+      </p>
+    </section>
+  );
+};
+
 const VistaRiesgos = ({ irA }) => {
   // Conteo por zona inherente para las fichas del resumen
   const porZona = Object.keys(ZONAS_RIESGO).filter((z) => z !== 'N/D')
@@ -2182,6 +2257,8 @@ const VistaRiesgos = ({ irA }) => {
         probabilidad 1–5 e impacto 1–25. Los riesgos en zona Significativo, Alto o Crítico
         exigen plan de acción en el formato MA-F01.
       </p>
+
+      <MapaCalorRiesgos />
 
       {/* Componentes A–E */}
       {COMPONENTES_RIESGO.map((c) => (
