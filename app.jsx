@@ -145,7 +145,7 @@ const DOCUMENTOS = [
   { codigo: 'POL-P01', nombre: 'Procedimiento de ejecución de contratos de clientes', archivo: 'POL-P01 Procedimiento ejecucion de contratos clientes.docx', proceso: 'POL', destacado: true },
   // — Eventos propios: operación misional. Auditorías: evaluación (EV = Evaluación
   //   independiente en la caracterización EV-C01 de Control Interno).
-  { codigo: 'EV-P01', nombre: 'Procedimiento de eventos propios', archivo: 'EV-P01 Procedimiento Eventos Propios.docx', proceso: 'GOP', destacado: true },
+  { codigo: 'EVEN-P01', nombre: 'Procedimiento de eventos propios', archivo: 'EVEN-P01 Procedimiento Eventos Propios.docx', proceso: 'GOP', destacado: true },
   { codigo: 'EV-P02', nombre: 'Procedimiento de auditorías internas', archivo: 'EV-P02 Procedimiento Auditorías Internas.docx', proceso: 'CI' },
   // — Operaciones
   { codigo: 'GOP-I05', nombre: 'Instructivo Comité de Asignación', archivo: 'GOP-I05 Instructivo Comité de Asignación.docx', proceso: 'GOP' },
@@ -190,11 +190,11 @@ const DOCUMENTOS = [
   { codigo: 'GTI-I8', nombre: 'Reserva de sala de reuniones', archivo: 'GTI-I8 INSTRUCTIVO RESERVA SALA DE REUNIONES.docx', proceso: 'GTI' },
   { codigo: 'GTI-I9', nombre: 'Ingreso a Microsoft 365', archivo: 'GTI-I9 INGRESO AL MICROSOFT 365.docx', proceso: 'GTI' },
   // — Bienes y Servicios
-  { codigo: 'BS-P05', nombre: 'Procedimiento de contratación', archivo: 'BS-P05 Procedimiento de contratación.docx', proceso: 'BS', destacado: true },
-  { codigo: 'BS-P06', nombre: 'Pólizas de clientes', archivo: 'BS-P06 Procedimiento pólizas clientes.docx', proceso: 'BS' },
-  { codigo: 'BS-P07', nombre: 'Liquidaciones de contratos', archivo: 'BS-P07 Procedimiento liquidaciones de contratos.docx', proceso: 'BS' },
-  { codigo: 'BS-P08', nombre: 'Registro de proveedores', archivo: 'BS-P08 Procedimiento Registro de Proveedores.docx', proceso: 'BS' },
-  { codigo: 'BS-P09', nombre: 'Publicación en SECOP', archivo: 'BS-P09 Procedimiento Publicación SECOP.docx', proceso: 'BS' },
+  { codigo: 'SBS-P05', nombre: 'Procedimiento de contratación', archivo: 'SBS-P05 Procedimiento de contratación.docx', proceso: 'BS', destacado: true },
+  { codigo: 'SBS-P06', nombre: 'Pólizas de clientes', archivo: 'SBS-P06 Procedimiento pólizas clientes.docx', proceso: 'BS' },
+  { codigo: 'SBS-P07', nombre: 'Liquidaciones de contratos', archivo: 'SBS-P07 Procedimiento liquidaciones de contratos.docx', proceso: 'BS' },
+  { codigo: 'SBS-P08', nombre: 'Registro de proveedores', archivo: 'SBS-P08 Procedimiento Registro de Proveedores.docx', proceso: 'BS' },
+  { codigo: 'SBS-P09', nombre: 'Publicación en SECOP', archivo: 'SBS-P09 Procedimiento Publicación SECOP.docx', proceso: 'BS' },
   // — Mejora Continua
   { codigo: 'MA-P01', nombre: 'Gestión de mejoras', archivo: 'MA-P01 procedimiento de Gestión de mejoras.doc', proceso: 'MA' },
   // — Disciplinarios
@@ -852,26 +852,759 @@ const CARACTERIZACIONES = {
   },
 };
 
+// Inventario COMPLETO del repositorio SharePoint (rastreo del 20/07/2026):
+// todas las carpetas de proceso con sus subcarpetas, Documentos del SGC,
+// Diagramas y Documentos Word. {carpeta: {subruta: [archivos...]}}.
+const REPO_ARCHIVOS = {
+  "Diagramas": {
+    "": [
+      "EV-P01 Procedimiento Auditorías Internas.vsdx",
+      "GD-P03 Procedimiento Préstamo de expedientes.vsdx",
+      "GD-P04 Procedimiento Almacenamiento de documentos.vsdx",
+      "GD-P05 Procedimiento_Transferencias documental.vsdx",
+      "GD-P06 Procedimiento Custodia documental.vsdx",
+      "GF-P01 Procedimiento de pagos.vsdx",
+      "GF-P02 Procedimiento para la elaboración del certificado de disponibilidad presupuestal.vsdx",
+      "GF-P03 Procedimiento para la elaboración del registro presupuestal (RP).vsdx",
+      "GF-P05 Procedimiento para liquidación y pago de impuestos, tasas y estampillas.vsdx",
+      "GF-P05 Procedimiento para liquidación y pago de impuestos, tasas y estampillas2.vsdx",
+      "GF-P05 Procedimiento para liquidación y pago de impuestos, tasas y estampillas3.vsdx",
+      "GF-P06 Procedimiento de facturacion y cobro de cartera.vsdx",
+      "GF-P07 Procedimiento de autorización pagos desde cuenta supervisada.vsdx",
+      "Gestión de Inventarios - copia.vsdx",
+      "Gestión de Inventarios_.vsdx",
+      "RC-P01 Procedimiento comunicaciones.vsdx",
+      "Registro de proveedores.vsdx",
+      "SBS-P06 Procedimiento polizas clientes1.vsdx",
+      "SBS-P07 Procedimiento liquidaciones de contratos 2.vsdx",
+      "SBS-P07 Procedimiento liquidaciones de contratos 3.vsdx",
+      "SBS-P07 Procedimiento liquidaciones de contratos.vsdx",
+      "SBS-P09 Procedimiento Publicación SECOP.vsdx",
+    ],
+  },
+  "Documentos Word": {
+    "": [
+      "CARACTERIZACIÓN GRUPOS DE VALOR.docx",
+      "EV-P02 Procedimiento Auditorías Internas.docx",
+      "EVEN-P01 Procedimiento Eventos Propios.docx",
+      "GA-F019 Política tramite de datos personales.docx",
+      "GA-I01 Instructivo Gestion Transparente Contratos.docx",
+      "GA-I02 Instructivo para realización de reserva de vehículo activa.docx",
+      "GA-P02 Procedimiento de Viáticos y Gastos de Viaje.docx",
+      "GA-P03 Procedimiento gestión de inventarios.docx",
+      "GD-P01 Procedimientos para la gestión de correspondencia recibida y enviada.docx",
+      "GD-P02 Procedimiento para la gestión de PQRS.docx",
+      "GD-P03 Procedimiento Préstamo de expedientes.docx",
+      "GD-P04 Procedimiento Almacenamiento de expedientes.docx",
+      "GD-P05 Procedimiento Transferencias documental.docx",
+      "GD-P06 Procedimiento Custodia documental.docx",
+      "GD-P07 Procedimiento Buzón de Sugerencias.docx",
+      "GF-P01 Procedimiento de pagos.doc",
+      "GF-P02 Procedimiento para la elaboración del certificado de disponibilidad presupuestal.docx",
+      "GF-P03 Procedimiento para la elaboración del registro presupuestal (RP).docx",
+      "GF-P04 Procedimiento conciliaciones bancarias.docx",
+      "GF-P05 Procedimiento para liquidación y pago de impuestos, tasas y estampillas.docx",
+      "GF-P06 Procedimiento de facturacion y cobro de cartera.docx",
+      "GF-P07 Procedimiento de autorización pagos desde cuenta supervisada.docx",
+      "GOP-I05 Instructivo Comité de Asignación.docx",
+      "GOP-P10 Soluciones para el suministro de bienes y servicios.docx",
+      "GT-I01 Instructivo para la concertación de acuerdos de gestión.docx",
+      "GT-P01 Procedimiento de reclutamiento, selección y vinculación de personal.docx",
+      "GT-P02 Procedimiento de inducción, entrenamiento y reinducción.docx",
+      "GT-P03 Procedimiento de desvinculación de personal.docx",
+      "GT-P04 Procedimiento de liquidación y pago de nomina.docx",
+      "GTI-I02 Instructivo Mesa de Ayuda.docx",
+      "GTI-I3 Instructivo creación de contratos en SAFIX.docx",
+      "GTI-I4 Aprobación informe de Evidencias CLIENTES.docx",
+      "GTI-I5 TUTORIAL INSTALACIÓN APLICATIVO CHIP LOCAL.docx",
+      "GTI-I6 INSTRUCTIVO PARA AGREGAR UN CALENDARIO DESDE EL DIRECTORIO.docx",
+      "GTI-I7 INSTRUCTIVO RESERVA DE CARRO.docx",
+      "GTI-I8 INSTRUCTIVO RESERVA SALA DE REUNIONES.docx",
+      "GTI-I9 INGRESO AL MICROSOFT 365.docx",
+      "GTI-P01 Proceso de Gestión Tecnológica.docx",
+      "Informe sobre el estado de formulación, validación y supervisión del PTEP.docx",
+      "MA-P01 procedimiento de Gestión de mejoras.doc",
+      "Manual versión Gerente 12072023.docx",
+      "OE-F08 Manual de calidad.docx",
+      "OE-M02 Politica de administracion gestión del riesgo.docx",
+      "OE-M03 Manual de Uso Vehicular Activa.docx",
+      "OE-M04 Plan de Manejo Integral de Residuos Sólidos (PMIRS).docx",
+      "OE-M05 Manual Manejo de la Crisis.docx",
+      "OE-M06 Protocolo vocería institucional.docx",
+      "OE-M08 Procedimiento para publicacón en página web.docx",
+      "OE-M09 Política de Comunicaciones.docx",
+      "OE-P01 Procedimiento atención  vía telefónica.docx",
+      "OE-P02 Procedimiento atención  personas con discapacidad.docx",
+      "PD-P01 Procedimiento Instrucción Control Interno Disciplinario.docx",
+      "POL-I01 Comité de Asignaciones.docx",
+      "POL-I02 Políticas comerciales.docx",
+      "POL-P01 Procedimiento ejecucion de contratos clientes.docx",
+      "Plan Institucional de Archivos.docx",
+      "Plan Institucional de Archivos.pdf",
+      "Procedimiento para gestión comercial.docx",
+      "RC-P01 Procedimiento comunicaciones.docx",
+      "SBS-P05 Procedimiento de contratación.docx",
+      "SBS-P06 Procedimiento pólizas clientes.docx",
+      "SBS-P07 Procedimiento liquidaciones de contratos.docx",
+      "SBS-P08 Procedimiento Registro de Proveedores.docx",
+      "SBS-P09 Procedimiento Publicación SECOP.docx",
+      "Términos y condiciones página web ACTIVA.docx",
+    ],
+  },
+  "Documentos del SGC": {
+    "": [
+      "ACUERDO Nro. 002 - POR EL CUAL SE ADOPTAN LOS ESTATUTOS DE LA EMPRESA DE PARQUES Y EVENTOS DE ANTIOQUIA – ACTIVA-F.pdf",
+      "CARACTERIZACIÓN GRUPOS DE VALOR.pdf",
+      "Circular 014 de 2023. Rendición Secop.pdf",
+      "Decreto Ordenanzal Activa.pdf",
+      "Formato Políticas.docx",
+      "Informe sobre el estado de formulación, validación y supervisión del PTEP.pdf",
+      "MAPA DE SITIO WEB ACTIVA.pdf",
+      "Matriz de Riesgos Activa.xlsx",
+      "Normograma.xlsx",
+      "OE-F08 Manual de calidad.pdf",
+      "OE-F09 Objetivos_de_Calidad.xlsx",
+      "OE-M02 Politica de administracion gestión del riesgo.pdf",
+      "Objetivos de los Procesos.xlsx",
+      "Organigrama Interactivo - ACTIVA.pdf",
+      "Organigrama.png",
+      "Plantilla Presentación ACTIVA.pptx",
+      "Plantilla Procedimiento.doc",
+      "RESOLUCION-032-DE-2024.pdf",
+      "RESOLUCIÓN 006 DE 2025 - 202503000011 MANUAL DE FUNCIONES.pdf",
+      "RESOLUCIÓN 012 DE 2023.pdf",
+      "Reglamentos, manuales y Políticas.docx",
+      "Seguimiento a Mapa de Riesgos.pdf",
+      "Términos y condiciones página web ACTIVA.pdf",
+    ],
+  },
+  "Gestión Administrativa": {
+    "": [
+      "GA-C01 Caracterización Gestión Administrativa.xls",
+      "GA-F019 Política tramite de datos personales.pdf",
+      "Plan de Mantenimiento 2022.xlsx",
+    ],
+    "Formatos": [
+      "GA-F01 Acta de entrega muebles y equipos Funcionarios.docx",
+      "GA-F012 Formato Registro de Inventario Activa.xlsx",
+      "GA-F013 Formato Bienes de Consumo Activa.xlsx",
+      "GA-F014 Aval de pago.docx",
+      "GA-F015 Certificado de Cumplimiento.docx",
+      "GA-F026 Formato Solicitud Baja de Bienes.xlsx",
+      "GA-F08 Autorización comisión de servicios, otorgamiento de viáticos, gastos de transporte y desplazamiento.xlsx",
+      "GA-F09 Liquidación del reconociendo de viáticos.xlsx",
+      "GA-F16 Liquidación del reconociendo de gastos de viaje.xlsx",
+      "GA-F17 Solicitud comisión de servicios.xlsx",
+      "GA-F20 Aviso de Pricacidad.docx",
+      "GA-F21 Tratamiento de datos en el proceso de selección.docx",
+      "GA-F22 Registro de incidentes.docx",
+      "GA-F23 Formato Hoja de Control.xlsx",
+      "GA-F24 Acta de entrega muebles y equipos Contratistas.docx",
+      "GA-F25 Formato Plan de Acción.xlsx",
+      "GA-F27 Lista de chequeo Viaticos.xlsx",
+    ],
+    "Instructivos": [
+      "GA-I01 Instructivo Gestion Transparente Contratos.pdf",
+      "GA-I02 Instructivo para realización de reserva de vehículo activa.pdf",
+    ],
+    "Procedimientos": [
+      "GA-P02 Procedimiento de viáticos y gastos de viaje.pdf",
+      "GA-P03 Procedimiento gestión de inventarios.pdf",
+    ],
+  },
+  "Gestión Comercial": {
+    "": [
+      "POL-C01 Caracterización Gestión Comercial.xls",
+    ],
+    "Formatos": [
+      "DEC-F01 Formato cotización OP operador.xlsx",
+      "DEC-F02 Formato cotización OP a cliente.xlsx",
+      "DEC-F03 Modelo propuesta.docx",
+      "DEC-F04 Lista de chequeo Clientes.xlsx",
+      "POL-F01 Acta comité asignación.docx",
+      "POL-F03 Formato seguimiento a requerimientos.xlsx",
+      "POL-F04 Seguimiento a contratos marco.xlsx",
+      "POL-F05 Informe de evidencias.pptx",
+      "POL-F06 Informe técnico.docx",
+      "POL-F08 Formato remision.xlsx",
+      "POL-F09 Solicitud de pedido.docx",
+      "POL-F11 Acta de Entrega Servicio de Alimentación.docx",
+      "POL-F12 Planilla Paz y Salvo Transporte Implementación Deportiva.docx",
+      "POL-F13 Formato Liquidación de Eventos ACTIVA.xlsx",
+      "POL-F14 Planilla Paz y Salvo Transporte Personal .docx",
+      "POL-F15 Remisión Servicios Adicionales.xlsx",
+      "POL-F16 Formato seguimiento a requerimientos comunicaciones.xlsx",
+      "POL-F17 FORMATO PRODUCTO, DESCRIPCIÓN, CANTIDAD PARA OP.xlsx",
+      "POL-F18 FORMATO REMISIÓN IMPREVISTOS.xlsx",
+      "POL-F19 Planilla de Alojamiento.xlsx",
+      "POL-F20 Formato Registro Hotelero.docx",
+      "POL-F21 Planilla de Auxilio Económico.xlsx",
+      "POL-F22 Planilla Paz y Salvo Transporte.docx",
+      "POL-F23 Acta de entrega material educativo.docx",
+    ],
+    "Instructivos": [
+      "POL-I01 Comité de Asignaciones.pdf",
+      "POL-I02 Políticas comerciales.pdf",
+    ],
+    "Procedimientos": [
+      "DEC-P01 procedimiento Gestión comercial.pdf",
+      "POL-P01 Procedimiento ejecucion de contratos clientes.pdf",
+    ],
+  },
+  "Gestión Documental": {
+    "": [
+      "GD-C01 Caracterización Programa de Gestión Documental.xlsx",
+      "PROGRAMA DE GESTIÓN DOCUMENTAL 2022-2024.docx",
+      "Plan Institucional de Archivos 2022-2024.docx",
+    ],
+    "Formatos": [
+      "GD-F04 Formato Planilla de correspondencia para mensajería.xlsx",
+      "GD-F06 Formato informe mensual PQRSFD.docx",
+      "GD-F07 Formato único inventario documental.xlsx",
+      "GD-F08 Formato inventario de existencia expedientes contractuales.xlsx",
+      "GD-F09 Formato control préstamo documental.xlsx",
+      "GD-F10 Formato rotúlo carpetas de archivo.xlsx",
+      "GD-F11 Formato rótulo identificación cajas de archivo.xlsx",
+      "GD-F12 Formato inventario topográfico documental.xlsx",
+      "GD-F13 Formato hoja de control.xlsx",
+      "GD-F14 Formato tablas de retención documental.xlsx",
+      "GD-F15 Formato cuadros de clasificación documental.xlsx",
+      "GD-F16 Formato inventario de eliminación documental.xlsx",
+      "GD-F17 Formato inventario general de liquidación anual.xlsx",
+      "GD-F18 Formato cronograma transferencias documentales.xlsx",
+      "GD-F19 Formato acta autorización salida de expedientes.docx",
+      "GD-F20 Formato acta ingreso de expedientes.docx",
+      "GD-F21 Planilla transferencias documentales.xlsx",
+      "GD-F22 Comunicación Interna Activa.docx",
+      "GD-F23 Comunicación Externa Activa.docx",
+      "GD-F24 Acta de instalación y formalización.docx",
+      "GD-F25 Acta Parcial Sesiones de Empalme.docx",
+      "GD-F26 Registro de Entrega de Insumos de Papelería.xlsx",
+      "GD-F27 Acta de Apertura.docx",
+      "GD-F29 Formato Registro de PQRSFD.xlsx",
+      "GD-F30 Formato Referencia Cruzada.xlsx",
+      "GD-F31 Formato Rótulo de Identificación de Estantería de Archivos.xlsx",
+    ],
+    "Formatos/Obsoletos": [
+      "GD-F01 Formato Registro de correspondencia recibida.xlsx",
+      "GD-F02  Formato Registro de correspondencia enviada.xlsx",
+      "GD-F03 Formato Planilla de registro de facturas.xlsx",
+      "GD-F05 Formato Distribución de correspondencia recibida.xlsx",
+    ],
+    "Procedimientos": [
+      "GD-P01 Procedimiento para la gestión de correspondencia recibida y enviada.pdf",
+      "GD-P02 Procedimiento para la gestión de PQRS.pdf",
+      "GD-P03 Procedimiento Préstamo de expedientes.pdf",
+      "GD-P04 Procedimiento Almacenamiento de documentos.pdf",
+      "GD-P05 Procedimiento_Transferencias documental.pdf",
+      "GD-P06 Procedimiento Custodia documental.pdf",
+      "GD-P07 Procedimiento Buzón de Sugerencias.pdf",
+    ],
+  },
+  "Gestión Financiera": {
+    "": [
+      "GF-C01 Caracterización Gestión Financiera.xls",
+    ],
+    "Formatos": [
+      "GF-F01 Certificado de disponibilidad presupuestal.xlsx",
+      "GF-F02 Certificado de registro presupuestal.xlsx",
+      "GF-F04 Solicitud de CDP.docx",
+      "GF-F05 Solicitud de RP.docx",
+      "GF-F06 Reintegro de recursos contrato marco.docx",
+      "GF-F07 Solicitud de liberación de CDP y RP.docx",
+      "GF-F08 Boletín diario de bancos.xlsx",
+      "GF-F09 Recibo pago anticipado.docx",
+      "GF-F10 Viabilidad presupuestal.docx",
+      "GF-F11 Planilla de pago contratistas.xlsx",
+      "GF-F12 Formato solicitud caja menor.xlsx",
+      "GF-F13 Formato Reembolso de caja menor.xlsx",
+      "GF-F14 Arqueo de caja menor.xlsx",
+      "GF-F15 Documento equivalente no responsables de IVA.xlsx",
+      "GF-F16 Formato para Anticipo o Desembolso.docx",
+      "GF-F17 Informe de ejecución recursos administración delegada o mandato.xlsx",
+      "GF-F18  Lista de Verfiicación para Autorización de desembolso en cuenta supervisada.xlsx",
+      "GF-F19 Formato para solicitar autorización desembolso desde cuenta supervisada.docx",
+      "GF-F20 Formato para autorizar desembolso desde cuenta supervisada.docx",
+      "GF-F21 Formato consolidado de ejecución final.xlsx",
+      "GF-F22 Informe de mandato.xlsx",
+      "GF-F23 Certificación pago a terceros.docx",
+      "GF-F24 Formato requisitos de pago a terceros.docx",
+      "GF-F25 Lista de Chequeo Certificación Facturas.docx",
+      "GF-F26 Certificación Pago Directo.docx",
+      "GF-F27 Estimación de Ingresos en Servicios.xlsx",
+      "GF-F28 Estimación de Costo en Servicios.xlsx",
+      "GF-F29 Certificado de liberación presupuestal.xlsx",
+      "GF-F30 SARLAFT Declaracion PERSONA NATURAL.docx",
+      "GF-F31 SARLAFT Declaracion PERSONA JURIDICA.docx",
+    ],
+    "Plantillas": [
+      "Palntilla Resolución xxx - Traslado Presupuestal.docx",
+      "Plantilla Certificado Juramentado de Dependientes 2021.docx",
+    ],
+    "Procedimientos": [
+      "GF-P01 Procedimiento de pagos.pdf",
+      "GF-P02 Procedimiento para la elaboración del certificado de disponibilidad presupuestal.pdf",
+      "GF-P03 Procedimiento para la elaboración del registro presupuestal (RP).pdf",
+      "GF-P04 Procedimiento conciliaciones bancarias.pdf",
+      "GF-P05 Procedimiento para liquidación y pago de impuestos, tasas y estampillas.pdf",
+      "GF-P06 Procedimiento de facturacion y cobro de cartera.pdf",
+      "GF-P07 Procedimiento de autorización pagos desde cuenta supervisada.pdf",
+    ],
+  },
+  "Gestión Proceso Disciplinario y juzgamiento": {
+    "": [
+      "DISC-C01 Caracterización Proceso Disciplinario.xlsx",
+    ],
+    "Formatos": [
+      "PD-F01 Acta de Confesión y Aceptación de Responsabilidad.docx",
+      "PD-F02 Ampliación y Ratificación de Queja.docx",
+      "PD-F03 Auto Accede a Solicitud de Copias.docx",
+      "PD-F04 Auto Apertura de Apertura de Investigación Disciplinaria.docx",
+      "PD-F05 Auto de Cierre de Investigación Disciplinaria y Traslado para Alegatos Precalificatorios.docx",
+      "PD-F06 Auto de Remisión.docx",
+      "PD-F07 Auto de Vinculación de Sujeto a una Investigación Disciplinaria.docx",
+      "PD-F08 Auto Declara Impedimento.docx",
+      "PD-F09 Auto Despacho Comisorio.docx",
+      "PD-F10 Auto Declara la Prescripción.docx",
+      "PD-F11 Auto Declara una Nulidad.docx",
+      "PD-F12 Auto Decreto de Pruebas.docx",
+      "PD-F13 Auto Formulación Pliego de Cargos.docx",
+      "PD-F14 Auto General.docx",
+      "PD-F15 Auto Indagación Previa.docx",
+      "PD-F16 Auto Inhibitorio.docx",
+      "PD-F17 Auto Posesión Defensor Público o Estudiante de Consultorio Jurídico.docx",
+      "PD-F18 Auto que Ordena Acumulación Procesal.docx",
+      "PD-F19 Auto Reconoce Personería Jurídica.docx",
+      "PD-F20 Auto Resuelve Procedencia de Recurso de Apelación.docx",
+      "PD-F21 Auto Resuelve Recurso de Queja.docx",
+      "PD-F22 Auto Resuelve Recurso de Reposición.docx",
+      "PD-F23 Auto Terminación de Proceso – Archivo Definitivo.docx",
+      "PD-F24 Constancia de Archivo Físico.docx",
+      "PD-F25 Constancia de Ejecutoria.docx",
+      "PD-F26 Constancia Secretarial.docx",
+      "PD-F27 Declaración Bajo la Gravedad de Juramento.docx",
+      "PD-F28 Formato de Registro para Control de Procesos Disciplinarios.xlsx",
+      "PD-F29 Notificación Personal.docx",
+      "PD-F30 Notificación por Edicto.docx",
+      "PD-F31Notificación por Estados.docx",
+      "PD-F32 Queja Disciplinaria.docx",
+      "PD-F33 Versión Libre y Espontánea.docx",
+    ],
+    "Procedimiento": [
+      "PD-P01 Procedimiento Instrucción Control Interno Disciplinario.pdf",
+    ],
+  },
+  "Gestión de Control Interno": {
+    "": [
+      "Codigo de etica del auditor.pdf",
+      "EV-C01 Caracterización evaluación independiente.xls",
+      "Estatuto de Control Interno_Activa _ Res 079 de 16_12_2022.pdf",
+    ],
+    "Formatos": [
+      "EV-F01 Formato gestión mejoras.xlsx",
+      "EV-F02 Plan Anual de Auditoria CI.xlsx",
+      "EV-F03 Plan de Mejoramiento.xlsx",
+    ],
+    "Procedimientos": [
+      "EV-P02 Procedimiento Auditorías Internas.pdf",
+    ],
+  },
+  "Gestión de Operaciones": {
+    "Formatos": [
+      "GOP-F01 Solicitud de Bienes y Servicios.xlsx",
+      "GOP-F02 Adición Solicitud de Bienes y Servicios.xlsx.docx",
+      "GOP-F03 Formato de Ampliación Plazo SBS.docx",
+    ],
+    "Instructivos": [
+      "GOP-I05 Instructivo Comité de Asignación.pdf",
+    ],
+    "Procedimientos": [
+      "GOP-P10 Soluciones para el suministro de bienes y servicios.pdf",
+    ],
+  },
+  "Gestión de Procesos y Mejoramiento Continuo": {
+    "": [
+      "MA-C01 Caracterizacion Mejoramiento Activo.xlsx",
+    ],
+    "Procedimientos": [
+      "MA-P01 procedimiento de Gestión de mejoras.pdf",
+    ],
+  },
+  "Gestión de Tecnologías de Información": {
+    "": [
+      "GTI-P01 Proceso de Gestión Tecnológica.pdf",
+      "Política de Uso Aceptable de Recursos Tecnológicos ACTIVA.pdf",
+    ],
+    "Instructivos": [
+      "GA-I01 Instructivo Gestion Transparente Contratos.pdf",
+      "GTI-I02 Instructivo Mesa de Ayuda.pdf",
+      "GTI-I3 Instructivo creación de contratos en SAFIX.pdf",
+      "GTI-I4 Aprobación informe de Evidencias CLIENTES.pdf",
+      "GTI-I5 TUTORIAL INSTALACIÓN APLICATIVO CHIP LOCAL.pdf",
+      "GTI-I6 INSTRUCTIVO PARA AGREGAR UN CALENDARIO DESDE EL DIRECTORIO.pdf",
+      "GTI-I7 INSTRUCTIVO RESERVA DE CARRO.pdf",
+      "GTI-I8 INSTRUCTIVO RESERVA SALA DE REUNIONES.pdf",
+      "GTI-I9 INGRESO AL MICROSOFT 365.pdf",
+      "Instructivo_Pedir_RP_OP_Internas.pdf",
+    ],
+  },
+  "Gestión del Talento Humano": {
+    "": [
+      "CODIGO DE INTEGRIDAD ACTIVA.pdf",
+      "GT-C01 Caracterización Gestión del Talento Humano.xlsx",
+      "Presentación Codigo de Integridad.pdf",
+    ],
+    "Formatos": [
+      "GT-F01 Lista de chequeo vinculación de personal.docx",
+      "GT-F02 Solicitud disminución base gravable.docx",
+      "GT-F026 Paz y Salvo para Retiro de Funcionarios.xlsx",
+      "GT-F03 Programa de inducción.xlsx",
+      "GT-F05 Lista de asistencia.xlsx",
+      "GT-F06 Lista de chequeo retiro de personal_.docx",
+      "GT-F07 Encuesta de retiro de servidores públicos y trabajadores oficiales_.xlsx",
+      "GT-F08 Control de Permisos.xlsx",
+      "GT-F09 Acuerdo de confidencialidad.docx",
+      "GT-F10 Contrato de trabajo término indefinido trabajadores oficiales.docx",
+      "GT-F11 Autorización descuento por nómina.docx",
+      "GT-F12 Acta entrega del cargo.docx",
+      "GT-F13 Constancia de horario flexible.docx",
+      "GT-F14 Informe de Entrega del Cargo.docx",
+      "GT-F15 Acta informe de Gestión.docx",
+      "GT-F16 Evaluacion_de_la_Induccion.docx",
+      "GT-F17 Evaluación de la entrevista .xlsx",
+      "GT-F18 Formato retiro de Cesantias.xlsx",
+      "GT-F19 Solicitud de vacaciones o licencias no remuneradas.xlsx",
+      "GT-F20 Evaluación de desempeño.xlsx",
+      "GT-F23 Autorización de Tratamiento de Datos Personales.docx",
+      "GT-F24 Autorización para la publicacion de imagenes.docx",
+      "GT-F25 Formato comision cumplido.docx",
+      "GT-F27 Formato Horas Extras y Recargos.docx",
+      "GT-F28 FORMATO -SST-Inspeccion locativa.xlsx",
+      "GT-F29 FORMATO-SST  Inspección de botiquín para primeros auxilios vehículo.xlsx",
+      "GT-F30 FORMATO-SST  Inspección de botiquin para primeros auxilios.xlsx",
+      "GT-F31 FORMATO-SST Inspección de extintores.xlsx",
+      "GT-F32 Matriz Identificación de Peligros.xlsx",
+      "GT-F33 FORMATO-SST Inspección de extintores.xlsx",
+    ],
+    "Instructivos": [
+      "GT-I01 Instructivo para la concertación de acuerdos de gestión.pdf",
+    ],
+    "Procedimientos": [
+      "GT-P01 Procedimiento de reclutamiento, selección y vinculación de personal.pdf",
+      "GT-P02 Procedimiento de inducción, entrenamiento y reinducción.pdf",
+      "GT-P03 Procedimiento de desvinculación de personal.pdf",
+      "GT-P04 Procedimiento de liquidación y pago de nomina.pdf",
+    ],
+  },
+  "Modelo Integrado de Planeación y Gestión": {
+    "": [
+      "DIMENSIONES.png",
+      "MIPG.png",
+      "Plan de Acción Programa de Transparencia y Ética Pública.xlsx",
+      "Plantilla Presentación ACTIVA.pptx",
+      "Politica de Fortalecimiento Institucional.pdf",
+      "Política Cero Papel Empresa de Parques y Eventos de Antioquia ACTIVA.pdf",
+      "Política Gestión del Talento Humano.pdf",
+      "Política de Archivos y Gestión Documental.pdf",
+      "Política de Compras y Contratación.pdf",
+      "Política de Control Interno.pdf",
+      "Política de Gestión Estadística.pdf",
+      "Política de Gestión Presupuestal.pdf",
+      "Política de Gestión del Conocimiento.pdf",
+      "Política de Gobierno Digital.pdf",
+      "Política de Integridad.pdf",
+      "Política de Mejora Normativa.pdf",
+      "Política de Participación Ciudadana.pdf",
+      "Política de Planeación Institucional.pdf",
+      "Política de Prevención del Daño Antijurídico.pdf",
+      "Política de Racionalización de Trámites.pdf",
+      "Política de Seguimiento y Evaluación.pdf",
+      "Política de Seguridad Digital.pdf",
+      "Política de Servicio al Ciudadano.pdf",
+      "Política de Transparencia.pdf",
+      "Políticas MIPG.jpg",
+      "RESOLUCIÓN Nro. 015 de 2022 Comité Institucional de Gestión y Desempeño.pdf",
+      "Seguimiento al Cumplimiento de la Política de Servicio al Ciudadano.docx",
+      "Seguimiento al Cumplimiento de la Política de Servicio al Ciudadano.pdf",
+    ],
+    "ACTAS DE COMITÉ": [
+      "OE-F01_Acta de Comité No. 2.pdf",
+      "OE-F01_Acta de Comité No. 3.pdf",
+      "OE-F01_Formato_de_acta[1].pdf",
+      "Presentación Para comité 2.pptx",
+      "Presentación Programa de Transparencia y Ética Pública.pptx",
+      "Presentación para comité 1.pptx",
+    ],
+    "AUTODIAGNOSTICOS": [
+      "01 Autodiagnóstico de Gestión del talento humano.xlsx",
+      "02 Autodiagnóstico de Integridad.xlsx",
+      "03 Autodiagnóstico para la Gestión de Conflictos de Intereses.xlsx",
+      "04 Autodiagnóstico de Transparencia y Acceso a la Información.xlsx",
+      "05 Autodiagnóstico de Plan Anticorrupción.xlsx",
+      "06 Autodiagnóstico de Gobierno Digital.xlsx",
+      "07 Autodiagnóstico de Defensa Jurídica (Territorio).xlsm",
+      "08 Autodiagnóstico de Servicio al Ciudadano.xlsx",
+      "09 Autodiagnóstico de Trámites.xlsx",
+      "10 Autodiagnóstico de Participación Ciudadana.xlsx",
+      "11 Autodiagnóstico de Rendición de Cuentas.xlsx",
+      "14 Autodiagnóstico Gestión Documental.xlsx",
+      "15 Autodiagnóstico de Gestión del Conocimiento y la Innovación.xlsx",
+      "16 Autodiagnóstico de Control Interno - Entidades Pequeñas.xlsx",
+      "17 Autodiagnóstico  de Gestión de la Información Estadística (Territorio) - Nueva.xlsx",
+      "Autodiagnostico MIPG V21_02_2023 .pdf",
+      "RESUMEN.xlsx",
+    ],
+    "Certificados Curso Integridad, transparencia y lucha contra la corrupción": [
+      "CERTIFICADO - CATALINA VALENCIA VANEGAS.pdf",
+      "CERTIFICADO FUNCION PUBLICA 20 HORAS, INTEGRIDAD, TRANSPARENCIA JHONATAN VALENCIA GOMEZ.pdf",
+      "CERTIFICADO MARIA ISABEL CASTAÑO G.pdf",
+      "CERTIFICADO MARIA ISABEL SANCHEZ.pdf",
+      "CURSO INTEGRIDAD, TRANSPARENCIA Y LUCHA DARLYN CHAVES CARO.pdf",
+      "Certificado 20 hrs William Alejandro Riaño Florez.pdf",
+      "Certificado Integridad Caterine Zapata Estrada.pdf",
+      "Certificado Maria Patricia Muñoz Cardona.pdf",
+      "Certificado _ Vanessa Urrea Gallo.pdf",
+      "Certificado curso EVA_DRIANA.pdf",
+      "Certificado de integridad y transparencia Daniela Jiménez Bedoya.pdf",
+      "Certificado integridad, transparencia y lucha contra la Corrupción Karen Valencia.pdf",
+      "Certificado_ Cristian Murillo.pdf",
+      "Certificado_ Esteban García.pdf",
+      "Certificado_ Stefany Pajón Ortiz.pdf",
+      "Certificado_Víctor Daniel Lezcano Quintero.pdf",
+      "Certificado_Yuri Maria Gallego Alzate.pdf",
+      "HERNAN CASTAÑO_Curso Integridad, Transparencia y Lucha contra la Corrupción.pdf",
+      "JUAN JOSÉ BARRIENTOS RESTREPO - CERTIFICADO FUNCIÓN PÚBLICA - INTEGRIDAD, TRANSPARENCIA Y LUCHA CONTRA LA CORRUPCIÓN.pdf",
+      "ceretificado lucha contra la corrupción.pdf",
+      "integridad,transparencia y lucha contra la corrupcion.pdf",
+    ],
+    "Políticas Word MIPG": [
+      "Análisis Resultados FURAG.docx",
+      "Análisis Resultados FURAG.pdf",
+      "DISTRIBUCIÓN.xlsx",
+      "Politica de Fortalecimiento Institucional.docx",
+      "Política Gestión del Talento Humano.docx",
+      "Política de Archivos y Gestión Documental.docx",
+      "Política de Compras y Contratación.docx",
+      "Política de Control Interno.docx",
+      "Política de Gestión Estadística.docx",
+      "Política de Gestión Presupuestal.docx",
+      "Política de Gestión del Conocimiento.docx",
+      "Política de Gobierno Digital.docx",
+      "Política de Integridad.docx",
+      "Política de Mejora Normativa.docx",
+      "Política de Participación Ciudadana.docx",
+      "Política de Planeación Institucional.docx",
+      "Política de Prevención del Daño Antijurídico.docx",
+      "Política de Racionalización de Trámites.docx",
+      "Política de Seguimiento y Evaluación.docx",
+      "Política de Seguridad Digital.docx",
+      "Política de Servicio al Ciudadano.docx",
+      "Política de Transparencia.docx",
+    ],
+  },
+  "Orientación Estratégica": {
+    "": [
+      "OE-C01 Caracterización Orientación Estratégica.xlsx",
+    ],
+    "Formatos": [
+      "OE-F01 Formato de acta.docx",
+      "OE-F02 Formato de acta comite de gerencia-contratacion.docx",
+      "OE-F03 Formato plan de acción por dirección.xlsx",
+      "OE-F04 Formato Mapa de riesgos entidad.xlsx",
+      "OE-F05 Listado maestro de documentos y registros.xlsx",
+      "OE-F06 Formato plan estrategico.xlsx",
+      "OE-F07 PMO- Project Management Office.xlsx",
+      "OE-F09 Objetivos_de_Calidad.xlsx",
+      "OE-F10 Formulario llamada telefónica.docx",
+      "OE-F11 Formato seguimiento via telefónica.docx",
+      "OE-F12 Formato Atención Discapacidad.docx",
+    ],
+    "Manuales": [
+      "OE-M01 Manual para la información documentada.pdf",
+      "OE-M03 Manual de Uso Vehicular Activa.pdf",
+      "OE-M04 Plan de Manejo Integral de Residuos Sólidos (PMIRS).pdf",
+      "OE-M05 Manual Manejo de la Crisis.pdf",
+      "OE-M06 Protocolo vocería institucional.pdf",
+      "OE-M08 Procedimiento para publicacón en página web.pdf",
+      "OE-M09 Política de Comunicaciones.pdf",
+    ],
+    "Plantillas": [
+      "Plantilla Manuales.doc",
+      "Plantilla Procedimiento.doc",
+      "Plantilla caracterización.xlsx",
+      "Plantilla instructivo.docx",
+    ],
+    "Procedimientos": [
+      "OE-P01 Procedimiento atención  vía telefónica.pdf",
+    ],
+  },
+  "Planeación Estratégica": {
+    "": [
+      "CÓDIGO DE INTEGRIDAD ACTUALIZADO.docx",
+    ],
+  },
+  "Proceso de Contratación": {
+    "": [
+      "SBS- C01 Caracterización Proceso de Contratación.xls",
+    ],
+    "Formatos": [
+      "POL-F10 Formato Orden de Pedido OP Interna.xlsx",
+      "SBS-F01 Formato solicitud de cotización de bienes y servicios.docx",
+      "SBS-F02 Orden de compra de bienes y servicios.docx",
+      "SBS-F03 Estudios previos.docx",
+      "SBS-F04 Invitación a contratar.docx",
+      "SBS-F05 Carta de presentación de la oferta.docx",
+      "SBS-F06 Minuta del contrato.docx",
+      "SBS-F07 Designación de supervisión.docx",
+      "SBS-F08 Acta de inicio.docx",
+      "SBS-F09 Aprobación de póliza.docx",
+      "SBS-F10 Certificado Inhabilidades Incompatibles Contratos.docx",
+      "SBS-F11 Oferta económica.xlsx",
+      "SBS-F12 Formato Otrosí.docx",
+      "SBS-F13 Acuerdo de confidencialidad y no divulgación.docx",
+      "SBS-F14 Respuesta a observaciones.docx",
+      "SBS-F15 Solicitud de modificación de contrato.docx",
+      "SBS-F16 Adenda.docx",
+      "SBS-F17 Conformación y designación del comité asesor y evaluador.docx",
+      "SBS-F18 Informe preliminar de evaluación de proceso de selección.docx",
+      "SBS-F19 Informe final de evaluación de proceso de selección.docx",
+      "SBS-F20 Informe de ejecución mensual de contrato.docx",
+      "SBS-F21 Informe supervisión.docx",
+      "SBS-F22 Acta de recibo y terminación.docx",
+      "SBS-F23 Acta de liquidacion.docx",
+      "SBS-F24 Acta recibo a satisfacción.docx",
+      "SBS-F25 Contrato prestación de servicios.docx",
+      "SBS-F26 Certificado experiencia.docx",
+      "SBS-F27 Acta comité ejecución de contratos marco.docx",
+      "SBS-F28 Estudio previo prestación de servicios.docx",
+      "SBS-F29 Lista de chequeo orden de compra.xlsx",
+      "SBS-F30 Lista de chequeo contratación directa.xlsx",
+      "SBS-F31 Lista de chequeo lista corta.xlsx",
+      "SBS-F32 Lista de chequeo prestación de servicios profesionales.xlsx",
+      "SBS-F33 Lista de chequeo invitación abierta.xlsx",
+      "SBS-F34 Minuta del contrato prestación de servicios.docx",
+      "SBS-F35 Informe de evaluación y análisis de la oferta económica y técnica.docx",
+      "SBS-F36 Matriz de riesgos contratacion - Contratación Directa.xlsx",
+      "SBS-F36 Matriz de riesgos contratacion - Lista corta - Invitacion abierta.xlsx",
+      "SBS-F36 Matriz de riesgos contratacion - Orden de compra.xlsx",
+      "SBS-F36 Matriz de riesgos contratacion.xlsx",
+      "SBS-F37 Certificado comité de contratación.docx",
+      "SBS-F37 Lista de chequeo Alianza Comercial.xlsx",
+      "SBS-F38 Formato acta recepción de ofertas.docx",
+      "SBS-F39 Lista chequeo Contratos Marco IA 001.xlsx",
+      "SBS-F40 Formato de necesidad, conveniencia y oportunidad de la evaluación de oferta.docx",
+      "SBS-F41 Constancia Cierre Proceso Contractual.docx",
+      "SBS-F42 Acta de suspension y reinicio.docx",
+      "SBS-F43 Orden de compra de bienes y servicios 3 SMMLV.docx",
+      "SBS-F44 Formato Designación Comité Asesor y Evaluador.docx",
+      "SBS-F45 ANEXO 2- carta de presentacion de la propuesta.docx",
+      "SBS-F46 ANEXO 3 - Pago seguridad social y parafiscales.docx",
+      "SBS-F47 ANEXO 4-  Compromiso anticorrupción.docx",
+      "SBS-F48 ANEXO 5 - Certificado de inhabilidades e incompatibilidades.docx",
+      "SBS-F49 ANEXO 6 - Acuerdo de niveles de servicio - ANS.docx",
+      "SBS-F50 ANEXO 7 - Acuerdo de confidencialidad.docx",
+      "SBS-F51 ANEXO 8 -  Aceptación Gestión Comercial.docx",
+      "SBS-F52 ANEXO 9 - Cumplimiento y aceptación tarifario.docx",
+      "SBS-F53 ANEXO 10 - Modelo acuerdo de consorcio.docx",
+      "SBS-F54 ANEXO 11 - Modelo acuerdo union temporal.docx",
+      "SBS-F55 ANEXO 12-  Capacidad financiera.docx",
+      "SBS-F56 ANEXO 13 -  Experiencia del proponente .docx",
+      "SBS-F57 ANEXO 14. Carta de compromiso del personal minimo requerido.docx",
+      "SBS-F58 ANEXO 24- Oferta de porcentaje por pago a terceros_.docx",
+      "SBS-F59 ANEXO 25 Experiencia adicional del proponente.docx",
+      "SBS-F60 ANEXO 26. Carta de compromiso personal adicional.docx",
+      "SBS-F61 Formato Orden de Servicio.docx",
+      "SBS-F61 Formato Orden de Servicio.xlsx",
+      "SBS-F62 Contrato Vinculación.docx",
+      "SBS-F63 Autorización para la celebración de contratos y órdenes de servicio que superen los 500 SMLMV.docx",
+      "SBS-F64 Acta de Recibo a Satisfaccion_Indeportes.xlsx",
+      "SBS-F65 Nota Aclaratoria.docx",
+      "SBS-F66 Acta Terminación ODS para liberación.docx",
+      "SBS-F67 Formato Seguimiento a Contrato.xlsx",
+      "SBS-F68 Lista de Chequeo Modificación Contractual.xlsx",
+    ],
+    "Manuales": [
+      "Acuerdo No. 001 del 13 de julio de 2023 Manual de contratación.pdf",
+      "SBS-M01 Manual de Supervisión.pdf",
+    ],
+    "Procedimientos": [
+      "SBS-P01 Procedimiento de compra por órdenes de compra.pdf",
+      "SBS-P02 Procedimiento de compra por contratación directa.pdf",
+      "SBS-P03 Procedimiento de compra por invitación con lista corta.pdf",
+      "SBS-P04 Procedimiento de compra por invitación abierta.pdf",
+      "SBS-P06 Procedimiento pólizas clientes.pdf",
+      "SBS-P07 Procedimiento liquidaciones de contratos.pdf",
+      "SBS-P08 Procedimiento Registro de Proveedores.pdf",
+      "SBS-P09 Procedimiento Publicación SECOP.pdf",
+    ],
+  },
+};
+
+// Carpeta del repositorio → sigla del proceso en el portal.
+const CARPETA_A_SIGLA = {
+  'Orientación Estratégica': 'OE', 'Planeación Estratégica': 'OE',
+  'Gestión Comercial': 'POL', 'Gestión de Operaciones': 'GOP',
+  'Gestión Financiera': 'GF', 'Gestión Administrativa': 'GA',
+  'Gestión Documental': 'GD', 'Gestión del Talento Humano': 'GT',
+  'Gestión de Tecnologías de Información': 'GTI', 'Proceso de Contratación': 'BS',
+  'Gestión de Procesos y Mejoramiento Continuo': 'MA', 'Gestión de Control Interno': 'CI',
+  'Gestión Proceso Disciplinario y juzgamiento': 'PD', 'Modelo Integrado de Planeación y Gestión': 'MIPG',
+};
+
+// Convierte el inventario del repositorio en entradas de búsqueda: extrae el
+// código del nombre del archivo (si lo tiene) y arma el enlace directo.
+const entradasRepositorio = () => {
+  const out = [];
+  for (const [carpeta, rutas] of Object.entries(REPO_ARCHIVOS)) {
+    for (const [ruta, nombres] of Object.entries(rutas)) {
+      for (const archivo of nombres) {
+        const base = archivo.replace(/\.[A-Za-z0-9]+$/, '');
+        const m = /^([A-Z]{2,5}- ?[A-Z]{0,4}\d+[A-Z]?)[\s.-]*(.*)$/.exec(base);
+        out.push({
+          codigo: m ? m[1].replace(/\s+/g, '') : null,
+          nombre: m && m[2] ? m[2] : base,
+          proceso: CARPETA_A_SIGLA[carpeta],
+          origen: CARPETA_A_SIGLA[carpeta] ? undefined : carpeta,
+          url: enlaceCarpeta(carpeta, ruta || undefined) + '/' + encodeURIComponent(archivo),
+        });
+      }
+    }
+  }
+  return out;
+};
+
 // Índice de búsqueda: absolutamente todos los documentos del sistema.
-// Une el inventario de "Documentos Word" con las caracterizaciones de cada
-// proceso y los informes de referencia. Cada entrada sabe abrirse sola:
-// url = archivo en SharePoint; ruta = vista del portal cuando no hay archivo.
-const DOCS_TODOS = [
-  ...DOCUMENTOS.map((d) => ({ ...d, url: enlaceDoc(d.archivo) })),
-  ...Object.entries(CARACTERIZACIONES).map(([sigla, c]) => ({
-    codigo: c.codigo,
-    nombre: `Caracterización ${PROCESOS.find((p) => p.sigla === sigla)?.nombre || sigla}`,
-    proceso: sigla,
-    url: c.archivo ? enlaceCarpeta(c.archivo[0]) + '/' + encodeURIComponent(c.archivo[1]) : null,
-    ruta: `proceso/${sigla}`,
-  })),
-  // Formato que vive en la carpeta Formatos del proceso (no en Documentos Word);
-  // es el que enlaza la guía de comisiones.
-  { codigo: 'GA-F015', nombre: 'Certificado de cumplimiento de actividades extramural', proceso: 'GA',
-    url: enlaceCarpeta('Gestión Administrativa', 'Formatos') + '/' + encodeURIComponent('GA-F015 Certificado de Cumplimiento.docx') },
-  { codigo: null, nombre: 'Seguimiento a la Gestión del Riesgo — Mapa de Riesgos (vigencia 2025)', origen: 'Documentos del SGC', url: ENLACE_SEGUIMIENTO_RIESGOS, ruta: 'riesgos' },
-  { codigo: null, nombre: 'Indicadores para Plan Estratégico', origen: 'Sitio Plan Estratégico', url: ENLACE_INDICADORES_PLAN, ruta: 'indicadores' },
-];
+// Une el inventario curado de "Documentos Word", las caracterizaciones, los
+// informes de referencia y el rastreo completo del repositorio; se eliminan
+// duplicados por URL (gana la entrada curada, que tiene mejor nombre).
+const DOCS_TODOS = (() => {
+  const candidatos = [
+    ...DOCUMENTOS.map((d) => ({ ...d, url: enlaceDoc(d.archivo) })),
+    ...Object.entries(CARACTERIZACIONES).map(([sigla, c]) => ({
+      codigo: c.codigo,
+      nombre: `Caracterización ${PROCESOS.find((p) => p.sigla === sigla)?.nombre || sigla}`,
+      proceso: sigla,
+      url: c.archivo ? enlaceCarpeta(c.archivo[0]) + '/' + encodeURIComponent(c.archivo[1]) : null,
+      ruta: `proceso/${sigla}`,
+    })),
+    { codigo: 'GA-F015', nombre: 'Certificado de cumplimiento de actividades extramural', proceso: 'GA',
+      url: enlaceCarpeta('Gestión Administrativa', 'Formatos') + '/' + encodeURIComponent('GA-F015 Certificado de Cumplimiento.docx') },
+    { codigo: null, nombre: 'Seguimiento a la Gestión del Riesgo — Mapa de Riesgos (vigencia 2025)', origen: 'Documentos del SGC', url: ENLACE_SEGUIMIENTO_RIESGOS, ruta: 'riesgos' },
+    { codigo: null, nombre: 'Indicadores para Plan Estratégico', origen: 'Sitio Plan Estratégico', url: ENLACE_INDICADORES_PLAN, ruta: 'indicadores' },
+    { codigo: null, nombre: 'Listado maestro de documentos', origen: 'Repositorio SGC',
+      url: encodeURI(BIBLIOTECA_SGC + '/') + encodeURIComponent('LISTADO MAESTRO DE DOCUMENTOS.xlsx') },
+    { codigo: null, nombre: 'Membrete ACTIVA', origen: 'Repositorio SGC',
+      url: encodeURI(BIBLIOTECA_SGC + '/') + encodeURIComponent('Membrete ACTIVA.docx') },
+    ...entradasRepositorio(),
+  ];
+  const vistos = new Set();
+  return candidatos.filter((d) => {
+    const clave = d.url || 'ruta:' + d.ruta + ':' + d.codigo;
+    if (vistos.has(clave)) return false;
+    vistos.add(clave);
+    return true;
+  });
+})();
 
 // Texto en el que busca cada buscador (código + nombre + proceso/origen).
 const textoBuscable = (d) => [d.codigo, d.nombre, PROCESOS.find((p) => p.sigla === d.proceso)?.nombre, d.origen]
@@ -890,7 +1623,7 @@ const FilaDocumento = ({ doc }) => {
     <div className="tarjeta flex items-center gap-3 bg-white rounded-xl border border-[#DCE5DC] px-4 py-3">
       <Codigo>{doc.codigo}</Codigo>
       <div className="flex-1 min-w-0">
-        <p className="font-medium leading-snug">{doc.nombre}</p>
+        <p className="font-medium leading-snug break-words">{doc.nombre}</p>
         <p className="text-xs text-[#5b6b5f]">{[tipoDeCodigo(doc.codigo), PROCESOS.find((p) => p.sigla === doc.proceso)?.nombre || doc.origen].filter(Boolean).join(' · ')}</p>
       </div>
       {url
@@ -921,17 +1654,17 @@ const Buscador = ({ irA }) => {
         <div className="absolute z-20 mt-2 w-full bg-white border border-[#DCE5DC] rounded-2xl shadow-xl overflow-hidden">
           <div className="max-h-80 overflow-y-auto">
             {resultados.map((d) => d.url ? (
-              <a key={(d.codigo || '') + d.nombre} href={d.url} target="_blank" rel="noopener" onClick={() => setQ('')}
+              <a key={d.url} href={d.url} target="_blank" rel="noopener" onClick={() => setQ('')}
                 className="w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0">
                 <Codigo>{d.codigo}</Codigo>
-                <span className="text-sm flex-1 min-w-0">{d.nombre}</span>
+                <span className="text-sm flex-1 min-w-0 break-words">{d.nombre}</span>
                 <span className="text-sm font-semibold text-[#1E6B47] whitespace-nowrap">Abrir ↗</span>
               </a>
             ) : (
-              <a key={(d.codigo || '') + d.nombre} href={'#/' + d.ruta} onClick={() => setQ('')}
+              <a key={'#/' + d.ruta} href={'#/' + d.ruta} onClick={() => setQ('')}
                 className="w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0">
                 <Codigo>{d.codigo}</Codigo>
-                <span className="text-sm flex-1 min-w-0">{d.nombre}</span>
+                <span className="text-sm flex-1 min-w-0 break-words">{d.nombre}</span>
                 <span className="text-sm font-semibold text-[#1E6B47] whitespace-nowrap">Ver ↗</span>
               </a>
             ))}
@@ -1504,7 +2237,7 @@ const VistaDocumentos = ({ irA }) => {
         )}
       </div>
       {docs.length > 0 ? (
-        <div className="space-y-2">{docs.map((d) => <FilaDocumento key={(d.codigo || '') + d.nombre} doc={d} />)}</div>
+        <div className="space-y-2">{docs.map((d) => <FilaDocumento key={d.url || d.ruta} doc={d} />)}</div>
       ) : (
         <p className="text-sm text-[#5b6b5f] py-8 text-center">Sin resultados para «{q}». Prueba con otro código o nombre.</p>
       )}
