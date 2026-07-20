@@ -13,6 +13,7 @@
        en SharePoint y requieren sesión Microsoft de ACTIVA.
      - Fuente del inventario: carpeta "Documentos Word" del sitio SGC
        (corte 11/07/2026).
+     - Publicación: GitHub Pages (build automático al fusionar a main).
    ============================================================================ */
 const { useState, useMemo, useEffect } = React;
 
