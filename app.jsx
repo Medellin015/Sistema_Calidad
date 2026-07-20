@@ -2516,7 +2516,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-30 bg-[#F7F8F4]/90 backdrop-blur border-b border-[#DCE5DC]">
+      <header className="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-[#DCE5DC]">
         <div className="max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1">
           <button onClick={() => irA('')} className="f-display font-extrabold tracking-tight flex items-center gap-2 shrink-0 text-left">
             <span className="w-7 h-7 rounded-lg bg-[#1E6B47] text-[#B5E048] flex items-center justify-center text-sm shrink-0" aria-hidden="true">A</span>
