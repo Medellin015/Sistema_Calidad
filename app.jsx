@@ -571,11 +571,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Asegurar el logro de metas de la compañía logrando el equilibrio financiero, el cumplimiento de requisitos y la satisfacción de los clientes.',
     alcance: 'El proceso va desde la recolección de expectativas de la junta y los clientes hasta la gestión de cambios en la plataforma estratégica y el sistema de gestión.',
     resultado: 'Satisfacción del cliente mediante el logro de metas, equilibrio financiero y el cumplimiento de requisitos — Receptores: todos los procesos, Junta Directiva, proveedores, familia ACTIVA, clientes y cooperadores.',
-    acuerdos: [
-      ['Satisfacción de clientes', 'Clientes satisfechos en un 80%'],
-      ['Equilibrio financiero', 'Punto de equilibrio financiero en $0'],
-      ['Cumplimiento de requisitos', 'Ejecución del presupuesto inicial de ingresos al 100%'],
-    ],
     phva: [
       ['P', 'Junta Directiva; clientes; proveedores; colaboradores; partners', 'Normatividad aplicable; necesidades y expectativas de partes interesadas; información del contexto y del sector económico', 'Planear estratégicamente: análisis del contexto, definición de la apuesta estratégica, análisis de partes interesadas, alineamiento con procesos, planeación de la implementación y definición de sistemas de medición', 'Estrategia ACTIVA; estructura de procesos', 'Todos los procesos; partes interesadas'],
       ['P', 'Estado colombiano; entes certificadores; todos los procesos', 'Normatividad aplicable; normas técnicas; solicitudes de creación, modificación y eliminación de documentos', 'Documentar políticas y lineamientos: identificación, creación, comunicación, modificación y eliminación de documentos', 'Políticas, instrucciones y formatos', 'Todos los procesos'],
@@ -598,10 +593,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Ejecutar servicios de operación logística satisfaciendo los requisitos acordados con el cliente.',
     alcance: 'Desde la recepción del contrato firmado con el cliente y las órdenes de pedido hasta las actividades de monitoreo y gestión de mejoras.',
     resultado: 'Servicios de operación logística ejecutados satisfactoriamente — Receptor: el cliente.',
-    acuerdos: [
-      ['Clientes satisfechos', 'Calificación de satisfacción superior al 80%'],
-      ['Proveedores idóneos', 'Calificación del nivel de servicio de proveedores superior al 80%'],
-    ],
     phva: [
       ['P', 'Orientación Estratégica; Desarrollo de la Experiencia del Cliente', 'Estrategia ACTIVA; contrato firmado; acta de inicio firmada; registro de aceptación de contrato; orden de pedido', 'Preparar la operación: comunicación y socialización de servicios contratados, verificación de disponibilidad de insumos, aceptación de cotizaciones por parte del cliente y solicitud de compra', 'Registros de comunicación y socialización; orden de pedido aprobada; solicitud de compra; orden de pedido a proveedores', 'Desarrollo de la Experiencia del Cliente; Suministro de Bienes y Servicios; Gestión Financiera'],
       ['H', 'Proyectos de operación logística; Suministro de Bienes y Servicios', 'Orden de servicio aprobada', 'Ejecutar servicios', 'Evidencias de ejecución de contratos', 'Cliente'],
@@ -621,10 +612,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Planear y ejecutar la operación logística de eventos y los eventos propios institucionales y comerciales, garantizando el cumplimiento de los requisitos y expectativas de clientes, socios, aliados y asistentes.',
     alcance: 'Desde la recepción de la orden de pedido o la aprobación del evento propio hasta la entrega del servicio, el informe de supervisión y el cierre con la validación de satisfacción.',
     resultado: 'Eventos y operaciones logísticas ejecutados a satisfacción — Receptores: clientes, asistentes y todos los procesos.',
-    acuerdos: [
-      ['Satisfacción del cliente', 'Encuesta post-servicio igual o superior al 85% (meta 2026 del Plan Estratégico)'],
-      ['Eventos propios', 'Realizar los eventos propios de la anualidad según el Plan Estratégico (1 en 2026, 2 en 2027)'],
-    ],
     phva: [
       ['P', 'Gestión Comercial; Orientación y Planeación Estratégica', 'Órdenes de pedido aprobadas; contratos; calendario de eventos', 'Planear la operación del evento o servicio: requerimientos, recursos, proveedores y cronograma (GOP-P10)', 'Plan de operación; solicitudes de cotización', 'Gestión de Operaciones; Proceso de Contratación'],
       ['H', 'Proceso de Contratación; proveedores', 'Bienes y servicios contratados; personal asignado', 'Ejecutar la operación logística y los eventos propios (EV-P01, GOP-P10)', 'Evento o servicio ejecutado; evidencias de ejecución', 'Cliente; asistentes'],
@@ -643,10 +630,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Administrar los parques y espacios recreativos asignados a la entidad, asegurando la optimización de los recursos, la implementación de políticas y procedimientos operativos estándar, y la planificación y ejecución de los contratos correspondientes.',
     alcance: 'Desde la recepción o asignación del parque o espacio recreativo hasta su operación, mantenimiento, atención de visitantes y rendición de informes del contrato.',
     resultado: 'Parques en funcionamiento operados de forma segura y sostenible — Receptores: visitantes, entidades contratantes y la comunidad.',
-    acuerdos: [
-      ['Parques en funcionamiento', 'Cumplir la meta del Plan Estratégico (2 parques en 2026, 3 en 2027)'],
-      ['Atención al visitante', 'PQRSFD de visitantes respondidas dentro de los términos de ley'],
-    ],
     phva: [
       ['P', 'Orientación y Planeación Estratégica; entidades contratantes', 'Contratos o convenios de administración de parques; presupuesto; normatividad aplicable', 'Planear la operación del parque: modelo de operación, recursos, tarifas y protocolos', 'Plan de operación del parque', 'Gestión de Parques; Gestión Financiera'],
       ['H', 'Proceso de Contratación; Gestión Administrativa', 'Bienes, servicios y personal para la operación', 'Operar y mantener el parque: apertura, atención de visitantes, seguridad, aseo y mantenimiento', 'Parque en funcionamiento; servicios prestados a visitantes', 'Visitantes; entidad contratante'],
@@ -666,11 +649,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Administrar los recursos financieros de ACTIVA garantizando una ejecución presupuestal eficiente, transparente, que presente balances positivos y estados financieros favorables.',
     alcance: 'Desde la planificación de recursos y actividades financieras hasta el saneamiento contable y el mejoramiento continuo del proceso.',
     resultado: 'Ejecución presupuestal eficiente, transparente, con balances positivos y estados financieros favorables — Receptores: todos los procesos.',
-    acuerdos: [
-      ['Eficiencia', 'Ejecución presupuestal del 100% al final de la vigencia'],
-      ['Eficacia', 'Margen de utilidades superior al 5%'],
-      ['Transparencia', '0 eventos de corrupción identificados en la vigencia'],
-    ],
     phva: [
       ['P', 'Orientación Estratégica; Junta Directiva', 'Estrategia ACTIVA; normatividad presupuestal y financiera; calendario tributario; presupuesto autorizado; solicitudes de modificación; planes de trabajo; metas financieras', 'Planear la gestión de recursos financieros: actividades de la anualidad, consolidación e incorporación del presupuesto, modificaciones, PAC, cronograma de pagos y calendario de cobros', 'Plan de trabajo anual; presupuesto general versionado; PAC; calendario de pagos y de cobros', 'Gestión Financiera; Gestión Administrativa; líderes de proceso y gestores; proveedores; contratistas; empleados'],
       ['H', 'Todos los procesos; Comité de Contratación', 'Solicitud de CDP; solicitud de RP', 'Generación de disponibilidad presupuestal y de registro presupuestal', 'CDP; RP', 'Gestión de Talentos; Suministro de Bienes y Servicios'],
@@ -696,11 +674,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Facilitar la disponibilidad de recursos físicos, tecnológicos, de infraestructura, transporte, documentales y de ambiente de trabajo, idóneos y oportunos.',
     alcance: 'Desde la recepción de la necesidad manifiesta por los diferentes procesos hasta la verificación de la ejecución de planes, la medición de indicadores y las actividades de mejoramiento continuo.',
     resultado: 'Disponibilidad de recursos físicos, tecnológicos, de infraestructura, transporte, documentales y de ambiente de trabajo, idóneos y oportunos — Receptores: todos los procesos.',
-    acuerdos: [
-      ['Recursos oportunos', '80% de los acuerdos de servicio cumplidos en términos de tiempo'],
-      ['Recursos idóneos', '0 eventos de pérdida o daño de la información digital y física'],
-      ['Ambiente de trabajo', 'Evaluación de satisfacción de bienestar por encima de 3'],
-    ],
     phva: [
       ['P', 'Todos los procesos', 'Estrategia ACTIVA; hojas de vida de bienes y equipos', 'Planear las actividades administrativas: planificación de TI, de la gestión documental y del mantenimiento preventivo y correctivo', 'Plan de desarrollo de TI; PGD y PINAR; plan de mantenimiento preventivo y correctivo', 'Gestión Administrativa; Gestión Financiera; todos los procesos'],
       ['H', 'Gestión Administrativa; todos los procesos', 'Necesidades tecnológicas manifiestas', 'Gestionar las tecnologías de la información: identificación, evaluación y selección; adaptación; capacitación; gestión de licencias y de documentación digital', 'Solicitudes de compra de tecnologías; tecnologías instaladas; licencias actualizadas; recursos funcionales; información digital auténtica, fiable, íntegra y usable', 'Gestión Administrativa; todos los procesos'],
@@ -724,11 +697,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Administrar el flujo documental y establecer la organización de los documentos siguiendo los lineamientos correspondientes del Programa de Gestión Documental en torno a la normativa vigente.',
     alcance: 'Inicia con los requerimientos de gestión documental presentados por usuarios internos y externos, continúa con la radicación y reparto de los mismos y finaliza con la custodia de la documentación teniendo en cuenta las Tablas de Retención Documental y la normatividad archivística vigente.',
     resultado: 'Organización, control, seguridad, accesibilidad y conservación de los expedientes generados en la entidad — Receptores: todos los procesos.',
-    acuerdos: [
-      ['Respuestas oportunas', '100% de PQRS contestadas de acuerdo con los términos de ley'],
-      ['Documentos distribuidos correctamente', 'Total de comunicaciones distribuidas correctamente / total recibidas por ventanilla'],
-      ['Transferencias ejecutadas', '100% de transferencias realizadas vs. programadas'],
-    ],
     phva: [
       ['P', 'Todos los procesos', 'Requerimientos de gestión documental; normatividad archivística', 'Planeación: establecer los criterios para garantizar el ciclo vital de los documentos, su acceso, control, organización y conservación mediante instrumentos archivísticos normalizados', 'Diagnóstico integral de archivos; política general de archivos; PGD; PINAR; indicadores de gestión; sistema integral de conservación; instrumentos archivísticos', 'Todos los procesos; Archivo Central'],
       ['H', 'Todos los procesos; proveedores; clientes; ciudadanía', 'Sistema de PQRS; documentos externos e internos', 'PQRS: determinación de los lineamientos para la gestión de peticiones, quejas, reclamos y sugerencias', 'Procedimiento de radicación; PQRS contestadas; tiempos de respuesta; firmas autorizadas', 'Todos los procesos; proveedores; clientes; ciudadanía'],
@@ -752,10 +720,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Desarrollar y asegurar PERSONAS con alto desempeño, competentes y satisfechas.',
     alcance: 'Inicia con la selección, sostenimiento y finaliza con el retiro del funcionario.',
     resultado: 'Personas con alto desempeño, competentes y satisfechas — Receptores: todos los procesos.',
-    acuerdos: [
-      ['Competentes', 'Acuerdos de gestión para cargos directivos de libre nombramiento (80%); calificación de entrevista mayor o igual a 20'],
-      ['Satisfechas', 'Evaluación de satisfacción de bienestar por encima de 3; clima laboral 60%'],
-    ],
     phva: [
       ['P', 'Orientación Estratégica', 'Estrategia ACTIVA; presupuesto', 'Proyección del presupuesto anual de funcionamiento del proceso y de las cuantías para el pago de nómina', 'Presupuesto del proceso', 'Gestión Financiera'],
       ['P', 'Organismos facultados; Orientación Estratégica', 'Normatividad vigente; diagnósticos de capacitación, bienestar y SST', 'Formulación de planes y programas de capacitación, bienestar y SST; gestión de riesgos laborales', 'Plan anual de SST; plan estratégico de talento humano; plan institucional de capacitación; plan social laboral e incentivos', 'Gestión Financiera; Orientación Estratégica'],
@@ -783,10 +747,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Garantizar la disponibilidad, el soporte y la seguridad de los servicios y activos tecnológicos de la entidad (ERP SAFIX, Microsoft 365 y aplicativos institucionales), gestionando los incidentes y solicitudes a través de la Mesa de Ayuda.',
     alcance: 'Desde la identificación de la necesidad o incidente tecnológico hasta su solución verificada, incluida la administración de activos de información, la seguridad digital y el soporte a los aplicativos institucionales.',
     resultado: 'Servicios tecnológicos disponibles, seguros y con soporte oportuno — Receptores: todos los procesos.',
-    acuerdos: [
-      ['Soporte oportuno', 'Oportunidad en la resolución de tickets o casos de la Mesa de Ayuda'],
-      ['Seguridad digital', '0 incidentes de seguridad sin gestionar (KRI06: verde = 0 incidentes en el período)'],
-    ],
     phva: [
       ['P', 'Orientación y Planeación Estratégica', 'Plan Estratégico; Política de Seguridad Digital V2; presupuesto TIC', 'Planear la gestión tecnológica: plan de desarrollo de TI, seguridad digital (MSPI) y adquisiciones tecnológicas (GTI-P01)', 'Plan de desarrollo de TI; plan de acción de seguridad digital', 'Todos los procesos'],
       ['H', 'Todos los procesos', 'Incidentes y solicitudes tecnológicas', 'Gestionar la Mesa de Ayuda: registro, clasificación, priorización, solución o escalamiento (GTI-I02)', 'Casos resueltos y documentados', 'Todos los procesos'],
@@ -807,11 +767,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Adquirir los bienes y servicios requeridos para la operación de los procesos de ACTIVA de forma oportuna, eficiente e idónea.',
     alcance: 'Desde la recepción de la necesidad de adquisición de bienes y servicios manifiesta desde los diferentes procesos hasta la verificación de la ejecución del plan anual de adquisiciones, evaluación de proveedores, la medición de indicadores y las actividades de mejoramiento continuo.',
     resultado: 'Bienes y servicios comprados de forma oportuna, eficiente e idónea — Receptores: todos los procesos.',
-    acuerdos: [
-      ['Oportunidad', '80% de compras realizadas oportunamente (según tiempos de invitación abierta, directa, órdenes de compra y lista corta)'],
-      ['Eficiencia', 'Valor de compras inferior al 100% del presupuesto'],
-      ['Idoneidad', '100% de bienes y servicios adquiridos con percepción positiva del nivel de servicio'],
-    ],
     phva: [
       ['P', 'Orientación Estratégica; Gestión Administrativa; Acompañamiento Jurídico', 'Estrategia ACTIVA; presupuesto general versionado; fichas técnicas de bienes y equipos; manual de contratación', 'Planear la contratación de compra de bienes y servicios', 'Plan Anual de Adquisiciones (versionado)', 'Gestión Administrativa; Gestión Financiera; todos los procesos'],
       ['P', 'Proveedores', 'Registros realizados en aplicativo', 'Crear y actualizar bases de datos de proveedores', 'Base de datos de proveedores inscritos', 'Suministro de Bienes y Servicios'],
@@ -838,11 +793,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Implementar acciones encaminadas a la medición, análisis, evaluación y mejora del Sistema de Gestión mediante el diseño y la aplicación de lineamientos y metodologías que permitan la conformidad de productos y servicios, optimizar la gestión institucional y la satisfacción de las partes interesadas y grupos de valor.',
     alcance: 'Inicia con la definición e implementación de lineamientos y metodologías, continúa con la formulación de acciones de mejora, y finaliza con la optimización de los procesos y la satisfacción de las partes interesadas y grupos de valor.',
     resultado: 'Ambiente de mejoramiento continuo con seguimiento a planes de mejora, cambios y evaluaciones, generando mejora a los procesos internos del SGC — Receptores: todos los procesos.',
-    acuerdos: [
-      ['Cumplimiento de la norma', 'Ejecución de auditorías internas de los procesos al 100%'],
-      ['Acciones de mejora', 'Acciones de mejora abiertas entre 0 y 10%'],
-      ['Satisfacción al cliente', 'Medición de satisfacción del cliente 80%'],
-    ],
     phva: [
       ['P', 'Todos los procesos', 'Acciones de mejora', 'Planear las actividades de mejoramiento continuo: plan de auditoría anual, informe anual de acciones de mejora e informe de evaluación de satisfacción', 'Plan anual de auditoría', 'Todos los procesos; líderes de proceso; líderes de los sistemas de gestión; Comité Institucional de Gestión y Desempeño; Oficina de Control Interno'],
       ['H', 'Líderes de los sistemas de gestión; líderes de políticas de gestión y desempeño; Comité de Coordinación de Control Interno', 'Programa de auditorías de los sistemas del SIG', 'Auditoría interna del SGC: selección de auditores, plan de auditoría, ejecución, informe, hallazgos y evaluación del auditor', 'Informe de auditoría interna de los sistemas', 'Líderes de proceso'],
@@ -866,10 +816,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Evaluar la gestión mediante la ejecución de auditorías, seguimientos y elaboración de informes a los diferentes procesos, procedimientos, dependencias, proyectos y contratos de la entidad, según requisitos legales y reglamentarios y generando recomendaciones que contribuyan al mejoramiento continuo y cumplimiento.',
     alcance: 'Inicia con la elaboración del Plan Anual de Auditoría y culmina con su seguimiento.',
     resultado: 'Evaluación de la gestión mediante auditorías, seguimientos e informes con recomendaciones para el mejoramiento continuo — Receptores: todos los procesos.',
-    acuerdos: [
-      ['Cumplimiento', 'Cumplimiento del plan anual de auditorías, seguimientos e informes de Control Interno en un 90%'],
-      ['Eficacia', 'Implementación y cierre del 85% de las acciones derivadas de auditorías, seguimientos e informes'],
-    ],
     phva: [
       ['P', 'Congreso de la República; organismos de control; procesos del sistema', 'Normas constitucionales y legales vigentes; necesidades de auditoría', 'Elaboración del Plan Anual de Auditorías, Seguimientos e Informes de Control Interno', 'Plan Anual de Auditorías, Seguimientos e Informes', 'Evaluación Independiente; Orientación Estratégica'],
       ['H', 'Todos los procesos', 'Información del proceso, dependencia, proyecto, contrato o tema a auditar', 'Realizar las auditorías, seguimientos e informes de Control Interno; elaborar, presentar y publicar los informes', 'Registros de auditoría (listas de chequeo, notas); informes de auditoría; informes a entes de control', 'Evaluación Independiente; entes de control; todos los procesos'],
@@ -892,11 +838,6 @@ const CARACTERIZACIONES = {
     objetivo: 'Adelantar el proceso disciplinario en etapa de instrucción, en aras de determinar la necesidad de formular cargos a algún servidor público adscrito a la Empresa de Parques y Eventos de Antioquia - ACTIVA, por la ocurrencia de una falta disciplinaria.',
     alcance: 'Inicia con la recepción de la queja, informe o de oficio para determinar la pertinencia y competencia de iniciar la acción disciplinaria y termina con un auto inhibitorio, auto de terminación de proceso disciplinario - archivo definitivo o remisión para juzgamiento, posterior a formulación de pliego de cargos.',
     resultado: 'Recepción y radicación de quejas e informes; impulso procesal de los expedientes; servidores públicos capacitados — Receptores: servidores públicos de ACTIVA y entes de control.',
-    acuerdos: [
-      ['Impulso procesal', 'Impulso procesal de los expedientes en un porcentaje mínimo del 85%'],
-      ['Capacitación', 'Capacitación al 90% de los servidores públicos de la entidad'],
-      ['Valores', 'Apropiación de valores y principios normativos'],
-    ],
     phva: [
       ['P', 'Oficina de Control Interno Disciplinario; servidores públicos; entes de control', 'Queja, solicitud o informe respecto a una conducta de un servidor público disciplinable', 'Formular el plan de acción; recibir y radicar la queja; identificar de oficio conductas relevantes; valorar y repartir según su contenido', 'Plan de acción aprobado; traslado a otra dependencia; archivo; reparto interno; auto inhibitorio', 'Todos los procesos del sistema; entidades externas; servidores públicos'],
       ['H', 'Proceso Control Disciplinario; usuarios internos y externos; ramas del poder público; entidades gubernamentales', 'Acciones del proceso; plan de capacitación en normativa disciplinaria; informes y quejas; políticas de operación y conceptos jurídicos', 'Ejecutar las acciones del proceso en sede de instrucción: evaluación de quejas, auto inhibitorio, indagación previa, investigación, pliego de cargos y remisión a juzgamiento, terminación o archivo, caducidad y prescripción; ejecutar el plan de capacitación', 'Impulsos procesales; expedientes tramitados; servidores capacitados', 'Usuario interno o externo; Proceso de Instrucción de Control Interno Disciplinario'],
@@ -948,10 +889,12 @@ const Buscador = ({ irA }) => {
       {resultados.length > 0 && (
         <div className="absolute z-20 mt-2 w-full bg-white border border-[#DCE5DC] rounded-2xl shadow-xl overflow-hidden">
           {resultados.map((d) => (
-            <button key={d.codigo + d.nombre} onClick={() => { setQ(''); irA(`proceso/${d.proceso}`); }}
+            <a key={d.codigo + d.nombre} href={enlaceDoc(d.archivo)} target="_blank" rel="noopener" onClick={() => setQ('')}
               className="w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0">
-              <Codigo>{d.codigo}</Codigo><span className="text-sm">{d.nombre}</span>
-            </button>
+              <Codigo>{d.codigo}</Codigo>
+              <span className="text-sm flex-1 min-w-0">{d.nombre}</span>
+              <span className="text-sm font-semibold text-[#1E6B47] whitespace-nowrap">Abrir ↗</span>
+            </a>
           ))}
         </div>
       )}
@@ -1251,15 +1194,8 @@ const VistaCaracterizacion = ({ proceso, c }) => (
         <p className="text-sm leading-relaxed">{c.resultado}</p>
       </div>
       <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4">
-        <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-2">Acuerdos de servicio</p>
-        <div className="space-y-1.5">
-          {c.acuerdos.map((a, i) => (
-            <div key={i} className="flex flex-wrap gap-x-3 text-sm">
-              <span className="font-semibold min-w-[11rem]">{a[0]}</span>
-              <span className="flex-1 text-[#3c4a40]">{a[1]}</span>
-            </div>
-          ))}
-        </div>
+        <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-2">Requisitos ISO 9001:2015</p>
+        <p className="text-sm leading-relaxed text-[#3c4a40]">{c.requisitosISO}</p>
       </div>
       <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4">
         <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-2">Ciclo PHVA</p>
@@ -1304,7 +1240,6 @@ const VistaCaracterizacion = ({ proceso, c }) => (
         <p><span className="font-semibold">Recursos humanos:</span> <span className="text-[#3c4a40]">{c.recursos.humanos}</span></p>
         <p><span className="font-semibold">Recursos físicos:</span> <span className="text-[#3c4a40]">{c.recursos.fisicos}</span></p>
         <p><span className="font-semibold">Documentos asociados:</span> <span className="text-[#3c4a40]">{c.documentos}</span></p>
-        <p><span className="font-semibold">Requisitos ISO 9001:2015:</span> <span className="text-[#3c4a40]">{c.requisitosISO}</span></p>
       </div>
     </div>
   </div>
