@@ -733,7 +733,6 @@ const CARACTERIZACIONES = {
         alcance: 'Inicia con la selección, sostenimiento y finaliza con el retiro del funcionario.',
         resultado: 'Personas con alto desempeño, competentes y satisfechas — Receptores: todos los procesos.',
         acuerdos: [
-            ['Alto desempeño', 'Evaluación de desempeño por encima del 80% (trabajadores oficiales)'],
             ['Competentes', 'Acuerdos de gestión para cargos directivos de libre nombramiento (80%); calificación de entrevista mayor o igual a 20'],
             ['Satisfechas', 'Evaluación de satisfacción de bienestar por encima de 3; clima laboral 60%'],
         ],
