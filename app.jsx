@@ -40,9 +40,9 @@ const ICONO_SECCION = {
   'Certificados curso de integridad': '🎓',
 };
 
-const TIPOS = { P: 'Procedimiento', I: 'Instructivo', F: 'Formato', M: 'Manual / Política' };
+const TIPOS = { P: 'Procedimiento', I: 'Instructivo', F: 'Formato', M: 'Manual / Política', C: 'Caracterización' };
 const tipoDeCodigo = (codigo) => {
-  const m = /^[A-Z]+-([PIFM])/.exec(codigo || '');
+  const m = /^[A-Z]+-\s?([PIFMC])/.exec(codigo || '');
   return m ? TIPOS[m[1]] : 'Documento';
 };
 
@@ -852,33 +852,60 @@ const CARACTERIZACIONES = {
   },
 };
 
+// Índice de búsqueda: absolutamente todos los documentos del sistema.
+// Une el inventario de "Documentos Word" con las caracterizaciones de cada
+// proceso y los informes de referencia. Cada entrada sabe abrirse sola:
+// url = archivo en SharePoint; ruta = vista del portal cuando no hay archivo.
+const DOCS_TODOS = [
+  ...DOCUMENTOS.map((d) => ({ ...d, url: enlaceDoc(d.archivo) })),
+  ...Object.entries(CARACTERIZACIONES).map(([sigla, c]) => ({
+    codigo: c.codigo,
+    nombre: `Caracterización ${PROCESOS.find((p) => p.sigla === sigla)?.nombre || sigla}`,
+    proceso: sigla,
+    url: c.archivo ? enlaceCarpeta(c.archivo[0]) + '/' + encodeURIComponent(c.archivo[1]) : null,
+    ruta: `proceso/${sigla}`,
+  })),
+  { codigo: null, nombre: 'Seguimiento a la Gestión del Riesgo — Mapa de Riesgos (vigencia 2025)', origen: 'Documentos del SGC', url: ENLACE_SEGUIMIENTO_RIESGOS, ruta: 'riesgos' },
+  { codigo: null, nombre: 'Indicadores para Plan Estratégico', origen: 'Sitio Plan Estratégico', url: ENLACE_INDICADORES_PLAN, ruta: 'indicadores' },
+];
+
+// Texto en el que busca cada buscador (código + nombre + proceso/origen).
+const textoBuscable = (d) => [d.codigo, d.nombre, PROCESOS.find((p) => p.sigla === d.proceso)?.nombre, d.origen]
+  .filter(Boolean).join(' ').toLowerCase();
+
 /* ===== 3. Componentes ===== */
 
 const Codigo = ({ children }) => children
   ? <span className="f-mono text-xs font-bold px-1.5 py-0.5 rounded bg-[#14231B] text-[#B5E048]">{children}</span>
   : <span className="f-mono text-xs px-1.5 py-0.5 rounded bg-[#DCE5DC] text-[#5b6b5f]">sin código</span>;
 
-const FilaDocumento = ({ doc }) => (
-  <div className="tarjeta flex items-center gap-3 bg-white rounded-xl border border-[#DCE5DC] px-4 py-3">
-    <Codigo>{doc.codigo}</Codigo>
-    <div className="flex-1 min-w-0">
-      <p className="font-medium leading-snug">{doc.nombre}</p>
-      <p className="text-xs text-[#5b6b5f]">{tipoDeCodigo(doc.codigo)} · {PROCESOS.find((p) => p.sigla === doc.proceso)?.nombre}</p>
+const FilaDocumento = ({ doc }) => {
+  // Destino: archivo en SharePoint si existe; si no, la vista del portal.
+  const url = doc.url || (doc.archivo && !Array.isArray(doc.archivo) ? enlaceDoc(doc.archivo) : null);
+  return (
+    <div className="tarjeta flex items-center gap-3 bg-white rounded-xl border border-[#DCE5DC] px-4 py-3">
+      <Codigo>{doc.codigo}</Codigo>
+      <div className="flex-1 min-w-0">
+        <p className="font-medium leading-snug">{doc.nombre}</p>
+        <p className="text-xs text-[#5b6b5f]">{[tipoDeCodigo(doc.codigo), PROCESOS.find((p) => p.sigla === doc.proceso)?.nombre || doc.origen].filter(Boolean).join(' · ')}</p>
+      </div>
+      {url
+        ? <a href={url} target="_blank" rel="noopener"
+             className="text-sm font-semibold text-[#1E6B47] hover:text-[#144D33] whitespace-nowrap">Abrir ↗</a>
+        : <a href={'#/' + doc.ruta}
+             className="text-sm font-semibold text-[#1E6B47] hover:text-[#144D33] whitespace-nowrap">Ver ↗</a>}
     </div>
-    {doc.estado === 'aprobacion'
-      ? <span className="text-xs font-semibold text-[#8A5A2C] bg-[#F4A93C]/20 border border-[#F4A93C]/50 rounded-full px-3 py-1 whitespace-nowrap">En aprobación</span>
-      : <a href={enlaceDoc(doc.archivo)} target="_blank" rel="noopener"
-           className="text-sm font-semibold text-[#1E6B47] hover:text-[#144D33] whitespace-nowrap">Abrir ↗</a>}
-  </div>
-);
+  );
+};
 
 const Buscador = ({ irA }) => {
   const [q, setQ] = useState('');
+  // Busca sobre TODOS los documentos del sistema (DOCS_TODOS), sin tope de
+  // resultados: si hay muchas coincidencias, la lista se desplaza.
   const resultados = useMemo(() => {
     const t = q.trim().toLowerCase();
     if (t.length < 2) return [];
-    return DOCUMENTOS.filter((d) =>
-      d.codigo.toLowerCase().includes(t) || d.nombre.toLowerCase().includes(t)).slice(0, 8);
+    return DOCS_TODOS.filter((d) => textoBuscable(d).includes(t));
   }, [q]);
   return (
     <div className="relative">
@@ -888,14 +915,24 @@ const Buscador = ({ irA }) => {
         className="w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-4 text-base shadow-[4px_4px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" />
       {resultados.length > 0 && (
         <div className="absolute z-20 mt-2 w-full bg-white border border-[#DCE5DC] rounded-2xl shadow-xl overflow-hidden">
-          {resultados.map((d) => (
-            <a key={d.codigo + d.nombre} href={enlaceDoc(d.archivo)} target="_blank" rel="noopener" onClick={() => setQ('')}
-              className="w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0">
-              <Codigo>{d.codigo}</Codigo>
-              <span className="text-sm flex-1 min-w-0">{d.nombre}</span>
-              <span className="text-sm font-semibold text-[#1E6B47] whitespace-nowrap">Abrir ↗</span>
-            </a>
-          ))}
+          <div className="max-h-80 overflow-y-auto">
+            {resultados.map((d) => d.url ? (
+              <a key={(d.codigo || '') + d.nombre} href={d.url} target="_blank" rel="noopener" onClick={() => setQ('')}
+                className="w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0">
+                <Codigo>{d.codigo}</Codigo>
+                <span className="text-sm flex-1 min-w-0">{d.nombre}</span>
+                <span className="text-sm font-semibold text-[#1E6B47] whitespace-nowrap">Abrir ↗</span>
+              </a>
+            ) : (
+              <a key={(d.codigo || '') + d.nombre} href={'#/' + d.ruta} onClick={() => setQ('')}
+                className="w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0">
+                <Codigo>{d.codigo}</Codigo>
+                <span className="text-sm flex-1 min-w-0">{d.nombre}</span>
+                <span className="text-sm font-semibold text-[#1E6B47] whitespace-nowrap">Ver ↗</span>
+              </a>
+            ))}
+          </div>
+          <p className="text-[11px] text-[#5b6b5f] px-4 py-1.5 border-t border-[#F0F3EE] bg-[#F7F8F4]">{resultados.length} de {DOCS_TODOS.length} documentos del sistema</p>
         </div>
       )}
     </div>
@@ -1442,12 +1479,11 @@ const VistaRiesgos = ({ irA }) => {
 };
 
 const VistaDocumentos = ({ irA }) => {
-  const [filtro, setFiltro] = useState('todos');
   const [q, setQ] = useState('');
   const t = q.trim().toLowerCase();
-  const docs = DOCUMENTOS.filter((d) => filtro === 'todos' || tipoDeCodigo(d.codigo) === filtro)
-    .filter((d) => t === '' || (d.codigo || '').toLowerCase().includes(t) || (d.nombre || '').toLowerCase().includes(t)
-      || (d.proceso || '').toLowerCase().includes(t))
+  // Lista y busca sobre TODOS los documentos del sistema (mismo índice que
+  // el buscador del inicio): inventario + caracterizaciones + informes.
+  const docs = DOCS_TODOS.filter((d) => t === '' || textoBuscable(d).includes(t))
     .slice().sort((a, b) => (a.codigo || 'ZZ').localeCompare(b.codigo || 'ZZ'));
   return (
     <div className="max-w-3xl mx-auto">
@@ -1463,18 +1499,10 @@ const VistaDocumentos = ({ irA }) => {
             className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5b6b5f] hover:text-[#14231B] text-lg font-bold">×</button>
         )}
       </div>
-      <div className="flex flex-wrap gap-2 mb-4">
-        {['todos', ...Object.values(TIPOS)].map((f) => (
-          <button key={f} onClick={() => setFiltro(f)}
-            className={`text-sm font-semibold rounded-full px-4 py-1.5 border-2 ${filtro === f ? 'bg-[#14231B] text-[#B5E048] border-[#14231B]' : 'bg-white border-[#DCE5DC] hover:border-[#1E6B47]'}`}>
-            {f === 'todos' ? 'Todos' : f}
-          </button>
-        ))}
-      </div>
       {docs.length > 0 ? (
-        <div className="space-y-2">{docs.map((d) => <FilaDocumento key={d.codigo + d.nombre} doc={d} />)}</div>
+        <div className="space-y-2">{docs.map((d) => <FilaDocumento key={(d.codigo || '') + d.nombre} doc={d} />)}</div>
       ) : (
-        <p className="text-sm text-[#5b6b5f] py-8 text-center">Sin resultados para «{q}». Prueba con otro código, nombre o categoría.</p>
+        <p className="text-sm text-[#5b6b5f] py-8 text-center">Sin resultados para «{q}». Prueba con otro código o nombre.</p>
       )}
     </div>
   );

@@ -34,9 +34,9 @@ const ICONO_SECCION = {
     'Actas de Comité': '🗒️', 'Autodiagnósticos': '🩺', 'Políticas MIPG': '📜',
     'Certificados curso de integridad': '🎓',
 };
-const TIPOS = { P: 'Procedimiento', I: 'Instructivo', F: 'Formato', M: 'Manual / Política' };
+const TIPOS = { P: 'Procedimiento', I: 'Instructivo', F: 'Formato', M: 'Manual / Política', C: 'Caracterización' };
 const tipoDeCodigo = (codigo) => {
-    const m = /^[A-Z]+-([PIFM])/.exec(codigo || '');
+    const m = /^[A-Z]+-\s?([PIFMC])/.exec(codigo || '');
     return m ? TIPOS[m[1]] : 'Documento';
 };
 /* ===== 2. Datos ===== */
@@ -831,38 +831,73 @@ const CARACTERIZACIONES = {
         requisitosISO: '4 Contexto · 5.3 Roles y responsabilidades · 6 Planificación · 7.1.2 Personas · 7.2 Competencias · 7.3 Toma de conciencia · 7.4 Comunicación · 7.5 Información documentada · 9 Evaluación del desempeño · 10 Mejora',
     },
 };
+// Índice de búsqueda: absolutamente todos los documentos del sistema.
+// Une el inventario de "Documentos Word" con las caracterizaciones de cada
+// proceso y los informes de referencia. Cada entrada sabe abrirse sola:
+// url = archivo en SharePoint; ruta = vista del portal cuando no hay archivo.
+const DOCS_TODOS = [
+    ...DOCUMENTOS.map((d) => ({ ...d, url: enlaceDoc(d.archivo) })),
+    ...Object.entries(CARACTERIZACIONES).map(([sigla, c]) => {
+        var _a;
+        return ({
+            codigo: c.codigo,
+            nombre: `Caracterización ${((_a = PROCESOS.find((p) => p.sigla === sigla)) === null || _a === void 0 ? void 0 : _a.nombre) || sigla}`,
+            proceso: sigla,
+            url: c.archivo ? enlaceCarpeta(c.archivo[0]) + '/' + encodeURIComponent(c.archivo[1]) : null,
+            ruta: `proceso/${sigla}`,
+        });
+    }),
+    { codigo: null, nombre: 'Seguimiento a la Gestión del Riesgo — Mapa de Riesgos (vigencia 2025)', origen: 'Documentos del SGC', url: ENLACE_SEGUIMIENTO_RIESGOS, ruta: 'riesgos' },
+    { codigo: null, nombre: 'Indicadores para Plan Estratégico', origen: 'Sitio Plan Estratégico', url: ENLACE_INDICADORES_PLAN, ruta: 'indicadores' },
+];
+// Texto en el que busca cada buscador (código + nombre + proceso/origen).
+const textoBuscable = (d) => {
+    var _a;
+    return [d.codigo, d.nombre, (_a = PROCESOS.find((p) => p.sigla === d.proceso)) === null || _a === void 0 ? void 0 : _a.nombre, d.origen]
+        .filter(Boolean).join(' ').toLowerCase();
+};
 /* ===== 3. Componentes ===== */
 const Codigo = ({ children }) => children
     ? React.createElement("span", { className: "f-mono text-xs font-bold px-1.5 py-0.5 rounded bg-[#14231B] text-[#B5E048]" }, children)
     : React.createElement("span", { className: "f-mono text-xs px-1.5 py-0.5 rounded bg-[#DCE5DC] text-[#5b6b5f]" }, "sin c\u00F3digo");
 const FilaDocumento = ({ doc }) => {
     var _a;
+    // Destino: archivo en SharePoint si existe; si no, la vista del portal.
+    const url = doc.url || (doc.archivo && !Array.isArray(doc.archivo) ? enlaceDoc(doc.archivo) : null);
     return (React.createElement("div", { className: "tarjeta flex items-center gap-3 bg-white rounded-xl border border-[#DCE5DC] px-4 py-3" },
         React.createElement(Codigo, null, doc.codigo),
         React.createElement("div", { className: "flex-1 min-w-0" },
             React.createElement("p", { className: "font-medium leading-snug" }, doc.nombre),
-            React.createElement("p", { className: "text-xs text-[#5b6b5f]" },
-                tipoDeCodigo(doc.codigo),
-                " \u00B7 ", (_a = PROCESOS.find((p) => p.sigla === doc.proceso)) === null || _a === void 0 ? void 0 :
-                _a.nombre)),
-        doc.estado === 'aprobacion'
-            ? React.createElement("span", { className: "text-xs font-semibold text-[#8A5A2C] bg-[#F4A93C]/20 border border-[#F4A93C]/50 rounded-full px-3 py-1 whitespace-nowrap" }, "En aprobaci\u00F3n")
-            : React.createElement("a", { href: enlaceDoc(doc.archivo), target: "_blank", rel: "noopener", className: "text-sm font-semibold text-[#1E6B47] hover:text-[#144D33] whitespace-nowrap" }, "Abrir \u2197")));
+            React.createElement("p", { className: "text-xs text-[#5b6b5f]" }, [tipoDeCodigo(doc.codigo), ((_a = PROCESOS.find((p) => p.sigla === doc.proceso)) === null || _a === void 0 ? void 0 : _a.nombre) || doc.origen].filter(Boolean).join(' · '))),
+        url
+            ? React.createElement("a", { href: url, target: "_blank", rel: "noopener", className: "text-sm font-semibold text-[#1E6B47] hover:text-[#144D33] whitespace-nowrap" }, "Abrir \u2197")
+            : React.createElement("a", { href: '#/' + doc.ruta, className: "text-sm font-semibold text-[#1E6B47] hover:text-[#144D33] whitespace-nowrap" }, "Ver \u2197")));
 };
 const Buscador = ({ irA }) => {
     const [q, setQ] = useState('');
+    // Busca sobre TODOS los documentos del sistema (DOCS_TODOS), sin tope de
+    // resultados: si hay muchas coincidencias, la lista se desplaza.
     const resultados = useMemo(() => {
         const t = q.trim().toLowerCase();
         if (t.length < 2)
             return [];
-        return DOCUMENTOS.filter((d) => d.codigo.toLowerCase().includes(t) || d.nombre.toLowerCase().includes(t)).slice(0, 8);
+        return DOCS_TODOS.filter((d) => textoBuscable(d).includes(t));
     }, [q]);
     return (React.createElement("div", { className: "relative" },
         React.createElement("input", { value: q, onChange: (e) => setQ(e.target.value), placeholder: "Buscar por c\u00F3digo o nombre\u2026", "aria-label": "Buscar documento del SGC", className: "w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-4 text-base shadow-[4px_4px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" }),
-        resultados.length > 0 && (React.createElement("div", { className: "absolute z-20 mt-2 w-full bg-white border border-[#DCE5DC] rounded-2xl shadow-xl overflow-hidden" }, resultados.map((d) => (React.createElement("a", { key: d.codigo + d.nombre, href: enlaceDoc(d.archivo), target: "_blank", rel: "noopener", onClick: () => setQ(''), className: "w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0" },
-            React.createElement(Codigo, null, d.codigo),
-            React.createElement("span", { className: "text-sm flex-1 min-w-0" }, d.nombre),
-            React.createElement("span", { className: "text-sm font-semibold text-[#1E6B47] whitespace-nowrap" }, "Abrir \u2197"))))))));
+        resultados.length > 0 && (React.createElement("div", { className: "absolute z-20 mt-2 w-full bg-white border border-[#DCE5DC] rounded-2xl shadow-xl overflow-hidden" },
+            React.createElement("div", { className: "max-h-80 overflow-y-auto" }, resultados.map((d) => d.url ? (React.createElement("a", { key: (d.codigo || '') + d.nombre, href: d.url, target: "_blank", rel: "noopener", onClick: () => setQ(''), className: "w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0" },
+                React.createElement(Codigo, null, d.codigo),
+                React.createElement("span", { className: "text-sm flex-1 min-w-0" }, d.nombre),
+                React.createElement("span", { className: "text-sm font-semibold text-[#1E6B47] whitespace-nowrap" }, "Abrir \u2197"))) : (React.createElement("a", { key: (d.codigo || '') + d.nombre, href: '#/' + d.ruta, onClick: () => setQ(''), className: "w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0" },
+                React.createElement(Codigo, null, d.codigo),
+                React.createElement("span", { className: "text-sm flex-1 min-w-0" }, d.nombre),
+                React.createElement("span", { className: "text-sm font-semibold text-[#1E6B47] whitespace-nowrap" }, "Ver \u2197"))))),
+            React.createElement("p", { className: "text-[11px] text-[#5b6b5f] px-4 py-1.5 border-t border-[#F0F3EE] bg-[#F7F8F4]" },
+                resultados.length,
+                " de ",
+                DOCS_TODOS.length,
+                " documentos del sistema")))));
 };
 // Envuelve una tabla ancha con desplazamiento horizontal y, en móvil, una
 // sombra en el borde derecho + micro-etiqueta que avisan que se puede deslizar.
@@ -1191,12 +1226,11 @@ const VistaRiesgos = ({ irA }) => {
             React.createElement("p", { className: "text-xs text-white/60 mt-3" }, "Resumen orientativo del informe de seguimiento; ante cualquier diferencia, manda el documento oficial aprobado por la Direcci\u00F3n."))));
 };
 const VistaDocumentos = ({ irA }) => {
-    const [filtro, setFiltro] = useState('todos');
     const [q, setQ] = useState('');
     const t = q.trim().toLowerCase();
-    const docs = DOCUMENTOS.filter((d) => filtro === 'todos' || tipoDeCodigo(d.codigo) === filtro)
-        .filter((d) => t === '' || (d.codigo || '').toLowerCase().includes(t) || (d.nombre || '').toLowerCase().includes(t)
-        || (d.proceso || '').toLowerCase().includes(t))
+    // Lista y busca sobre TODOS los documentos del sistema (mismo índice que
+    // el buscador del inicio): inventario + caracterizaciones + informes.
+    const docs = DOCS_TODOS.filter((d) => t === '' || textoBuscable(d).includes(t))
         .slice().sort((a, b) => (a.codigo || 'ZZ').localeCompare(b.codigo || 'ZZ'));
     return (React.createElement("div", { className: "max-w-3xl mx-auto" },
         React.createElement("button", { onClick: () => irA(''), className: "text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
@@ -1209,11 +1243,10 @@ const VistaDocumentos = ({ irA }) => {
         React.createElement("div", { className: "relative mb-4" },
             React.createElement("input", { value: q, onChange: (e) => setQ(e.target.value), placeholder: "Buscar por c\u00F3digo o nombre\u2026", "aria-label": "Buscar en el listado de documentos", className: "w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-3 text-base shadow-[3px_3px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" }),
             q && (React.createElement("button", { onClick: () => setQ(''), "aria-label": "Limpiar b\u00FAsqueda", className: "absolute right-3 top-1/2 -translate-y-1/2 text-[#5b6b5f] hover:text-[#14231B] text-lg font-bold" }, "\u00D7"))),
-        React.createElement("div", { className: "flex flex-wrap gap-2 mb-4" }, ['todos', ...Object.values(TIPOS)].map((f) => (React.createElement("button", { key: f, onClick: () => setFiltro(f), className: `text-sm font-semibold rounded-full px-4 py-1.5 border-2 ${filtro === f ? 'bg-[#14231B] text-[#B5E048] border-[#14231B]' : 'bg-white border-[#DCE5DC] hover:border-[#1E6B47]'}` }, f === 'todos' ? 'Todos' : f)))),
-        docs.length > 0 ? (React.createElement("div", { className: "space-y-2" }, docs.map((d) => React.createElement(FilaDocumento, { key: d.codigo + d.nombre, doc: d })))) : (React.createElement("p", { className: "text-sm text-[#5b6b5f] py-8 text-center" },
+        docs.length > 0 ? (React.createElement("div", { className: "space-y-2" }, docs.map((d) => React.createElement(FilaDocumento, { key: (d.codigo || '') + d.nombre, doc: d })))) : (React.createElement("p", { className: "text-sm text-[#5b6b5f] py-8 text-center" },
             "Sin resultados para \u00AB",
             q,
-            "\u00BB. Prueba con otro c\u00F3digo, nombre o categor\u00EDa."))));
+            "\u00BB. Prueba con otro c\u00F3digo o nombre."))));
 };
 const Inicio = ({ irA }) => (React.createElement("div", { className: "max-w-4xl mx-auto" },
     React.createElement("div", { className: "pt-6 pb-4 text-center" },
