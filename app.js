@@ -2181,7 +2181,7 @@ const App = () => {
         contenido = React.createElement(Inicio, { irA: irA, docs: docs });
     }
     return (React.createElement("div", { className: "min-h-screen flex flex-col" },
-        React.createElement("header", { className: "sticky top-0 z-30 bg-[#F7F8F4]/90 backdrop-blur border-b border-[#DCE5DC]" },
+        React.createElement("header", { className: "sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-[#DCE5DC]" },
             React.createElement("div", { className: "max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1" },
                 React.createElement("button", { onClick: () => irA(''), className: "f-display font-extrabold tracking-tight flex items-center gap-2 shrink-0 text-left" },
                     React.createElement("span", { className: "w-7 h-7 rounded-lg bg-[#1E6B47] text-[#B5E048] flex items-center justify-center text-sm shrink-0", "aria-hidden": "true" }, "A"),
