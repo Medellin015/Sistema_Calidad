@@ -220,7 +220,7 @@ const GUIAS = [
     {
         id: 'op', pregunta: '¿Cómo hago una orden de pedido interna?',
         corta: 'Crear una OP interna (contrato ACTIVA-ACTIVA)',
-        proceso: 'GA', fuente: 'GA-P01',
+        proceso: 'GA',
         resumen: 'Las OP internas son las órdenes de pedido de la propia ACTIVA. Se crean dentro del '
             + 'contrato ACTIVA-ACTIVA y su número es un consecutivo automático.',
         instructivo: {
@@ -284,7 +284,7 @@ const GUIAS = [
             ],
             resumenFinal: 'ACTIVA-ACTIVA → Nueva Orden → llenar Objeto, Área, Valor, Cantidad, Solicitante + correo @activa.com.co (y datos del contratista) → dejar CDP/RP vacíos → Guardar → luego Pedir CDP y Pedir RP.',
         },
-        docs: ['GA-P01', 'GF-P02', 'GF-P03', 'GF-P01', 'GA-P03'],
+        docs: ['GF-P02', 'GF-P03', 'GF-P01', 'GA-P03'],
     },
     {
         id: 'cdp', pregunta: '¿Cómo pido un CDP Interno?',
@@ -847,6 +847,10 @@ const DOCS_TODOS = [
             ruta: `proceso/${sigla}`,
         });
     }),
+    // Formato que vive en la carpeta Formatos del proceso (no en Documentos Word);
+    // es el que enlaza la guía de comisiones.
+    { codigo: 'GA-F015', nombre: 'Certificado de cumplimiento de actividades extramural', proceso: 'GA',
+        url: enlaceCarpeta('Gestión Administrativa', 'Formatos') + '/' + encodeURIComponent('GA-F015 Certificado de Cumplimiento.docx') },
     { codigo: null, nombre: 'Seguimiento a la Gestión del Riesgo — Mapa de Riesgos (vigencia 2025)', origen: 'Documentos del SGC', url: ENLACE_SEGUIMIENTO_RIESGOS, ruta: 'riesgos' },
     { codigo: null, nombre: 'Indicadores para Plan Estratégico', origen: 'Sitio Plan Estratégico', url: ENLACE_INDICADORES_PLAN, ruta: 'indicadores' },
 ];
