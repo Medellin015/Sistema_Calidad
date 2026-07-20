@@ -18,8 +18,8 @@
 const { useState, useMemo, useEffect } = React;
 
 /* ===== 1. Configuración ===== */
-const SITIO_SGC =
-  'https://activaparquesyeventos.sharepoint.com/sites/SistemadeGestindeCalidad';
+const HOST_SP = 'https://activaparquesyeventos.sharepoint.com';
+const SITIO_SGC = HOST_SP + '/sites/SistemadeGestindeCalidad';
 const BIBLIOTECA_SGC = SITIO_SGC + '/Documentos compartidos';
 const CARPETA_SGC_DEFAULT = BIBLIOTECA_SGC + '/Documentos Word/';
 
@@ -1577,34 +1577,59 @@ const entradasRepositorio = () => {
 // Une el inventario curado de "Documentos Word", las caracterizaciones, los
 // informes de referencia y el rastreo completo del repositorio; se eliminan
 // duplicados por URL (gana la entrada curada, que tiene mejor nombre).
-const DOCS_TODOS = (() => {
-  const candidatos = [
-    ...DOCUMENTOS.map((d) => ({ ...d, url: enlaceDoc(d.archivo) })),
-    ...Object.entries(CARACTERIZACIONES).map(([sigla, c]) => ({
-      codigo: c.codigo,
-      nombre: `Caracterización ${PROCESOS.find((p) => p.sigla === sigla)?.nombre || sigla}`,
-      proceso: sigla,
-      url: c.archivo ? enlaceCarpeta(c.archivo[0]) + '/' + encodeURIComponent(c.archivo[1]) : null,
-      ruta: `proceso/${sigla}`,
-    })),
-    { codigo: 'GA-F015', nombre: 'Certificado de cumplimiento de actividades extramural', proceso: 'GA',
-      url: enlaceCarpeta('Gestión Administrativa', 'Formatos') + '/' + encodeURIComponent('GA-F015 Certificado de Cumplimiento.docx') },
-    { codigo: null, nombre: 'Seguimiento a la Gestión del Riesgo — Mapa de Riesgos (vigencia 2025)', origen: 'Documentos del SGC', url: ENLACE_SEGUIMIENTO_RIESGOS, ruta: 'riesgos' },
-    { codigo: null, nombre: 'Indicadores para Plan Estratégico', origen: 'Sitio Plan Estratégico', url: ENLACE_INDICADORES_PLAN, ruta: 'indicadores' },
-    { codigo: null, nombre: 'Listado maestro de documentos', origen: 'Repositorio SGC',
-      url: encodeURI(BIBLIOTECA_SGC + '/') + encodeURIComponent('LISTADO MAESTRO DE DOCUMENTOS.xlsx') },
-    { codigo: null, nombre: 'Membrete ACTIVA', origen: 'Repositorio SGC',
-      url: encodeURI(BIBLIOTECA_SGC + '/') + encodeURIComponent('Membrete ACTIVA.docx') },
-    ...entradasRepositorio(),
-  ];
+// Clave de deduplicación: el destino (archivo en SharePoint o ruta del portal).
+const claveDoc = (d) => d.url || 'ruta:' + d.ruta + ':' + d.codigo;
+const dedupeDocs = (lista) => {
   const vistos = new Set();
-  return candidatos.filter((d) => {
-    const clave = d.url || 'ruta:' + d.ruta + ':' + d.codigo;
-    if (vistos.has(clave)) return false;
-    vistos.add(clave);
+  return lista.filter((d) => {
+    const k = claveDoc(d);
+    if (vistos.has(k)) return false;
+    vistos.add(k);
     return true;
   });
-})();
+};
+
+// Índice de RESPALDO horneado en la app (rastreo del repositorio). Se usa si
+// documentos.json no está disponible; así el buscador nunca queda vacío.
+const DOCS_FALLBACK = dedupeDocs([
+  ...DOCUMENTOS.map((d) => ({ ...d, url: enlaceDoc(d.archivo) })),
+  ...Object.entries(CARACTERIZACIONES).map(([sigla, c]) => ({
+    codigo: c.codigo,
+    nombre: `Caracterización ${PROCESOS.find((p) => p.sigla === sigla)?.nombre || sigla}`,
+    proceso: sigla,
+    url: c.archivo ? enlaceCarpeta(c.archivo[0]) + '/' + encodeURIComponent(c.archivo[1]) : null,
+    ruta: `proceso/${sigla}`,
+  })),
+  { codigo: 'GA-F015', nombre: 'Certificado de cumplimiento de actividades extramural', proceso: 'GA',
+    url: enlaceCarpeta('Gestión Administrativa', 'Formatos') + '/' + encodeURIComponent('GA-F015 Certificado de Cumplimiento.docx') },
+  { codigo: null, nombre: 'Seguimiento a la Gestión del Riesgo — Mapa de Riesgos (vigencia 2025)', origen: 'Documentos del SGC', url: ENLACE_SEGUIMIENTO_RIESGOS, ruta: 'riesgos' },
+  { codigo: null, nombre: 'Indicadores para Plan Estratégico', origen: 'Sitio Plan Estratégico', url: ENLACE_INDICADORES_PLAN, ruta: 'indicadores' },
+  { codigo: null, nombre: 'Listado maestro de documentos', origen: 'Repositorio SGC',
+    url: encodeURI(BIBLIOTECA_SGC + '/') + encodeURIComponent('LISTADO MAESTRO DE DOCUMENTOS.xlsx') },
+  { codigo: null, nombre: 'Membrete ACTIVA', origen: 'Repositorio SGC',
+    url: encodeURI(BIBLIOTECA_SGC + '/') + encodeURIComponent('Membrete ACTIVA.docx') },
+  ...entradasRepositorio(),
+]);
+
+// Entradas de NAVEGACIÓN INTERNA del portal (tienen ruta): un flujo sobre la
+// biblioteca no las puede generar, así que se conservan siempre al fusionar
+// con documentos.json (caracterizaciones y accesos a Riesgos/Indicadores).
+const PORTAL_EXTRAS = DOCS_FALLBACK.filter((d) => d.ruta);
+
+// Normaliza una entrada de documentos.json (tolera campos faltantes/extra).
+// El enlace puede venir ya como `url` (absoluta) o como `path` (ruta del
+// archivo relativa al servidor, p. ej. "/sites/.../Formatos/SBS-F31 ....xlsx"):
+// esta última es la que produce fácilmente el flujo de Power Automate y aquí
+// se codifica y se convierte en URL absoluta.
+const urlDesdePath = (path) => HOST_SP + encodeURI(path).replace(/#/g, '%23').replace(/\?/g, '%3F');
+const normalizarDoc = (d) => ({
+  codigo: (d && d.codigo) || null,
+  nombre: (d && (d.nombre || d.codigo)) || '(sin nombre)',
+  proceso: (d && d.proceso) || undefined,
+  origen: (d && d.origen) || undefined,
+  url: (d && d.url) || (d && d.path ? urlDesdePath(d.path) : null),
+  ruta: (d && d.ruta) || undefined,
+});
 
 // Texto en el que busca cada buscador (código + nombre + proceso/origen).
 const textoBuscable = (d) => [d.codigo, d.nombre, PROCESOS.find((p) => p.sigla === d.proceso)?.nombre, d.origen]
@@ -1635,15 +1660,15 @@ const FilaDocumento = ({ doc }) => {
   );
 };
 
-const Buscador = ({ irA }) => {
+const Buscador = ({ irA, docs = DOCS_FALLBACK }) => {
   const [q, setQ] = useState('');
-  // Busca sobre TODOS los documentos del sistema (DOCS_TODOS), sin tope de
-  // resultados: si hay muchas coincidencias, la lista se desplaza.
+  // Busca sobre TODOS los documentos del sistema (índice cargado en runtime,
+  // con respaldo horneado), sin tope de resultados: la lista se desplaza.
   const resultados = useMemo(() => {
     const t = q.trim().toLowerCase();
     if (t.length < 2) return [];
-    return DOCS_TODOS.filter((d) => textoBuscable(d).includes(t));
-  }, [q]);
+    return docs.filter((d) => textoBuscable(d).includes(t));
+  }, [q, docs]);
   return (
     <div className="relative">
       <input value={q} onChange={(e) => setQ(e.target.value)}
@@ -1669,7 +1694,7 @@ const Buscador = ({ irA }) => {
               </a>
             ))}
           </div>
-          <p className="text-[11px] text-[#5b6b5f] px-4 py-1.5 border-t border-[#F0F3EE] bg-[#F7F8F4]">{resultados.length} de {DOCS_TODOS.length} documentos del sistema</p>
+          <p className="text-[11px] text-[#5b6b5f] px-4 py-1.5 border-t border-[#F0F3EE] bg-[#F7F8F4]">{resultados.length} de {docs.length} documentos del sistema</p>
         </div>
       )}
     </div>
@@ -2215,17 +2240,17 @@ const VistaRiesgos = ({ irA }) => {
   );
 };
 
-const VistaDocumentos = ({ irA }) => {
+const VistaDocumentos = ({ irA, docs = DOCS_FALLBACK }) => {
   const [q, setQ] = useState('');
   const t = q.trim().toLowerCase();
   // Lista y busca sobre TODOS los documentos del sistema (mismo índice que
   // el buscador del inicio): inventario + caracterizaciones + informes.
-  const docs = DOCS_TODOS.filter((d) => t === '' || textoBuscable(d).includes(t))
+  const visibles = docs.filter((d) => t === '' || textoBuscable(d).includes(t))
     .slice().sort((a, b) => (a.codigo || 'ZZ').localeCompare(b.codigo || 'ZZ'));
   return (
     <div className="max-w-3xl mx-auto">
       <button onClick={() => irA('')} className="text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
-      <h2 className="f-display text-3xl font-extrabold mb-4">Todos los documentos <span className="text-[#5b6b5f] text-xl font-semibold">({docs.length})</span></h2>
+      <h2 className="f-display text-3xl font-extrabold mb-4">Todos los documentos <span className="text-[#5b6b5f] text-xl font-semibold">({visibles.length})</span></h2>
       <div className="relative mb-4">
         <input value={q} onChange={(e) => setQ(e.target.value)}
           placeholder="Buscar por código o nombre…"
@@ -2236,8 +2261,8 @@ const VistaDocumentos = ({ irA }) => {
             className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5b6b5f] hover:text-[#14231B] text-lg font-bold">×</button>
         )}
       </div>
-      {docs.length > 0 ? (
-        <div className="space-y-2">{docs.map((d) => <FilaDocumento key={d.url || d.ruta} doc={d} />)}</div>
+      {visibles.length > 0 ? (
+        <div className="space-y-2">{visibles.map((d) => <FilaDocumento key={d.url || d.ruta} doc={d} />)}</div>
       ) : (
         <p className="text-sm text-[#5b6b5f] py-8 text-center">Sin resultados para «{q}». Prueba con otro código o nombre.</p>
       )}
@@ -2245,7 +2270,7 @@ const VistaDocumentos = ({ irA }) => {
   );
 };
 
-const Inicio = ({ irA }) => (
+const Inicio = ({ irA, docs }) => (
   <div className="max-w-4xl mx-auto">
     {/* El mapa de procesos es la puerta de entrada: va arriba de todo */}
     <div className="pt-6 pb-4 text-center">
@@ -2265,7 +2290,7 @@ const Inicio = ({ irA }) => (
         </button>
       ))}
     </div>
-    <Buscador irA={irA} />
+    <Buscador irA={irA} docs={docs} />
     <div className="mt-3 flex justify-end gap-5">
       <button onClick={() => irA('riesgos')} className="text-sm font-semibold text-[#1E6B47] hover:underline">
         Mapa de riesgos →
@@ -2373,10 +2398,26 @@ const rutaActual = () => decodeURIComponent((window.location.hash || '#/').repla
 
 const App = () => {
   const [ruta, setRuta] = useState(rutaActual());
+  // Índice de documentos: parte del respaldo horneado y, si existe
+  // documentos.json (generado por el flujo automático), lo adopta. Ante
+  // cualquier fallo (offline, file://, 404) se queda con el respaldo.
+  const [docs, setDocs] = useState(DOCS_FALLBACK);
   useEffect(() => {
     const alCambiar = () => { setRuta(rutaActual()); window.scrollTo(0, 0); };
     window.addEventListener('hashchange', alCambiar);
     return () => window.removeEventListener('hashchange', alCambiar);
+  }, []);
+  useEffect(() => {
+    let vivo = true;
+    fetch('documentos.json', { cache: 'no-store' })
+      .then((r) => r.ok ? r.json() : Promise.reject(r.status))
+      .then((data) => {
+        if (!vivo || !Array.isArray(data) || data.length === 0) return;
+        const entradas = data.map(normalizarDoc).filter((d) => d.url || d.ruta);
+        setDocs(dedupeDocs([...PORTAL_EXTRAS, ...entradas]));
+      })
+      .catch(() => { /* respaldo: se conserva DOCS_FALLBACK */ });
+    return () => { vivo = false; };
   }, []);
   // El porqué del hash: permite compartir enlaces directos (#/guia/rp) sin
   // servidor ni router; funciona abriendo el archivo o desde GitHub Pages.
@@ -2390,7 +2431,7 @@ const App = () => {
     // PE se fusionó con OE; los enlaces viejos siguen funcionando.
     contenido = <VistaProceso sigla={parametro === 'PE' ? 'OE' : parametro} irA={irA} />;
   } else if (seccion === 'documentos') {
-    contenido = <VistaDocumentos irA={irA} />;
+    contenido = <VistaDocumentos irA={irA} docs={docs} />;
   } else if (seccion === 'riesgos') {
     contenido = <VistaRiesgos irA={irA} />;
   } else if (seccion === 'organigrama') {
@@ -2398,7 +2439,7 @@ const App = () => {
   } else if (seccion === 'indicadores') {
     contenido = <VistaIndicadores irA={irA} />;
   } else {
-    contenido = <Inicio irA={irA} />;
+    contenido = <Inicio irA={irA} docs={docs} />;
   }
 
   return (
