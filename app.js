@@ -1944,7 +1944,7 @@ const MapaCalorRiesgos = () => {
     const subieron = TODOS_RIESGOS.filter((r) => r.zr !== 'N/D' && idx(r.zr) > idx(r.zi)).length;
     const sinDato = TODOS_RIESGOS.filter((r) => r.zr === 'N/D').length;
     return (React.createElement("section", { className: "mt-8" },
-        React.createElement("h3", { className: "f-display text-xl font-bold mb-1" }, "Mapa de calor: de la zona inherente a la residual"),
+        React.createElement("h3", { className: "f-display text-xl font-bold mb-1" }, "Mapa de calor"),
         React.createElement("p", { className: "text-sm text-[#3c4a40] mb-3 max-w-2xl" },
             "Cada celda cuenta los riesgos que estaban en la zona de la fila (antes de controles) y quedaron en la de la columna (despu\u00E9s). ",
             bajaron,

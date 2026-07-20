@@ -2167,7 +2167,7 @@ const MapaCalorRiesgos = () => {
   const sinDato = TODOS_RIESGOS.filter((r) => r.zr === 'N/D').length;
   return (
     <section className="mt-8">
-      <h3 className="f-display text-xl font-bold mb-1">Mapa de calor: de la zona inherente a la residual</h3>
+      <h3 className="f-display text-xl font-bold mb-1">Mapa de calor</h3>
       <p className="text-sm text-[#3c4a40] mb-3 max-w-2xl">
         Cada celda cuenta los riesgos que estaban en la zona de la fila (antes de
         controles) y quedaron en la de la columna (después). {bajaron} de {TODOS_RIESGOS.length} riesgos
