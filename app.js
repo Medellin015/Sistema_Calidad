@@ -63,7 +63,7 @@ const FRANJAS = [
                 secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
             { sigla: 'GOP', nombre: 'Gestión de Operaciones',
                 carpeta: 'Gestión de Operaciones',
-                secciones: [S('Procedimientos'), S('Formatos'), S('Instructivos')] },
+                secciones: [S('Procedimientos'), S('Formatos')] },
             // Proceso nuevo: aún no tiene carpeta en SharePoint ni documentos.
             { sigla: 'GP', nombre: 'Gestión de Parques', enConstruccion: true,
                 carpeta: '', secciones: [] },
@@ -140,7 +140,6 @@ const DOCUMENTOS = [
     { codigo: 'EVEN-P01', nombre: 'Procedimiento de eventos propios', archivo: 'EVEN-P01 Procedimiento Eventos Propios.docx', proceso: 'GOP', destacado: true },
     { codigo: 'EV-P02', nombre: 'Procedimiento de auditorías internas', archivo: 'EV-P02 Procedimiento Auditorías Internas.docx', proceso: 'CI' },
     // — Operaciones
-    { codigo: 'GOP-I05', nombre: 'Instructivo Comité de Asignación', archivo: 'GOP-I05 Instructivo Comité de Asignación.docx', proceso: 'GOP' },
     { codigo: 'GOP-P10', nombre: 'Soluciones para el suministro de bienes y servicios', archivo: 'GOP-P10 Soluciones para el suministro de bienes y servicios.docx', proceso: 'GOP' },
     // — Financiera
     { codigo: 'GF-P01', nombre: 'Procedimiento de pagos', archivo: 'GF-P01 Procedimiento de pagos.doc', proceso: 'GF', destacado: true },
@@ -602,7 +601,7 @@ const CARACTERIZACIONES = {
         indicadores: ['Realizar eventos propios durante la anualidad (Plan Estratégico)', 'Nivel de satisfacción del cliente medido a través de encuesta (Plan Estratégico)'],
         riesgos: ['X02 — Órdenes internas (POL-F10) sin aprobación formal del director de área', 'M04 — Afectación de imagen institucional por fallas operativas en eventos de alto perfil', 'M07 — Eventos climáticos extremos que afecten la operación logística al aire libre'],
         recursos: { humanos: 'Gestor de Operaciones; profesionales y contratistas de operación logística', fisicos: 'Aplicativo de Órdenes de Pedido; herramientas ofimáticas; equipos e infraestructura de eventos' },
-        documentos: 'GOP-P10 Soluciones para el suministro de bienes y servicios; EV-P01 Procedimiento de eventos propios; GOP-I05 Instructivo Comité de Asignación',
+        documentos: 'GOP-P10 Soluciones para el suministro de bienes y servicios; EV-P01 Procedimiento de eventos propios',
         requisitosISO: '8.1 Planificación y control operacional · 8.2 Requisitos para los productos y servicios · 8.5 Producción y provisión del servicio · 9.1.2 Satisfacción del cliente',
     },
     GP: {
@@ -886,7 +885,6 @@ const REPO_ARCHIVOS = {
             "GF-P05 Procedimiento para liquidación y pago de impuestos, tasas y estampillas.docx",
             "GF-P06 Procedimiento de facturacion y cobro de cartera.docx",
             "GF-P07 Procedimiento de autorización pagos desde cuenta supervisada.docx",
-            "GOP-I05 Instructivo Comité de Asignación.docx",
             "GOP-P10 Soluciones para el suministro de bienes y servicios.docx",
             "GT-I01 Instructivo para la concertación de acuerdos de gestión.docx",
             "GT-P01 Procedimiento de reclutamiento, selección y vinculación de personal.docx",
@@ -1194,9 +1192,6 @@ const REPO_ARCHIVOS = {
             "GOP-F01 Solicitud de Bienes y Servicios.xlsx",
             "GOP-F02 Adición Solicitud de Bienes y Servicios.xlsx.docx",
             "GOP-F03 Formato de Ampliación Plazo SBS.docx",
-        ],
-        "Instructivos": [
-            "GOP-I05 Instructivo Comité de Asignación.pdf",
         ],
         "Procedimientos": [
             "GOP-P10 Soluciones para el suministro de bienes y servicios.pdf",
