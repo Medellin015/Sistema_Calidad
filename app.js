@@ -193,7 +193,7 @@ const DOCUMENTOS = [
 ];
 // Colores de "señal" por responsable dentro del sendero.
 const ROLES = {
-    solicitante: { nombre: 'Tú (solicitante)', color: '#1E6B47' },
+    solicitante: { nombre: 'Tú (solicitante)', color: '#008840' },
     area: { nombre: 'Área responsable', color: '#2C5D8A' },
     financiera: { nombre: 'Gestión Financiera', color: '#8A5A2C' },
     documental: { nombre: 'Gestión Documental', color: '#5B4A8A' },
@@ -426,7 +426,7 @@ const GUIAS = [
 // Cada riesgo: [código, proceso, descripción, zona inherente, zona residual,
 // tratamiento]. Las zonas salen de P×I (escala de la política OE-M02).
 const ZONAS_RIESGO = {
-    'BAJO': { color: '#1E6B47', texto: '#FFFFFF', rango: '1–4' },
+    'BAJO': { color: '#008840', texto: '#FFFFFF', rango: '1–4' },
     'MEDIO': { color: '#C9A227', texto: '#14231B', rango: '5–30' },
     'SIGNIFICATIVO': { color: '#E07B2A', texto: '#FFFFFF', rango: '31–60' },
     'ALTO': { color: '#B5432E', texto: '#FFFFFF', rango: '61–80' },
@@ -1611,7 +1611,7 @@ const textoBuscable = (d) => {
 };
 /* ===== 3. Componentes ===== */
 const Codigo = ({ children }) => children
-    ? React.createElement("span", { className: "f-mono text-xs font-bold px-1.5 py-0.5 rounded bg-[#14231B] text-[#B5E048]" }, children)
+    ? React.createElement("span", { className: "f-mono text-xs font-bold px-1.5 py-0.5 rounded bg-[#14231B] text-[#A0C030]" }, children)
     : React.createElement("span", { className: "f-mono text-xs px-1.5 py-0.5 rounded bg-[#DCE5DC] text-[#5b6b5f]" }, "sin c\u00F3digo");
 const FilaDocumento = ({ doc }) => {
     var _a;
@@ -1623,8 +1623,8 @@ const FilaDocumento = ({ doc }) => {
             React.createElement("p", { className: "font-medium leading-snug break-words" }, doc.nombre),
             React.createElement("p", { className: "text-xs text-[#5b6b5f]" }, [tipoDeCodigo(doc.codigo), ((_a = PROCESOS.find((p) => p.sigla === doc.proceso)) === null || _a === void 0 ? void 0 : _a.nombre) || doc.origen].filter(Boolean).join(' · '))),
         url
-            ? React.createElement("a", { href: url, target: "_blank", rel: "noopener", className: "text-sm font-semibold text-[#1E6B47] hover:text-[#144D33] whitespace-nowrap" }, "Abrir \u2197")
-            : React.createElement("a", { href: '#/' + doc.ruta, className: "text-sm font-semibold text-[#1E6B47] hover:text-[#144D33] whitespace-nowrap" }, "Ver \u2197")));
+            ? React.createElement("a", { href: url, target: "_blank", rel: "noopener", className: "text-sm font-semibold text-[#008840] hover:text-[#00662F] whitespace-nowrap" }, "Abrir \u2197")
+            : React.createElement("a", { href: '#/' + doc.ruta, className: "text-sm font-semibold text-[#008840] hover:text-[#00662F] whitespace-nowrap" }, "Ver \u2197")));
 };
 const Buscador = ({ irA, docs = DOCS_FALLBACK }) => {
     const [q, setQ] = useState('');
@@ -1637,15 +1637,15 @@ const Buscador = ({ irA, docs = DOCS_FALLBACK }) => {
         return docs.filter((d) => textoBuscable(d).includes(t));
     }, [q, docs]);
     return (React.createElement("div", { className: "relative" },
-        React.createElement("input", { value: q, onChange: (e) => setQ(e.target.value), placeholder: "Buscar por c\u00F3digo o nombre\u2026", "aria-label": "Buscar documento del SGC", className: "w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-4 text-base shadow-[4px_4px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" }),
+        React.createElement("input", { value: q, onChange: (e) => setQ(e.target.value), placeholder: "Buscar por c\u00F3digo o nombre\u2026", "aria-label": "Buscar documento del SGC", className: "w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-4 text-base shadow-[4px_4px_0_#14231B] focus:outline-none focus:border-[#008840]" }),
         resultados.length > 0 && (React.createElement("div", { className: "absolute z-20 mt-2 w-full bg-white border border-[#DCE5DC] rounded-2xl shadow-xl overflow-hidden" },
             React.createElement("div", { className: "max-h-80 overflow-y-auto" }, resultados.map((d) => d.url ? (React.createElement("a", { key: d.url, href: d.url, target: "_blank", rel: "noopener", onClick: () => setQ(''), className: "w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0" },
                 React.createElement(Codigo, null, d.codigo),
                 React.createElement("span", { className: "text-sm flex-1 min-w-0 break-words" }, d.nombre),
-                React.createElement("span", { className: "text-sm font-semibold text-[#1E6B47] whitespace-nowrap" }, "Abrir \u2197"))) : (React.createElement("a", { key: '#/' + d.ruta, href: '#/' + d.ruta, onClick: () => setQ(''), className: "w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0" },
+                React.createElement("span", { className: "text-sm font-semibold text-[#008840] whitespace-nowrap" }, "Abrir \u2197"))) : (React.createElement("a", { key: '#/' + d.ruta, href: '#/' + d.ruta, onClick: () => setQ(''), className: "w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0" },
                 React.createElement(Codigo, null, d.codigo),
                 React.createElement("span", { className: "text-sm flex-1 min-w-0 break-words" }, d.nombre),
-                React.createElement("span", { className: "text-sm font-semibold text-[#1E6B47] whitespace-nowrap" }, "Ver \u2197"))))),
+                React.createElement("span", { className: "text-sm font-semibold text-[#008840] whitespace-nowrap" }, "Ver \u2197"))))),
             React.createElement("p", { className: "text-[11px] text-[#5b6b5f] px-4 py-1.5 border-t border-[#F0F3EE] bg-[#F7F8F4]" },
                 resultados.length,
                 " de ",
@@ -1695,7 +1695,7 @@ const Flujograma = ({ pasos }) => (React.createElement("div", { className: "send
                     "\u23F1 ",
                     paso.plazo))),
             React.createElement("p", { className: "text-sm text-[#3c4a40] leading-relaxed" }, paso.detalle),
-            paso.enlace && (React.createElement("a", { href: paso.enlace.url, target: "_blank", rel: "noopener", className: "mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#1E6B47] bg-[#B5E048]/25 border border-[#1E6B47]/40 rounded-lg px-3 py-1.5 hover:bg-[#B5E048]/45" },
+            paso.enlace && (React.createElement("a", { href: paso.enlace.url, target: "_blank", rel: "noopener", className: "mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#008840] bg-[#A0C030]/25 border border-[#008840]/40 rounded-lg px-3 py-1.5 hover:bg-[#A0C030]/45" },
                 "\uD83D\uDD17 ",
                 paso.enlace.texto,
                 " \u2197")),
@@ -1704,8 +1704,8 @@ const Flujograma = ({ pasos }) => (React.createElement("div", { className: "send
                     React.createElement("span", { className: "w-1.5 h-1.5 rounded-full bg-white/80" }),
                     rol.nombre)),
             paso.tipo === 'decision' && (React.createElement("div", { className: "mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2" },
-                React.createElement("div", { className: "rounded-xl border-2 border-[#1E6B47] bg-[#1E6B47]/5 px-3 py-2 text-sm" },
-                    React.createElement("span", { className: "font-bold text-[#1E6B47]" }, "S\u00ED \u2192"),
+                React.createElement("div", { className: "rounded-xl border-2 border-[#008840] bg-[#008840]/5 px-3 py-2 text-sm" },
+                    React.createElement("span", { className: "font-bold text-[#008840]" }, "S\u00ED \u2192"),
                     " ",
                     paso.si),
                 React.createElement("div", { className: "rounded-xl border-2 border-[#F4A93C] bg-[#F4A93C]/10 px-3 py-2 text-sm" },
@@ -1716,8 +1716,8 @@ const Flujograma = ({ pasos }) => (React.createElement("div", { className: "send
 // Instructivo paso a paso con casos (A/B), requisitos previos, avisos y
 // comparación final. Se usa en las guías que no son un flujograma lineal.
 const Instructivo = ({ data }) => (React.createElement("div", { className: "space-y-5" },
-    data.enlaceApp && (React.createElement("a", { href: data.enlaceApp, target: "_blank", rel: "noopener", className: "inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]" }, "\uD83D\uDD17 Abrir el aplicativo de \u00D3rdenes de Pedido \u2197")),
-    data.enlace && (React.createElement("a", { href: data.enlace.url, target: "_blank", rel: "noopener", className: "inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]" },
+    data.enlaceApp && (React.createElement("a", { href: data.enlaceApp, target: "_blank", rel: "noopener", className: "inline-flex items-center gap-2 rounded-xl bg-[#008840] text-white font-semibold px-4 py-2.5 hover:bg-[#00662F] shadow-[3px_3px_0_#14231B]" }, "\uD83D\uDD17 Abrir el aplicativo de \u00D3rdenes de Pedido \u2197")),
+    data.enlace && (React.createElement("a", { href: data.enlace.url, target: "_blank", rel: "noopener", className: "inline-flex items-center gap-2 rounded-xl bg-[#008840] text-white font-semibold px-4 py-2.5 hover:bg-[#00662F] shadow-[3px_3px_0_#14231B]" },
         "\uD83D\uDD17 ",
         data.enlace.texto,
         " \u2197")),
@@ -1728,7 +1728,7 @@ const Instructivo = ({ data }) => (React.createElement("div", { className: "spac
             React.createElement("p", { className: "text-sm font-semibold text-[#14231B] mb-0.5" }, "Antes de empezar"),
             React.createElement("p", { className: "text-sm text-[#3c4a40] leading-relaxed" }, c.antes),
             c.antesSub && (React.createElement("ul", { className: "mt-1.5 list-disc pl-5 text-sm text-[#3c4a40] space-y-1" }, c.antesSub.map((s, j) => React.createElement("li", { key: j }, s)))))),
-        c.pasos && (React.createElement("ol", { className: "list-decimal pl-5 space-y-2 text-sm text-[#3c4a40] marker:font-bold marker:text-[#1E6B47]" }, c.pasos.map((p, j) => {
+        c.pasos && (React.createElement("ol", { className: "list-decimal pl-5 space-y-2 text-sm text-[#3c4a40] marker:font-bold marker:text-[#008840]" }, c.pasos.map((p, j) => {
             const paso = typeof p === 'string' ? { texto: p } : p;
             return (React.createElement("li", { key: j, className: "leading-relaxed" },
                 paso.texto,
@@ -1746,14 +1746,14 @@ const Instructivo = ({ data }) => (React.createElement("div", { className: "spac
         c.aviso && (React.createElement("p", { className: "mt-2 rounded-lg bg-[#F4A93C]/15 border border-[#F4A93C]/50 px-2.5 py-1.5 text-sm text-[#8A5A2C]" },
             "\u26A0\uFE0F ",
             c.aviso)),
-        c.flujo && (React.createElement("p", { className: "mt-3 rounded-xl bg-[#1E6B47]/10 border border-[#1E6B47]/25 px-3 py-2 text-sm text-[#14231B] leading-relaxed" },
+        c.flujo && (React.createElement("p", { className: "mt-3 rounded-xl bg-[#008840]/10 border border-[#008840]/25 px-3 py-2 text-sm text-[#14231B] leading-relaxed" },
             "\u27A1\uFE0F ",
             c.flujo)),
-        c.nota && (React.createElement("p", { className: "mt-2 rounded-xl bg-[#B5E048]/25 border border-[#B5E048]/60 px-3 py-2 text-sm text-[#14231B] leading-relaxed" },
+        c.nota && (React.createElement("p", { className: "mt-2 rounded-xl bg-[#A0C030]/25 border border-[#A0C030]/60 px-3 py-2 text-sm text-[#14231B] leading-relaxed" },
             "\uD83D\uDCA1 ",
             c.nota))))),
-    data.resumenFinal && (React.createElement("div", { className: "rounded-2xl bg-[#B5E048]/25 border-2 border-[#1E6B47]/30 p-4" },
-        React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1" }, "Resumen r\u00E1pido"),
+    data.resumenFinal && (React.createElement("div", { className: "rounded-2xl bg-[#A0C030]/25 border-2 border-[#008840]/30 p-4" },
+        React.createElement("p", { className: "f-mono text-xs font-bold text-[#008840] uppercase tracking-widest mb-1" }, "Resumen r\u00E1pido"),
         React.createElement("p", { className: "text-sm text-[#14231B] leading-relaxed" }, data.resumenFinal))),
     data.comparacion && (React.createElement("div", { className: "bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5" },
         React.createElement("p", { className: "f-display font-semibold mb-2" }, data.comparacion.titulo),
@@ -1763,8 +1763,8 @@ const VistaGuia = ({ guia, irA }) => {
     const formatos = guia.formatos || [];
     const proceso = PROCESOS.find((p) => p.sigla === guia.proceso);
     return (React.createElement("div", { className: "max-w-3xl mx-auto" },
-        React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
-        React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1" },
+        React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#008840] mb-4" }, "\u2190 Volver al inicio"),
+        React.createElement("p", { className: "f-mono text-xs font-bold text-[#008840] uppercase tracking-widest mb-1" },
             "Gu\u00EDa",
             guia.fuente ? ` · fuente ${guia.fuente}` : ''),
         React.createElement("h2", { className: "f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-2" }, guia.pregunta),
@@ -1774,15 +1774,15 @@ const VistaGuia = ({ guia, irA }) => {
             React.createElement("p", { className: "f-display font-semibold mb-3" }, "Documentos oficiales de esta gu\u00EDa"),
             React.createElement("div", { className: "space-y-2" },
                 docs.map((d) => (React.createElement("div", { key: d.codigo, className: "flex items-center gap-3 text-sm" },
-                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048]" }, d.codigo),
+                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#A0C030]" }, d.codigo),
                     React.createElement("span", { className: "flex-1 text-white/90" }, d.nombre),
                     d.estado === 'aprobacion'
                         ? React.createElement("span", { className: "text-xs text-[#F4A93C]" }, "En aprobaci\u00F3n")
-                        : React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: enlaceDoc(d.archivo), target: "_blank", rel: "noopener" }, "Abrir \u2197")))),
+                        : React.createElement("a", { className: "font-semibold text-[#A0C030] hover:underline", href: enlaceDoc(d.archivo), target: "_blank", rel: "noopener" }, "Abrir \u2197")))),
                 formatos.map((f) => (React.createElement("div", { key: f.codigo || f.nombre, className: "flex items-center gap-3 text-sm" },
-                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048]" }, f.codigo || 'Formato'),
+                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#A0C030]" }, f.codigo || 'Formato'),
                     React.createElement("span", { className: "flex-1 text-white/90" }, f.nombre),
-                    React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: f.url, target: "_blank", rel: "noopener" }, "Abrir \u2197"))))),
+                    React.createElement("a", { className: "font-semibold text-[#A0C030] hover:underline", href: f.url, target: "_blank", rel: "noopener" }, "Abrir \u2197"))))),
             React.createElement("p", { className: "text-xs text-white/60 mt-3" },
                 "Esta gu\u00EDa es un resumen orientativo; ante cualquier diferencia, manda el procedimiento oficial. Proceso due\u00F1o: ", proceso === null || proceso === void 0 ? void 0 :
                 proceso.nombre,
@@ -1798,8 +1798,8 @@ const SeccionesProceso = ({ proceso }) => {
     return (React.createElement("div", { className: "mt-5" },
         React.createElement("div", { className: "flex items-baseline justify-between gap-3 mb-2" },
             React.createElement("h3", { className: "f-display text-lg font-semibold" }, "Carpetas del proceso en el repositorio"),
-            React.createElement("a", { href: enlaceCarpeta(proceso.carpeta), target: "_blank", rel: "noopener", className: "text-sm font-semibold text-[#1E6B47] hover:underline whitespace-nowrap" }, "Abrir carpeta \u2197")),
-        React.createElement("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-3" }, secciones.map((s) => (React.createElement("a", { key: s.nombre, target: "_blank", rel: "noopener", href: enlaceCarpeta(s.base || proceso.carpeta, s.carpeta || undefined), className: "tarjeta bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 flex flex-col items-start gap-1" },
+            React.createElement("a", { href: enlaceCarpeta(proceso.carpeta), target: "_blank", rel: "noopener", className: "text-sm font-semibold text-[#008840] hover:underline whitespace-nowrap" }, "Abrir carpeta \u2197")),
+        React.createElement("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-3" }, secciones.map((s) => (React.createElement("a", { key: s.nombre, target: "_blank", rel: "noopener", href: enlaceCarpeta(s.base || proceso.carpeta, s.carpeta || undefined), className: "tarjeta bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#008840] p-4 flex flex-col items-start gap-1" },
             React.createElement("span", { className: "text-2xl", "aria-hidden": "true" }, ICONO_SECCION[s.nombre] || '📁'),
             React.createElement("span", { className: "font-semibold leading-snug break-words hyphens-auto w-full" }, s.nombre),
             React.createElement("span", { className: "text-xs text-[#5b6b5f]" }, "Abrir en SharePoint \u2197")))))));
@@ -1807,7 +1807,7 @@ const SeccionesProceso = ({ proceso }) => {
 // Primera página de cada proceso: su caracterización.
 const VistaCaracterizacion = ({ proceso, c }) => (React.createElement("div", null,
     React.createElement("div", { className: "flex flex-wrap items-center gap-2 mb-4" },
-        React.createElement("span", { className: "f-mono text-xs font-bold px-2 py-1 rounded bg-[#14231B] text-[#B5E048]" }, c.codigo),
+        React.createElement("span", { className: "f-mono text-xs font-bold px-2 py-1 rounded bg-[#14231B] text-[#A0C030]" }, c.codigo),
         React.createElement("span", { className: "text-xs font-semibold text-[#5b6b5f]" },
             "Versi\u00F3n: ",
             c.version),
@@ -1816,17 +1816,17 @@ const VistaCaracterizacion = ({ proceso, c }) => (React.createElement("div", nul
             c.lider)),
     React.createElement("div", { className: "space-y-3" },
         React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-4" },
-            React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-1" }, "Objetivo"),
+            React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mb-1" }, "Objetivo"),
             React.createElement("p", { className: "text-sm leading-relaxed" }, c.objetivo),
-            React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mt-3 mb-1" }, "Alcance"),
+            React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mt-3 mb-1" }, "Alcance"),
             React.createElement("p", { className: "text-sm leading-relaxed" }, c.alcance),
-            React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mt-3 mb-1" }, "Resultado relevante"),
+            React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mt-3 mb-1" }, "Resultado relevante"),
             React.createElement("p", { className: "text-sm leading-relaxed" }, c.resultado)),
         React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-4" },
-            React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-2" }, "Requisitos ISO 9001:2015"),
+            React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mb-2" }, "Requisitos ISO 9001:2015"),
             React.createElement("p", { className: "text-sm leading-relaxed text-[#3c4a40]" }, c.requisitosISO)),
         React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-4" },
-            React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-2" }, "Ciclo PHVA"),
+            React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mb-2" }, "Ciclo PHVA"),
             React.createElement(TablaScroll, null,
                 React.createElement("table", { className: "w-full text-xs border-collapse min-w-[52rem]" },
                     React.createElement("thead", null,
@@ -1839,7 +1839,7 @@ const VistaCaracterizacion = ({ proceso, c }) => (React.createElement("div", nul
                             React.createElement("th", { className: "px-2 py-1.5 font-semibold" }, "Receptor"))),
                     React.createElement("tbody", null, c.phva.map((f, i) => (React.createElement("tr", { key: i, className: "border-t border-[#F0F3EE] align-top" },
                         React.createElement("td", { className: "px-2 py-1.5" },
-                            React.createElement("span", { className: "f-mono font-bold text-white bg-[#1E6B47] rounded px-1.5" }, f[0])),
+                            React.createElement("span", { className: "f-mono font-bold text-white bg-[#008840] rounded px-1.5" }, f[0])),
                         React.createElement("td", { className: "px-2 py-1.5 text-[#3c4a40]" }, f[1]),
                         React.createElement("td", { className: "px-2 py-1.5 text-[#3c4a40]" }, f[2]),
                         React.createElement("td", { className: "px-2 py-1.5 font-medium" }, f[3]),
@@ -1847,7 +1847,7 @@ const VistaCaracterizacion = ({ proceso, c }) => (React.createElement("div", nul
                         React.createElement("td", { className: "px-2 py-1.5 text-[#3c4a40]" }, f[5])))))))),
         React.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-3" },
             React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-4" },
-                React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-1.5" }, "Indicadores"),
+                React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mb-1.5" }, "Indicadores"),
                 React.createElement("ul", { className: "text-sm space-y-1 list-disc pl-4 text-[#3c4a40]" }, c.indicadores.map((x, i) => React.createElement("li", { key: i }, x)))),
             React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-4" },
                 React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#B5432E] uppercase tracking-widest mb-1.5" }, "Riesgos"),
@@ -1878,23 +1878,23 @@ const VALORES_INTEGRIDAD = [
 ];
 // Acceso al Código de Integridad: tarjeta clicable que se muestra en MIPG y
 // lleva a la vista propia #/codigo-integridad.
-const EntradaCodigoIntegridad = ({ irA }) => (React.createElement("button", { onClick: () => irA('codigo-integridad'), className: "tarjeta w-full text-left mb-6 bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 sm:p-5 flex items-center gap-4" },
+const EntradaCodigoIntegridad = ({ irA }) => (React.createElement("button", { onClick: () => irA('codigo-integridad'), className: "tarjeta w-full text-left mb-6 bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#008840] p-4 sm:p-5 flex items-center gap-4" },
     React.createElement("span", { className: "text-3xl shrink-0", "aria-hidden": "true" }, "\u2696\uFE0F"),
     React.createElement("span", { className: "flex-1 min-w-0" },
         React.createElement("span", { className: "f-display block text-lg font-bold text-[#14231B]" }, "\u00BFQu\u00E9 es el C\u00F3digo de Integridad?"),
         React.createElement("span", { className: "block text-sm text-[#5b6b5f] leading-snug" }, "Conoce el C\u00F3digo de Integridad y Buen Gobierno de ACTIVA y sus cinco valores del servicio p\u00FAblico.")),
-    React.createElement("span", { className: "text-sm font-semibold text-[#1E6B47] whitespace-nowrap" }, "Ingresar \u2192")));
+    React.createElement("span", { className: "text-sm font-semibold text-[#008840] whitespace-nowrap" }, "Ingresar \u2192")));
 // Vista propia del Código de Integridad (ruta #/codigo-integridad).
 const VistaCodigoIntegridad = ({ irA }) => (React.createElement("div", { className: "max-w-4xl mx-auto" },
-    React.createElement("button", { onClick: () => irA('proceso/MIPG'), className: "no-print text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver a MIPG"),
-    React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest" }, "MIPG \u00B7 Integridad"),
+    React.createElement("button", { onClick: () => irA('proceso/MIPG'), className: "no-print text-sm font-semibold text-[#008840] mb-4" }, "\u2190 Volver a MIPG"),
+    React.createElement("p", { className: "f-mono text-xs font-bold text-[#008840] uppercase tracking-widest" }, "MIPG \u00B7 Integridad"),
     React.createElement("h2", { className: "f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-3" }, "\u00BFQu\u00E9 es el C\u00F3digo de Integridad?"),
     React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-4 sm:p-5" },
         React.createElement("p", { className: "text-sm leading-relaxed text-[#3c4a40]" },
             "El ",
             React.createElement("span", { className: "font-semibold text-[#14231B]" }, "C\u00F3digo de Integridad y Buen Gobierno"),
             " de ACTIVA establece los principios, valores y lineamientos que orientan el comportamiento de los servidores p\u00FAblicos, trabajadores oficiales, contratistas y colaboradores de la entidad, en cumplimiento de la normativa vigente y en armon\u00EDa con el Conglomerado P\u00FAblico de la Gobernaci\u00F3n de Antioquia. Se implementa a partir del c\u00F3digo de valores del servicio p\u00FAblico definido por la Funci\u00F3n P\u00FAblica \u2014en l\u00EDnea con la OCDE y el Modelo Integrado de Planeaci\u00F3n y Gesti\u00F3n (MIPG)\u2014 y actualiza el c\u00F3digo adoptado por la entidad en 2023."),
-        React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mt-4 mb-2" }, "Los cinco valores"),
+        React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mt-4 mb-2" }, "Los cinco valores"),
         React.createElement("div", { className: "grid sm:grid-cols-2 gap-3" }, VALORES_INTEGRIDAD.map((v) => (React.createElement("div", { key: v.valor, className: "rounded-xl border border-[#DCE5DC] bg-[#F4F9EE] p-3" },
             React.createElement("p", { className: "font-bold text-[#14231B] flex items-center gap-2" },
                 React.createElement("span", { className: "text-lg", "aria-hidden": "true" }, v.icono),
@@ -1911,7 +1911,7 @@ const VistaCodigoIntegridad = ({ irA }) => (React.createElement("div", { classNa
                 ' ',
                 React.createElement("span", { className: "font-semibold" }, "Comit\u00E9 Institucional de Gesti\u00F3n y Desempe\u00F1o"),
                 ". Se articula con el mapa de riesgos y el Programa de Transparencia y \u00C9tica P\u00FAblica (PTEP)."),
-            React.createElement("a", { href: ENLACE_CODIGO_INTEGRIDAD, target: "_blank", rel: "noopener", className: "text-sm font-semibold text-white bg-[#1E6B47] rounded-full px-4 py-2 hover:bg-[#144D33] whitespace-nowrap" }, "Ver el C\u00F3digo de Integridad \u2197")))));
+            React.createElement("a", { href: ENLACE_CODIGO_INTEGRIDAD, target: "_blank", rel: "noopener", className: "text-sm font-semibold text-white bg-[#008840] rounded-full px-4 py-2 hover:bg-[#00662F] whitespace-nowrap" }, "Ver el C\u00F3digo de Integridad \u2197")))));
 const VistaProceso = ({ sigla, irA }) => {
     const proceso = PROCESOS.find((p) => p.sigla === sigla);
     const docs = DOCUMENTOS.filter((d) => d.proceso === sigla);
@@ -1922,27 +1922,27 @@ const VistaProceso = ({ sigla, irA }) => {
     if (!proceso)
         return React.createElement("p", { className: "text-center py-10" },
             "Proceso no encontrado. ",
-            React.createElement("button", { className: "text-[#1E6B47] font-semibold", onClick: () => irA('') }, "Volver"));
+            React.createElement("button", { className: "text-[#008840] font-semibold", onClick: () => irA('') }, "Volver"));
     const vistaDocumentos = (React.createElement("div", null,
         sigla === 'MIPG' && React.createElement(EntradaCodigoIntegridad, { irA: irA }),
         proceso.enConstruccion ? (React.createElement("div", { className: "text-center py-8" },
             React.createElement("p", { className: "text-5xl mb-3", "aria-hidden": "true" }, "\uD83D\uDEA7"),
             React.createElement("p", { className: "text-lg font-semibold text-[#8A5A2C]" }, "En construcci\u00F3n"),
             React.createElement("p", { className: "text-sm text-[#5b6b5f] mt-1 max-w-md mx-auto" }, "Este proceso est\u00E1 en estructuraci\u00F3n: pronto tendr\u00E1 su carpeta en el repositorio y sus documentos oficiales."))) : (React.createElement(SeccionesProceso, { proceso: proceso })),
-        guias.length > 0 && (React.createElement("div", { className: "mt-5 flex flex-wrap gap-2" }, guias.map((g) => (React.createElement("button", { key: g.id, onClick: () => irA(`guia/${g.id}`), className: "text-sm font-semibold bg-[#B5E048] text-[#14231B] rounded-full px-4 py-2 hover:bg-[#a3d13a]" }, g.pregunta))))),
+        guias.length > 0 && (React.createElement("div", { className: "mt-5 flex flex-wrap gap-2" }, guias.map((g) => (React.createElement("button", { key: g.id, onClick: () => irA(`guia/${g.id}`), className: "text-sm font-semibold bg-[#A0C030] text-[#14231B] rounded-full px-4 py-2 hover:bg-[#8AA828]" }, g.pregunta))))),
         docs.length > 0 && (React.createElement("div", { className: "mt-6" },
             React.createElement("h3", { className: "f-display text-lg font-semibold mb-2" }, "Documentos del inventario (Word)"),
             React.createElement("div", { className: "space-y-2" }, docs.map((d) => React.createElement(FilaDocumento, { key: d.codigo + d.nombre, doc: d })))))));
     return (React.createElement("div", { className: "max-w-4xl mx-auto" },
-        React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
+        React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#008840] mb-4" }, "\u2190 Volver al inicio"),
         React.createElement("div", { className: "mb-3" },
-            React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest" },
+            React.createElement("p", { className: "f-mono text-xs font-bold text-[#008840] uppercase tracking-widest" },
                 proceso.franja,
                 " \u00B7 ",
                 proceso.sigla),
             React.createElement("h2", { className: "f-display text-3xl font-extrabold leading-tight" }, proceso.nombre)),
         caract ? (React.createElement("div", null,
-            React.createElement("div", { className: "no-print flex gap-2 mb-4 border-b-2 border-[#DCE5DC]" }, [['caracterizacion', 'Caracterización'], ['documentos', 'Documentos y carpetas']].map(([id, nombre]) => (React.createElement("button", { key: id, onClick: () => setPestana(id), className: `text-sm font-bold px-4 py-2 rounded-t-xl ${pestana === id ? 'bg-[#1E6B47] text-white' : 'text-[#5b6b5f] hover:text-[#1E6B47]'}` }, nombre)))),
+            React.createElement("div", { className: "no-print flex gap-2 mb-4 border-b-2 border-[#DCE5DC]" }, [['caracterizacion', 'Caracterización'], ['documentos', 'Documentos y carpetas']].map(([id, nombre]) => (React.createElement("button", { key: id, onClick: () => setPestana(id), className: `text-sm font-bold px-4 py-2 rounded-t-xl ${pestana === id ? 'bg-[#008840] text-white' : 'text-[#5b6b5f] hover:text-[#008840]'}` }, nombre)))),
             pestana === 'caracterizacion' ? React.createElement(VistaCaracterizacion, { proceso: proceso, c: caract }) : vistaDocumentos)) : vistaDocumentos));
 };
 const ZonaBadge = ({ zona }) => {
@@ -1956,14 +1956,14 @@ const TablaKris = () => (React.createElement(TablaScroll, { className: "rounded-
             React.createElement("tr", { className: "bg-[#DCE5DC]/50 text-left" },
                 React.createElement("th", { className: "px-3 py-2 font-semibold" }, "KRI"),
                 React.createElement("th", { className: "px-3 py-2 font-semibold" }, "Indicador"),
-                React.createElement("th", { className: "px-3 py-2 font-semibold text-[#1E6B47]" }, "Verde"),
+                React.createElement("th", { className: "px-3 py-2 font-semibold text-[#008840]" }, "Verde"),
                 React.createElement("th", { className: "px-3 py-2 font-semibold text-[#8A5A2C]" }, "Amarillo"),
                 React.createElement("th", { className: "px-3 py-2 font-semibold text-[#B5432E]" }, "Rojo"),
                 React.createElement("th", { className: "px-3 py-2 font-semibold" }, "Frecuencia \u00B7 Responsable"))),
         React.createElement("tbody", null, KRIS.map((k) => (React.createElement("tr", { key: k[0], className: "border-t border-[#F0F3EE]" },
-            React.createElement("td", { className: "px-3 py-2 f-mono text-xs font-bold text-[#1E6B47]" }, k[0]),
+            React.createElement("td", { className: "px-3 py-2 f-mono text-xs font-bold text-[#008840]" }, k[0]),
             React.createElement("td", { className: "px-3 py-2" }, k[1]),
-            React.createElement("td", { className: "px-3 py-2 whitespace-nowrap font-semibold text-[#1E6B47]" }, k[2]),
+            React.createElement("td", { className: "px-3 py-2 whitespace-nowrap font-semibold text-[#008840]" }, k[2]),
             React.createElement("td", { className: "px-3 py-2 whitespace-nowrap text-[#8A5A2C]" }, k[3]),
             React.createElement("td", { className: "px-3 py-2 whitespace-nowrap font-semibold text-[#B5432E]" }, k[4]),
             React.createElement("td", { className: "px-3 py-2 text-xs text-[#5b6b5f]" }, k[5]))))))));
@@ -1972,7 +1972,7 @@ const TablaKris = () => (React.createElement(TablaScroll, { className: "rounded-
 // celda es una escala secuencial de un solo tono (claro → oscuro = más
 // riesgos); el número es la etiqueta directa y el tooltip lista los códigos.
 const CALOR_ZONAS = ['BAJO', 'MEDIO', 'SIGNIFICATIVO', 'ALTO', 'CRÍTICO'];
-const pasoCalor = (n) => n >= 7 ? { fondo: '#1E6B47', texto: '#FFFFFF' }
+const pasoCalor = (n) => n >= 7 ? { fondo: '#008840', texto: '#FFFFFF' }
     : n >= 5 ? { fondo: '#4E9770', texto: '#FFFFFF' }
         : n >= 3 ? { fondo: '#C2DEC9', texto: '#14231B' }
             : { fondo: '#EAF3EC', texto: '#14231B' };
@@ -2029,15 +2029,15 @@ const VistaRiesgos = ({ irA }) => {
     const porZona = Object.keys(ZONAS_RIESGO).filter((z) => z !== 'N/D')
         .map((z) => ({ zona: z, n: TODOS_RIESGOS.filter((r) => r.zi === z).length }));
     return (React.createElement("div", { className: "max-w-4xl mx-auto" },
-        React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
-        React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1" }, "Gesti\u00F3n del riesgo \u00B7 Vigencia 2025"),
+        React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#008840] mb-4" }, "\u2190 Volver al inicio"),
+        React.createElement("p", { className: "f-mono text-xs font-bold text-[#008840] uppercase tracking-widest mb-1" }, "Gesti\u00F3n del riesgo \u00B7 Vigencia 2025"),
         React.createElement("h2", { className: "f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-2" }, "Mapa de riesgos"),
         React.createElement("p", { className: "text-[#3c4a40] leading-relaxed max-w-2xl" },
             "Seguimiento a la gesti\u00F3n del riesgo con la matriz actualizada al 25/02/2026 (Informe CI 2022-2025, Rad. 202503000143), en cumplimiento de la pol\u00EDtica OE-M02.",
             ' ',
             TODOS_RIESGOS.length,
             " riesgos en 5 componentes."),
-        React.createElement("a", { href: ENLACE_SEGUIMIENTO_RIESGOS, target: "_blank", rel: "noopener", className: "mt-3 inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]" }, "\uD83D\uDCC4 Ver el informe completo de Seguimiento a Riesgos \u2197"),
+        React.createElement("a", { href: ENLACE_SEGUIMIENTO_RIESGOS, target: "_blank", rel: "noopener", className: "mt-3 inline-flex items-center gap-2 rounded-xl bg-[#008840] text-white font-semibold px-4 py-2.5 hover:bg-[#00662F] shadow-[3px_3px_0_#14231B]" }, "\uD83D\uDCC4 Ver el informe completo de Seguimiento a Riesgos \u2197"),
         React.createElement("div", { className: "mt-5 grid grid-cols-2 sm:grid-cols-5 gap-3" }, porZona.map(({ zona, n }) => {
             const z = ZONAS_RIESGO[zona];
             return (React.createElement("div", { key: zona, className: "rounded-2xl border-2 p-3 text-center", style: { borderColor: z.color } },
@@ -2051,11 +2051,11 @@ const VistaRiesgos = ({ irA }) => {
         React.createElement(MapaCalorRiesgos, null),
         COMPONENTES_RIESGO.map((c) => (React.createElement("section", { key: c.clave, className: "mt-8" },
             React.createElement("div", { className: "flex items-baseline gap-3 mb-2" },
-                React.createElement("span", { className: "f-mono text-xs font-bold bg-[#14231B] text-[#B5E048] rounded px-1.5 py-0.5" }, c.clave),
+                React.createElement("span", { className: "f-mono text-xs font-bold bg-[#14231B] text-[#A0C030] rounded px-1.5 py-0.5" }, c.clave),
                 React.createElement("h3", { className: "f-display text-xl font-bold" }, c.nombre),
                 React.createElement("span", { className: "text-xs text-[#5b6b5f]" }, c.fuente)),
             React.createElement("div", { className: "space-y-2" }, c.riesgos.map((r) => (React.createElement("div", { key: r.id, className: "tarjeta bg-white rounded-xl border border-[#DCE5DC] px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1.5" },
-                React.createElement("span", { className: "f-mono text-xs font-bold text-[#1E6B47] w-9" }, r.id),
+                React.createElement("span", { className: "f-mono text-xs font-bold text-[#008840] w-9" }, r.id),
                 React.createElement("div", { className: "flex-1 min-w-[14rem]" },
                     React.createElement("p", { className: "text-sm font-medium leading-snug" }, r.desc),
                     React.createElement("p", { className: "text-xs text-[#5b6b5f]" },
@@ -2075,13 +2075,13 @@ const VistaRiesgos = ({ irA }) => {
             React.createElement("p", { className: "f-display font-semibold mb-2" }, "Documentos de referencia"),
             React.createElement("div", { className: "space-y-2" },
                 React.createElement("div", { className: "flex items-center gap-3 text-sm" },
-                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap" }, "Informe"),
+                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#A0C030] whitespace-nowrap" }, "Informe"),
                     React.createElement("span", { className: "flex-1 text-white/90" }, "Seguimiento a la Gesti\u00F3n del Riesgo \u2014 Mapa de Riesgos (vigencia 2025)"),
-                    React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: ENLACE_SEGUIMIENTO_RIESGOS, target: "_blank", rel: "noopener" }, "Abrir \u2197")),
+                    React.createElement("a", { className: "font-semibold text-[#A0C030] hover:underline", href: ENLACE_SEGUIMIENTO_RIESGOS, target: "_blank", rel: "noopener" }, "Abrir \u2197")),
                 React.createElement("div", { className: "flex items-center gap-3 text-sm" },
-                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap" }, "OE-M02"),
+                    React.createElement("span", { className: "f-mono text-xs font-bold text-[#A0C030] whitespace-nowrap" }, "OE-M02"),
                     React.createElement("span", { className: "flex-1 text-white/90" }, "Pol\u00EDtica de administraci\u00F3n y gesti\u00F3n del riesgo"),
-                    React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: enlaceDoc('OE-M02 Politica de administracion gestión del riesgo.docx'), target: "_blank", rel: "noopener" }, "Abrir \u2197"))),
+                    React.createElement("a", { className: "font-semibold text-[#A0C030] hover:underline", href: enlaceDoc('OE-M02 Politica de administracion gestión del riesgo.docx'), target: "_blank", rel: "noopener" }, "Abrir \u2197"))),
             React.createElement("p", { className: "text-xs text-white/60 mt-3" }, "Resumen orientativo del informe de seguimiento; ante cualquier diferencia, manda el documento oficial aprobado por la Direcci\u00F3n."))));
 };
 const VistaDocumentos = ({ irA, docs = DOCS_FALLBACK }) => {
@@ -2092,7 +2092,7 @@ const VistaDocumentos = ({ irA, docs = DOCS_FALLBACK }) => {
     const visibles = docs.filter((d) => t === '' || textoBuscable(d).includes(t))
         .slice().sort((a, b) => (a.codigo || 'ZZ').localeCompare(b.codigo || 'ZZ'));
     return (React.createElement("div", { className: "max-w-3xl mx-auto" },
-        React.createElement("button", { onClick: () => irA(''), className: "text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
+        React.createElement("button", { onClick: () => irA(''), className: "text-sm font-semibold text-[#008840] mb-4" }, "\u2190 Volver al inicio"),
         React.createElement("h2", { className: "f-display text-3xl font-extrabold mb-4" },
             "Todos los documentos ",
             React.createElement("span", { className: "text-[#5b6b5f] text-xl font-semibold" },
@@ -2100,7 +2100,7 @@ const VistaDocumentos = ({ irA, docs = DOCS_FALLBACK }) => {
                 visibles.length,
                 ")")),
         React.createElement("div", { className: "relative mb-4" },
-            React.createElement("input", { value: q, onChange: (e) => setQ(e.target.value), placeholder: "Buscar por c\u00F3digo o nombre\u2026", "aria-label": "Buscar en el listado de documentos", className: "w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-3 text-base shadow-[3px_3px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" }),
+            React.createElement("input", { value: q, onChange: (e) => setQ(e.target.value), placeholder: "Buscar por c\u00F3digo o nombre\u2026", "aria-label": "Buscar en el listado de documentos", className: "w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-3 text-base shadow-[3px_3px_0_#14231B] focus:outline-none focus:border-[#008840]" }),
             q && (React.createElement("button", { onClick: () => setQ(''), "aria-label": "Limpiar b\u00FAsqueda", className: "absolute right-3 top-1/2 -translate-y-1/2 text-[#5b6b5f] hover:text-[#14231B] text-lg font-bold" }, "\u00D7"))),
         visibles.length > 0 ? (React.createElement("div", { className: "space-y-2" }, visibles.map((d) => React.createElement(FilaDocumento, { key: d.url || d.ruta, doc: d })))) : (React.createElement("p", { className: "text-sm text-[#5b6b5f] py-8 text-center" },
             "Sin resultados para \u00AB",
@@ -2109,23 +2109,23 @@ const VistaDocumentos = ({ irA, docs = DOCS_FALLBACK }) => {
 };
 const Inicio = ({ irA, docs }) => (React.createElement("div", { className: "max-w-4xl mx-auto" },
     React.createElement("div", { className: "pt-6 pb-4 text-center" },
-        React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-[.2em] mb-1" }, "Sistema de Gesti\u00F3n de Calidad \u00B7 ACTIVA"),
+        React.createElement("p", { className: "f-mono text-xs font-bold text-[#008840] uppercase tracking-[.2em] mb-1" }, "Sistema de Gesti\u00F3n de Calidad \u00B7 ACTIVA"),
         React.createElement("h1", { className: "f-display text-3xl sm:text-4xl font-extrabold leading-tight" }, "Mapa de procesos")),
     React.createElement(MapaProcesos, { irA: irA }),
     React.createElement("h2", { className: "f-display text-2xl sm:text-3xl font-extrabold leading-tight mt-10 mb-4" },
         "\u00BFC\u00F3mo pido ",
-        React.createElement("span", { className: "text-[#1E6B47]" }, "lo que necesito"),
+        React.createElement("span", { className: "text-[#008840]" }, "lo que necesito"),
         "?"),
-    React.createElement("div", { className: "flex flex-wrap gap-2 mb-6" }, GUIAS.map((g) => (React.createElement("button", { key: g.id, onClick: () => irA(`guia/${g.id}`), className: "tarjeta text-sm font-semibold bg-[#B5E048] text-[#14231B] rounded-full px-4 py-2" }, g.pregunta)))),
+    React.createElement("div", { className: "flex flex-wrap gap-2 mb-6" }, GUIAS.map((g) => (React.createElement("button", { key: g.id, onClick: () => irA(`guia/${g.id}`), className: "tarjeta text-sm font-semibold bg-[#A0C030] text-[#14231B] rounded-full px-4 py-2" }, g.pregunta)))),
     React.createElement(Buscador, { irA: irA, docs: docs }),
     React.createElement("div", { className: "mt-3 flex justify-end gap-5" },
-        React.createElement("button", { onClick: () => irA('riesgos'), className: "text-sm font-semibold text-[#1E6B47] hover:underline" }, "Mapa de riesgos \u2192"),
-        React.createElement("button", { onClick: () => irA('documentos'), className: "text-sm font-semibold text-[#1E6B47] hover:underline" }, "Ver todos los documentos \u2192"))));
+        React.createElement("button", { onClick: () => irA('riesgos'), className: "text-sm font-semibold text-[#008840] hover:underline" }, "Mapa de riesgos \u2192"),
+        React.createElement("button", { onClick: () => irA('documentos'), className: "text-sm font-semibold text-[#008840] hover:underline" }, "Ver todos los documentos \u2192"))));
 // Indicadores del Plan Estratégico 2025-2027 + KRI, solo de los documentos oficiales.
 const VistaIndicadores = ({ irA }) => (React.createElement("div", { className: "max-w-4xl mx-auto" },
-    React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
+    React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#008840] mb-4" }, "\u2190 Volver al inicio"),
     React.createElement("div", { className: "mb-4" },
-        React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest" }, "Seguimiento y medici\u00F3n"),
+        React.createElement("p", { className: "f-mono text-xs font-bold text-[#008840] uppercase tracking-widest" }, "Seguimiento y medici\u00F3n"),
         React.createElement("h2", { className: "f-display text-3xl font-extrabold leading-tight" }, "Indicadores"),
         React.createElement("p", { className: "text-sm text-[#3c4a40] mt-2 max-w-2xl" }, "Metas 2025\u20132027 del Plan Estrat\u00E9gico de ACTIVA, por l\u00EDnea estrat\u00E9gica, e indicadores clave de riesgo (KRI) del seguimiento al mapa de riesgos.")),
     LINEAS_INDICADORES.map((l) => (React.createElement("section", { key: l.linea, className: "mb-6" },
@@ -2141,40 +2141,40 @@ const VistaIndicadores = ({ irA }) => (React.createElement("div", { className: "
                         React.createElement("th", { className: "px-3 py-2 font-semibold whitespace-nowrap" }, "Meta 2027"))),
                 React.createElement("tbody", null, l.indicadores.map((i) => (React.createElement("tr", { key: i[0], className: "border-t border-[#F0F3EE]" },
                     React.createElement("td", { className: "px-3 py-2 min-w-[13rem]" }, i[0]),
-                    React.createElement("td", { className: "px-3 py-2 font-semibold text-[#1E6B47]" }, i[1]),
-                    React.createElement("td", { className: "px-3 py-2 font-semibold text-[#1E6B47]" }, i[2]),
-                    React.createElement("td", { className: "px-3 py-2 font-semibold text-[#1E6B47]" }, i[3])))))))))),
+                    React.createElement("td", { className: "px-3 py-2 font-semibold text-[#008840]" }, i[1]),
+                    React.createElement("td", { className: "px-3 py-2 font-semibold text-[#008840]" }, i[2]),
+                    React.createElement("td", { className: "px-3 py-2 font-semibold text-[#008840]" }, i[3])))))))))),
     React.createElement("section", { className: "mt-8" },
         React.createElement("h3", { className: "f-display text-xl font-bold mb-1" }, "Indicadores clave de riesgo (KRI) 2026"),
         React.createElement("p", { className: "text-sm text-[#3c4a40] mb-3 max-w-2xl" },
             "Alertas tempranas del seguimiento al mapa de riesgos. El detalle de los riesgos que vigilan est\u00E1 en la ",
-            React.createElement("button", { onClick: () => irA('riesgos'), className: "font-semibold text-[#1E6B47] hover:underline" }, "secci\u00F3n de riesgos"),
+            React.createElement("button", { onClick: () => irA('riesgos'), className: "font-semibold text-[#008840] hover:underline" }, "secci\u00F3n de riesgos"),
             "."),
         React.createElement(TablaKris, null)),
     React.createElement("div", { className: "mt-6 bg-[#14231B] text-[#F7F8F4] rounded-2xl p-5" },
         React.createElement("p", { className: "f-display font-semibold mb-2" }, "Documentos de referencia"),
         React.createElement("div", { className: "space-y-2" },
             React.createElement("div", { className: "flex items-center gap-3 text-sm" },
-                React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap" }, "Plan"),
+                React.createElement("span", { className: "f-mono text-xs font-bold text-[#A0C030] whitespace-nowrap" }, "Plan"),
                 React.createElement("span", { className: "flex-1 text-white/90" }, "Indicadores para Plan Estrat\u00E9gico (sitio Plan Estrat\u00E9gico)"),
-                React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: ENLACE_INDICADORES_PLAN, target: "_blank", rel: "noopener" }, "Abrir \u2197")),
+                React.createElement("a", { className: "font-semibold text-[#A0C030] hover:underline", href: ENLACE_INDICADORES_PLAN, target: "_blank", rel: "noopener" }, "Abrir \u2197")),
             React.createElement("div", { className: "flex items-center gap-3 text-sm" },
-                React.createElement("span", { className: "f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap" }, "Informe"),
+                React.createElement("span", { className: "f-mono text-xs font-bold text-[#A0C030] whitespace-nowrap" }, "Informe"),
                 React.createElement("span", { className: "flex-1 text-white/90" }, "Seguimiento a la Gesti\u00F3n del Riesgo \u2014 Mapa de Riesgos (vigencia 2025)"),
-                React.createElement("a", { className: "font-semibold text-[#B5E048] hover:underline", href: ENLACE_SEGUIMIENTO_RIESGOS, target: "_blank", rel: "noopener" }, "Abrir \u2197"))),
+                React.createElement("a", { className: "font-semibold text-[#A0C030] hover:underline", href: ENLACE_SEGUIMIENTO_RIESGOS, target: "_blank", rel: "noopener" }, "Abrir \u2197"))),
         React.createElement("p", { className: "text-xs text-white/60 mt-3" }, "Transcripci\u00F3n de los documentos oficiales; ante cualquier diferencia, mandan los documentos aprobados por la Direcci\u00F3n."))));
 // Organigrama oficial de ACTIVA: se muestra la imagen institucional tal cual.
 const VistaOrganigrama = ({ irA }) => (React.createElement("div", { className: "max-w-4xl mx-auto" },
-    React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver al inicio"),
+    React.createElement("button", { onClick: () => irA(''), className: "no-print text-sm font-semibold text-[#008840] mb-4" }, "\u2190 Volver al inicio"),
     React.createElement("div", { className: "mb-4" },
-        React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest" }, "Estructura organizacional"),
+        React.createElement("p", { className: "f-mono text-xs font-bold text-[#008840] uppercase tracking-widest" }, "Estructura organizacional"),
         React.createElement("h2", { className: "f-display text-3xl font-extrabold leading-tight" }, "Organigrama")),
     React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-3 sm:p-5" },
         React.createElement("a", { href: "organigrama.png", target: "_blank", rel: "noopener", title: "Abrir el organigrama en tama\u00F1o completo" },
             React.createElement("img", { src: "organigrama.png", alt: "Organigrama de ACTIVA: Junta Directiva, Gerente General y sus equipos (Subgerencia Comercial, Direcci\u00F3n Jur\u00EDdica, Direcci\u00F3n Administrativa y Financiera, Oficina de Control Interno e Instrucci\u00F3n CID)", className: "w-full h-auto rounded-xl" })),
         React.createElement("div", { className: "mt-3 flex flex-wrap items-center justify-between gap-2" },
             React.createElement("p", { className: "text-xs text-[#5b6b5f]" }, "En el celular, \u00E1brelo en pantalla completa para leer los cargos."),
-            React.createElement("a", { href: "organigrama.png", target: "_blank", rel: "noopener", className: "text-sm font-semibold text-white bg-[#1E6B47] rounded-full px-4 py-2 hover:bg-[#144D33] whitespace-nowrap" }, "Ver en pantalla completa \u2197")))));
+            React.createElement("a", { href: "organigrama.png", target: "_blank", rel: "noopener", className: "text-sm font-semibold text-white bg-[#008840] rounded-full px-4 py-2 hover:bg-[#00662F] whitespace-nowrap" }, "Ver en pantalla completa \u2197")))));
 /* ===== 4. Aplicación y enrutado por hash ===== */
 const rutaActual = () => decodeURIComponent((window.location.hash || '#/').replace(/^#\/?/, ''));
 const App = () => {
@@ -2235,15 +2235,15 @@ const App = () => {
         React.createElement("header", { className: "sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-[#DCE5DC]" },
             React.createElement("div", { className: "max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1" },
                 React.createElement("button", { onClick: () => irA(''), className: "f-display font-extrabold tracking-tight flex items-center gap-2 shrink-0 text-left" },
-                    React.createElement("span", { className: "w-7 h-7 rounded-lg bg-[#1E6B47] text-[#B5E048] flex items-center justify-center text-sm shrink-0", "aria-hidden": "true" }, "A"),
+                    React.createElement("img", { src: "activa-logo.png", alt: "ACTIVA \u2014 Empresa de Parques y Eventos de Antioquia", className: "h-9 w-auto shrink-0" }),
                     React.createElement("span", { className: "text-[12px] sm:text-[13px] leading-tight max-w-[14rem] sm:max-w-[22rem]" }, "Sistema de Gesti\u00F3n de Calidad - Empresa de Parques y Eventos de Antioquia ACTIVA")),
                 React.createElement("nav", { className: "w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-semibold" },
-                    React.createElement("button", { onClick: () => irA(''), className: "hover:text-[#1E6B47]" }, "Inicio"),
-                    React.createElement("button", { onClick: () => irA('organigrama'), className: "hover:text-[#1E6B47]" }, "Organigrama"),
-                    React.createElement("button", { onClick: () => irA('indicadores'), className: "hover:text-[#1E6B47]" }, "Indicadores"),
-                    React.createElement("button", { onClick: () => irA('riesgos'), className: "hover:text-[#1E6B47]" }, "Riesgos"),
-                    React.createElement("button", { onClick: () => irA('documentos'), className: "hover:text-[#1E6B47]" }, "Documentos"),
-                    React.createElement("a", { href: ENLACE_NORMOGRAMA, target: "_blank", rel: "noopener", className: "hover:text-[#1E6B47] inline-flex items-center gap-1" },
+                    React.createElement("button", { onClick: () => irA(''), className: "hover:text-[#008840]" }, "Inicio"),
+                    React.createElement("button", { onClick: () => irA('organigrama'), className: "hover:text-[#008840]" }, "Organigrama"),
+                    React.createElement("button", { onClick: () => irA('indicadores'), className: "hover:text-[#008840]" }, "Indicadores"),
+                    React.createElement("button", { onClick: () => irA('riesgos'), className: "hover:text-[#008840]" }, "Riesgos"),
+                    React.createElement("button", { onClick: () => irA('documentos'), className: "hover:text-[#008840]" }, "Documentos"),
+                    React.createElement("a", { href: ENLACE_NORMOGRAMA, target: "_blank", rel: "noopener", className: "hover:text-[#008840] inline-flex items-center gap-1" },
                         "Normograma ",
                         React.createElement("span", { "aria-hidden": "true" }, "\u2197"))))),
         React.createElement("main", { className: "flex-1 px-4 py-6" }, contenido),
@@ -2252,7 +2252,7 @@ const App = () => {
                 React.createElement("p", null, "Empresa de Parques y Eventos de Antioquia \u2014 ACTIVA \u00B7 Portal de consulta del SGC."),
                 React.createElement("p", null,
                     "Los enlaces abren el ",
-                    React.createElement("a", { className: "font-semibold text-[#1E6B47] hover:underline", href: CARPETA_SGC_DEFAULT, target: "_blank", rel: "noopener" }, "repositorio oficial en SharePoint"),
+                    React.createElement("a", { className: "font-semibold text-[#008840] hover:underline", href: CARPETA_SGC_DEFAULT, target: "_blank", rel: "noopener" }, "repositorio oficial en SharePoint"),
                     " y requieren sesi\u00F3n Microsoft institucional.")))));
 };
 ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App, null));
