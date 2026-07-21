@@ -1865,6 +1865,43 @@ const VistaCaracterizacion = ({ proceso, c }) => (React.createElement("div", nul
                 React.createElement("span", { className: "font-semibold" }, "Documentos asociados:"),
                 " ",
                 React.createElement("span", { className: "text-[#3c4a40]" }, c.documentos))))));
+// Enlace al documento oficial (carpeta Planeación Estratégica del repositorio SGC).
+const ENLACE_CODIGO_INTEGRIDAD = enlaceCarpeta('Planeación Estratégica') + '/' + encodeURIComponent('CÓDIGO DE INTEGRIDAD ACTUALIZADO.docx');
+// Los cinco valores del Código de Integridad del Servicio Público, con el lema
+// tal como los adopta el «Código de Integridad y Buen Gobierno» de ACTIVA.
+const VALORES_INTEGRIDAD = [
+    { valor: 'Honestidad', icono: '🤝', lema: 'Actúo siempre con fundamento en la verdad, cumpliendo mis deberes con transparencia y rectitud, y favoreciendo en todo momento el interés general.' },
+    { valor: 'Respeto', icono: '🫂', lema: 'Reconozco, valoro y trato de manera digna a todas las personas, con sus virtudes y defectos, sin importar su labor, su procedencia o cualquier otra condición.' },
+    { valor: 'Compromiso', icono: '💪', lema: 'Soy consciente de la importancia de mi rol como servidor público y estoy en disposición permanente para comprender y resolver las necesidades de las personas con las que me relaciono, buscando siempre mejorar su bienestar.' },
+    { valor: 'Diligencia', icono: '⏱️', lema: 'Cumplo con los deberes, funciones y responsabilidades asignadas a mi cargo de la mejor manera posible, con atención, prontitud y eficiencia, para así optimizar el uso de los recursos del Estado.' },
+    { valor: 'Justicia', icono: '⚖️', lema: 'Actúo con imparcialidad garantizando los derechos de las personas, con equidad, igualdad y sin discriminación.' },
+];
+// Sección informativa del Código de Integridad (se muestra en la vista MIPG).
+const CodigoIntegridad = () => (React.createElement("section", { className: "mb-6" },
+    React.createElement("h3", { className: "f-display text-xl font-bold mb-2" }, "\u00BFQu\u00E9 es el C\u00F3digo de Integridad?"),
+    React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-4 sm:p-5" },
+        React.createElement("p", { className: "text-sm leading-relaxed text-[#3c4a40]" },
+            "El ",
+            React.createElement("span", { className: "font-semibold text-[#14231B]" }, "C\u00F3digo de Integridad y Buen Gobierno"),
+            " de ACTIVA establece los principios, valores y lineamientos que orientan el comportamiento de los servidores p\u00FAblicos, trabajadores oficiales, contratistas y colaboradores de la entidad, en cumplimiento de la normativa vigente y en armon\u00EDa con el Conglomerado P\u00FAblico de la Gobernaci\u00F3n de Antioquia. Se implementa a partir del c\u00F3digo de valores del servicio p\u00FAblico definido por la Funci\u00F3n P\u00FAblica \u2014en l\u00EDnea con la OCDE y el Modelo Integrado de Planeaci\u00F3n y Gesti\u00F3n (MIPG)\u2014 y actualiza el c\u00F3digo adoptado por la entidad en 2023."),
+        React.createElement("p", { className: "f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mt-4 mb-2" }, "Los cinco valores"),
+        React.createElement("div", { className: "grid sm:grid-cols-2 gap-3" }, VALORES_INTEGRIDAD.map((v) => (React.createElement("div", { key: v.valor, className: "rounded-xl border border-[#DCE5DC] bg-[#F4F9EE] p-3" },
+            React.createElement("p", { className: "font-bold text-[#14231B] flex items-center gap-2" },
+                React.createElement("span", { className: "text-lg", "aria-hidden": "true" }, v.icono),
+                v.valor),
+            React.createElement("p", { className: "text-sm text-[#3c4a40] mt-1 leading-snug" }, v.lema))))),
+        React.createElement("div", { className: "mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#F0F3EE] pt-3" },
+            React.createElement("p", { className: "text-xs text-[#5b6b5f] max-w-md" },
+                "Gobernanza: responsable ",
+                React.createElement("span", { className: "font-semibold" }, "Talento Humano"),
+                ", seguimiento",
+                ' ',
+                React.createElement("span", { className: "font-semibold" }, "Oficina de Control Interno"),
+                ", instancia",
+                ' ',
+                React.createElement("span", { className: "font-semibold" }, "Comit\u00E9 Institucional de Gesti\u00F3n y Desempe\u00F1o"),
+                ". Se articula con el mapa de riesgos y el Programa de Transparencia y \u00C9tica P\u00FAblica (PTEP)."),
+            React.createElement("a", { href: ENLACE_CODIGO_INTEGRIDAD, target: "_blank", rel: "noopener", className: "text-sm font-semibold text-white bg-[#1E6B47] rounded-full px-4 py-2 hover:bg-[#144D33] whitespace-nowrap" }, "Ver el C\u00F3digo de Integridad \u2197")))));
 const VistaProceso = ({ sigla, irA }) => {
     const proceso = PROCESOS.find((p) => p.sigla === sigla);
     const docs = DOCUMENTOS.filter((d) => d.proceso === sigla);
@@ -1877,6 +1914,7 @@ const VistaProceso = ({ sigla, irA }) => {
             "Proceso no encontrado. ",
             React.createElement("button", { className: "text-[#1E6B47] font-semibold", onClick: () => irA('') }, "Volver"));
     const vistaDocumentos = (React.createElement("div", null,
+        sigla === 'MIPG' && React.createElement(CodigoIntegridad, null),
         proceso.enConstruccion ? (React.createElement("div", { className: "text-center py-8" },
             React.createElement("p", { className: "text-5xl mb-3", "aria-hidden": "true" }, "\uD83D\uDEA7"),
             React.createElement("p", { className: "text-lg font-semibold text-[#8A5A2C]" }, "En construcci\u00F3n"),
