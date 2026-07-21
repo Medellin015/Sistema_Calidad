@@ -2591,7 +2591,7 @@ const App = () => {
         <div className="max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1">
           <button onClick={() => irA('')} className="f-display font-extrabold tracking-tight flex items-center gap-2 shrink-0 text-left">
             <img src="activa-logo.png" alt="ACTIVA — Empresa de Parques y Eventos de Antioquia" className="h-9 w-auto shrink-0" />
-            <span className="text-[12px] sm:text-[13px] leading-tight max-w-[14rem] sm:max-w-[22rem]">Sistema de Gestión de Calidad - Empresa de Parques y Eventos de Antioquia ACTIVA</span>
+            <span className="text-xs sm:text-sm leading-tight max-w-[14rem] sm:max-w-[22rem]">Sistema de Gestión de Calidad - Empresa de Parques y Eventos de Antioquia ACTIVA</span>
           </button>
           <nav className="w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-semibold">
             <button onClick={() => irA('')} className="hover:text-[#008840]">Inicio</button>

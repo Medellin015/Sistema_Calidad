@@ -2236,7 +2236,7 @@ const App = () => {
             React.createElement("div", { className: "max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1" },
                 React.createElement("button", { onClick: () => irA(''), className: "f-display font-extrabold tracking-tight flex items-center gap-2 shrink-0 text-left" },
                     React.createElement("img", { src: "activa-logo.png", alt: "ACTIVA \u2014 Empresa de Parques y Eventos de Antioquia", className: "h-9 w-auto shrink-0" }),
-                    React.createElement("span", { className: "text-[12px] sm:text-[13px] leading-tight max-w-[14rem] sm:max-w-[22rem]" }, "Sistema de Gesti\u00F3n de Calidad - Empresa de Parques y Eventos de Antioquia ACTIVA")),
+                    React.createElement("span", { className: "text-xs sm:text-sm leading-tight max-w-[14rem] sm:max-w-[22rem]" }, "Sistema de Gesti\u00F3n de Calidad - Empresa de Parques y Eventos de Antioquia ACTIVA")),
                 React.createElement("nav", { className: "w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-semibold" },
                     React.createElement("button", { onClick: () => irA(''), className: "hover:text-[#008840]" }, "Inicio"),
                     React.createElement("button", { onClick: () => irA('organigrama'), className: "hover:text-[#008840]" }, "Organigrama"),

@@ -9,7 +9,9 @@
   --papel:#FFFFFF; --niebla:#DCE5DC; --sol:#F4A93C; --arcilla:#8A5A2C;
   --azul:#0088C0; --azul-osc:#006E9B;
 }
-html{scroll-behavior:smooth}
+/* Tamaño base del portal: al subir la raíz, todo el texto en rem escala.
+   16px → 18px (112.5%) para una lectura más cómoda en todo el sitio. */
+html{scroll-behavior:smooth;font-size:112.5%}
 body{background:var(--papel);color:var(--tinta);font-family:'Nunito Sans',system-ui,sans-serif}
 .f-display{font-family:'Nunito','Nunito Sans',system-ui,sans-serif}
 .f-mono{font-family:'JetBrains Mono',ui-monospace,monospace}
