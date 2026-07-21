@@ -1876,9 +1876,19 @@ const VALORES_INTEGRIDAD = [
     { valor: 'Diligencia', icono: '⏱️', lema: 'Cumplo con los deberes, funciones y responsabilidades asignadas a mi cargo de la mejor manera posible, con atención, prontitud y eficiencia, para así optimizar el uso de los recursos del Estado.' },
     { valor: 'Justicia', icono: '⚖️', lema: 'Actúo con imparcialidad garantizando los derechos de las personas, con equidad, igualdad y sin discriminación.' },
 ];
-// Sección informativa del Código de Integridad (se muestra en la vista MIPG).
-const CodigoIntegridad = () => (React.createElement("section", { className: "mb-6" },
-    React.createElement("h3", { className: "f-display text-xl font-bold mb-2" }, "\u00BFQu\u00E9 es el C\u00F3digo de Integridad?"),
+// Acceso al Código de Integridad: tarjeta clicable que se muestra en MIPG y
+// lleva a la vista propia #/codigo-integridad.
+const EntradaCodigoIntegridad = ({ irA }) => (React.createElement("button", { onClick: () => irA('codigo-integridad'), className: "tarjeta w-full text-left mb-6 bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 sm:p-5 flex items-center gap-4" },
+    React.createElement("span", { className: "text-3xl shrink-0", "aria-hidden": "true" }, "\u2696\uFE0F"),
+    React.createElement("span", { className: "flex-1 min-w-0" },
+        React.createElement("span", { className: "f-display block text-lg font-bold text-[#14231B]" }, "\u00BFQu\u00E9 es el C\u00F3digo de Integridad?"),
+        React.createElement("span", { className: "block text-sm text-[#5b6b5f] leading-snug" }, "Conoce el C\u00F3digo de Integridad y Buen Gobierno de ACTIVA y sus cinco valores del servicio p\u00FAblico.")),
+    React.createElement("span", { className: "text-sm font-semibold text-[#1E6B47] whitespace-nowrap" }, "Ingresar \u2192")));
+// Vista propia del Código de Integridad (ruta #/codigo-integridad).
+const VistaCodigoIntegridad = ({ irA }) => (React.createElement("div", { className: "max-w-4xl mx-auto" },
+    React.createElement("button", { onClick: () => irA('proceso/MIPG'), className: "no-print text-sm font-semibold text-[#1E6B47] mb-4" }, "\u2190 Volver a MIPG"),
+    React.createElement("p", { className: "f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest" }, "MIPG \u00B7 Integridad"),
+    React.createElement("h2", { className: "f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-3" }, "\u00BFQu\u00E9 es el C\u00F3digo de Integridad?"),
     React.createElement("div", { className: "bg-white rounded-2xl border border-[#DCE5DC] p-4 sm:p-5" },
         React.createElement("p", { className: "text-sm leading-relaxed text-[#3c4a40]" },
             "El ",
@@ -1914,7 +1924,7 @@ const VistaProceso = ({ sigla, irA }) => {
             "Proceso no encontrado. ",
             React.createElement("button", { className: "text-[#1E6B47] font-semibold", onClick: () => irA('') }, "Volver"));
     const vistaDocumentos = (React.createElement("div", null,
-        sigla === 'MIPG' && React.createElement(CodigoIntegridad, null),
+        sigla === 'MIPG' && React.createElement(EntradaCodigoIntegridad, { irA: irA }),
         proceso.enConstruccion ? (React.createElement("div", { className: "text-center py-8" },
             React.createElement("p", { className: "text-5xl mb-3", "aria-hidden": "true" }, "\uD83D\uDEA7"),
             React.createElement("p", { className: "text-lg font-semibold text-[#8A5A2C]" }, "En construcci\u00F3n"),
@@ -2214,6 +2224,9 @@ const App = () => {
     }
     else if (seccion === 'indicadores') {
         contenido = React.createElement(VistaIndicadores, { irA: irA });
+    }
+    else if (seccion === 'codigo-integridad') {
+        contenido = React.createElement(VistaCodigoIntegridad, { irA: irA });
     }
     else {
         contenido = React.createElement(Inicio, { irA: irA, docs: docs });

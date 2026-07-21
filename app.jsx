@@ -2051,10 +2051,26 @@ const VALORES_INTEGRIDAD = [
   { valor: 'Justicia', icono: '⚖️', lema: 'Actúo con imparcialidad garantizando los derechos de las personas, con equidad, igualdad y sin discriminación.' },
 ];
 
-// Sección informativa del Código de Integridad (se muestra en la vista MIPG).
-const CodigoIntegridad = () => (
-  <section className="mb-6">
-    <h3 className="f-display text-xl font-bold mb-2">¿Qué es el Código de Integridad?</h3>
+// Acceso al Código de Integridad: tarjeta clicable que se muestra en MIPG y
+// lleva a la vista propia #/codigo-integridad.
+const EntradaCodigoIntegridad = ({ irA }) => (
+  <button onClick={() => irA('codigo-integridad')}
+    className="tarjeta w-full text-left mb-6 bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 sm:p-5 flex items-center gap-4">
+    <span className="text-3xl shrink-0" aria-hidden="true">⚖️</span>
+    <span className="flex-1 min-w-0">
+      <span className="f-display block text-lg font-bold text-[#14231B]">¿Qué es el Código de Integridad?</span>
+      <span className="block text-sm text-[#5b6b5f] leading-snug">Conoce el Código de Integridad y Buen Gobierno de ACTIVA y sus cinco valores del servicio público.</span>
+    </span>
+    <span className="text-sm font-semibold text-[#1E6B47] whitespace-nowrap">Ingresar →</span>
+  </button>
+);
+
+// Vista propia del Código de Integridad (ruta #/codigo-integridad).
+const VistaCodigoIntegridad = ({ irA }) => (
+  <div className="max-w-4xl mx-auto">
+    <button onClick={() => irA('proceso/MIPG')} className="no-print text-sm font-semibold text-[#1E6B47] mb-4">← Volver a MIPG</button>
+    <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest">MIPG · Integridad</p>
+    <h2 className="f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-3">¿Qué es el Código de Integridad?</h2>
     <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4 sm:p-5">
       <p className="text-sm leading-relaxed text-[#3c4a40]">
         El <span className="font-semibold text-[#14231B]">Código de Integridad y Buen Gobierno</span> de ACTIVA establece
@@ -2088,7 +2104,7 @@ const CodigoIntegridad = () => (
         </a>
       </div>
     </div>
-  </section>
+  </div>
 );
 
 const VistaProceso = ({ sigla, irA }) => {
@@ -2101,7 +2117,7 @@ const VistaProceso = ({ sigla, irA }) => {
   if (!proceso) return <p className="text-center py-10">Proceso no encontrado. <button className="text-[#1E6B47] font-semibold" onClick={() => irA('')}>Volver</button></p>;
   const vistaDocumentos = (
     <div>
-      {sigla === 'MIPG' && <CodigoIntegridad />}
+      {sigla === 'MIPG' && <EntradaCodigoIntegridad irA={irA} />}
       {proceso.enConstruccion ? (
         <div className="text-center py-8">
           <p className="text-5xl mb-3" aria-hidden="true">🚧</p>
@@ -2563,6 +2579,8 @@ const App = () => {
     contenido = <VistaOrganigrama irA={irA} />;
   } else if (seccion === 'indicadores') {
     contenido = <VistaIndicadores irA={irA} />;
+  } else if (seccion === 'codigo-integridad') {
+    contenido = <VistaCodigoIntegridad irA={irA} />;
   } else {
     contenido = <Inicio irA={irA} docs={docs} />;
   }
