@@ -2039,6 +2039,58 @@ const VistaCaracterizacion = ({ proceso, c }) => (
   </div>
 );
 
+// Enlace al documento oficial (carpeta Planeación Estratégica del repositorio SGC).
+const ENLACE_CODIGO_INTEGRIDAD = enlaceCarpeta('Planeación Estratégica') + '/' + encodeURIComponent('CÓDIGO DE INTEGRIDAD ACTUALIZADO.docx');
+// Los cinco valores del Código de Integridad del Servicio Público, con el lema
+// tal como los adopta el «Código de Integridad y Buen Gobierno» de ACTIVA.
+const VALORES_INTEGRIDAD = [
+  { valor: 'Honestidad', icono: '🤝', lema: 'Actúo siempre con fundamento en la verdad, cumpliendo mis deberes con transparencia y rectitud, y favoreciendo en todo momento el interés general.' },
+  { valor: 'Respeto', icono: '🫂', lema: 'Reconozco, valoro y trato de manera digna a todas las personas, con sus virtudes y defectos, sin importar su labor, su procedencia o cualquier otra condición.' },
+  { valor: 'Compromiso', icono: '💪', lema: 'Soy consciente de la importancia de mi rol como servidor público y estoy en disposición permanente para comprender y resolver las necesidades de las personas con las que me relaciono, buscando siempre mejorar su bienestar.' },
+  { valor: 'Diligencia', icono: '⏱️', lema: 'Cumplo con los deberes, funciones y responsabilidades asignadas a mi cargo de la mejor manera posible, con atención, prontitud y eficiencia, para así optimizar el uso de los recursos del Estado.' },
+  { valor: 'Justicia', icono: '⚖️', lema: 'Actúo con imparcialidad garantizando los derechos de las personas, con equidad, igualdad y sin discriminación.' },
+];
+
+// Sección informativa del Código de Integridad (se muestra en la vista MIPG).
+const CodigoIntegridad = () => (
+  <section className="mb-6">
+    <h3 className="f-display text-xl font-bold mb-2">¿Qué es el Código de Integridad?</h3>
+    <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4 sm:p-5">
+      <p className="text-sm leading-relaxed text-[#3c4a40]">
+        El <span className="font-semibold text-[#14231B]">Código de Integridad y Buen Gobierno</span> de ACTIVA establece
+        los principios, valores y lineamientos que orientan el comportamiento de los servidores públicos, trabajadores
+        oficiales, contratistas y colaboradores de la entidad, en cumplimiento de la normativa vigente y en armonía con el
+        Conglomerado Público de la Gobernación de Antioquia. Se implementa a partir del código de valores del servicio
+        público definido por la Función Pública —en línea con la OCDE y el Modelo Integrado de Planeación y Gestión (MIPG)—
+        y actualiza el código adoptado por la entidad en 2023.
+      </p>
+      <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mt-4 mb-2">Los cinco valores</p>
+      <div className="grid sm:grid-cols-2 gap-3">
+        {VALORES_INTEGRIDAD.map((v) => (
+          <div key={v.valor} className="rounded-xl border border-[#DCE5DC] bg-[#F4F9EE] p-3">
+            <p className="font-bold text-[#14231B] flex items-center gap-2">
+              <span className="text-lg" aria-hidden="true">{v.icono}</span>{v.valor}
+            </p>
+            <p className="text-sm text-[#3c4a40] mt-1 leading-snug">{v.lema}</p>
+          </div>
+        ))}
+      </div>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#F0F3EE] pt-3">
+        <p className="text-xs text-[#5b6b5f] max-w-md">
+          Gobernanza: responsable <span className="font-semibold">Talento Humano</span>, seguimiento{' '}
+          <span className="font-semibold">Oficina de Control Interno</span>, instancia{' '}
+          <span className="font-semibold">Comité Institucional de Gestión y Desempeño</span>. Se articula con el mapa de
+          riesgos y el Programa de Transparencia y Ética Pública (PTEP).
+        </p>
+        <a href={ENLACE_CODIGO_INTEGRIDAD} target="_blank" rel="noopener"
+          className="text-sm font-semibold text-white bg-[#1E6B47] rounded-full px-4 py-2 hover:bg-[#144D33] whitespace-nowrap">
+          Ver el Código de Integridad ↗
+        </a>
+      </div>
+    </div>
+  </section>
+);
+
 const VistaProceso = ({ sigla, irA }) => {
   const proceso = PROCESOS.find((p) => p.sigla === sigla);
   const docs = DOCUMENTOS.filter((d) => d.proceso === sigla);
@@ -2049,6 +2101,7 @@ const VistaProceso = ({ sigla, irA }) => {
   if (!proceso) return <p className="text-center py-10">Proceso no encontrado. <button className="text-[#1E6B47] font-semibold" onClick={() => irA('')}>Volver</button></p>;
   const vistaDocumentos = (
     <div>
+      {sigla === 'MIPG' && <CodigoIntegridad />}
       {proceso.enConstruccion ? (
         <div className="text-center py-8">
           <p className="text-5xl mb-3" aria-hidden="true">🚧</p>
