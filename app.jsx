@@ -202,7 +202,7 @@ const DOCUMENTOS = [
 
 // Colores de "señal" por responsable dentro del sendero.
 const ROLES = {
-  solicitante: { nombre: 'Tú (solicitante)', color: '#1E6B47' },
+  solicitante: { nombre: 'Tú (solicitante)', color: '#008840' },
   area:        { nombre: 'Área responsable', color: '#2C5D8A' },
   financiera:  { nombre: 'Gestión Financiera', color: '#8A5A2C' },
   documental:  { nombre: 'Gestión Documental', color: '#5B4A8A' },
@@ -439,7 +439,7 @@ const GUIAS = [
 // Cada riesgo: [código, proceso, descripción, zona inherente, zona residual,
 // tratamiento]. Las zonas salen de P×I (escala de la política OE-M02).
 const ZONAS_RIESGO = {
-  'BAJO':          { color: '#1E6B47', texto: '#FFFFFF', rango: '1–4' },
+  'BAJO':          { color: '#008840', texto: '#FFFFFF', rango: '1–4' },
   'MEDIO':         { color: '#C9A227', texto: '#14231B', rango: '5–30' },
   'SIGNIFICATIVO': { color: '#E07B2A', texto: '#FFFFFF', rango: '31–60' },
   'ALTO':          { color: '#B5432E', texto: '#FFFFFF', rango: '61–80' },
@@ -1633,7 +1633,7 @@ const textoBuscable = (d) => [d.codigo, d.nombre, PROCESOS.find((p) => p.sigla =
 /* ===== 3. Componentes ===== */
 
 const Codigo = ({ children }) => children
-  ? <span className="f-mono text-xs font-bold px-1.5 py-0.5 rounded bg-[#14231B] text-[#B5E048]">{children}</span>
+  ? <span className="f-mono text-xs font-bold px-1.5 py-0.5 rounded bg-[#14231B] text-[#A0C030]">{children}</span>
   : <span className="f-mono text-xs px-1.5 py-0.5 rounded bg-[#DCE5DC] text-[#5b6b5f]">sin código</span>;
 
 const FilaDocumento = ({ doc }) => {
@@ -1648,9 +1648,9 @@ const FilaDocumento = ({ doc }) => {
       </div>
       {url
         ? <a href={url} target="_blank" rel="noopener"
-             className="text-sm font-semibold text-[#1E6B47] hover:text-[#144D33] whitespace-nowrap">Abrir ↗</a>
+             className="text-sm font-semibold text-[#008840] hover:text-[#00662F] whitespace-nowrap">Abrir ↗</a>
         : <a href={'#/' + doc.ruta}
-             className="text-sm font-semibold text-[#1E6B47] hover:text-[#144D33] whitespace-nowrap">Ver ↗</a>}
+             className="text-sm font-semibold text-[#008840] hover:text-[#00662F] whitespace-nowrap">Ver ↗</a>}
     </div>
   );
 };
@@ -1669,7 +1669,7 @@ const Buscador = ({ irA, docs = DOCS_FALLBACK }) => {
       <input value={q} onChange={(e) => setQ(e.target.value)}
         placeholder="Buscar por código o nombre…"
         aria-label="Buscar documento del SGC"
-        className="w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-4 text-base shadow-[4px_4px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" />
+        className="w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-4 text-base shadow-[4px_4px_0_#14231B] focus:outline-none focus:border-[#008840]" />
       {resultados.length > 0 && (
         <div className="absolute z-20 mt-2 w-full bg-white border border-[#DCE5DC] rounded-2xl shadow-xl overflow-hidden">
           <div className="max-h-80 overflow-y-auto">
@@ -1678,14 +1678,14 @@ const Buscador = ({ irA, docs = DOCS_FALLBACK }) => {
                 className="w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0">
                 <Codigo>{d.codigo}</Codigo>
                 <span className="text-sm flex-1 min-w-0 break-words">{d.nombre}</span>
-                <span className="text-sm font-semibold text-[#1E6B47] whitespace-nowrap">Abrir ↗</span>
+                <span className="text-sm font-semibold text-[#008840] whitespace-nowrap">Abrir ↗</span>
               </a>
             ) : (
               <a key={'#/' + d.ruta} href={'#/' + d.ruta} onClick={() => setQ('')}
                 className="w-full text-left px-4 py-3 hover:bg-[#F7F8F4] flex items-center gap-3 border-b border-[#F0F3EE] last:border-0">
                 <Codigo>{d.codigo}</Codigo>
                 <span className="text-sm flex-1 min-w-0 break-words">{d.nombre}</span>
-                <span className="text-sm font-semibold text-[#1E6B47] whitespace-nowrap">Ver ↗</span>
+                <span className="text-sm font-semibold text-[#008840] whitespace-nowrap">Ver ↗</span>
               </a>
             ))}
           </div>
@@ -1774,7 +1774,7 @@ const Flujograma = ({ pasos }) => (
             <p className="text-sm text-[#3c4a40] leading-relaxed">{paso.detalle}</p>
             {paso.enlace && (
               <a href={paso.enlace.url} target="_blank" rel="noopener"
-                 className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#1E6B47] bg-[#B5E048]/25 border border-[#1E6B47]/40 rounded-lg px-3 py-1.5 hover:bg-[#B5E048]/45">
+                 className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#008840] bg-[#A0C030]/25 border border-[#008840]/40 rounded-lg px-3 py-1.5 hover:bg-[#A0C030]/45">
                 🔗 {paso.enlace.texto} ↗
               </a>
             )}
@@ -1785,8 +1785,8 @@ const Flujograma = ({ pasos }) => (
             </div>
             {paso.tipo === 'decision' && (
               <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div className="rounded-xl border-2 border-[#1E6B47] bg-[#1E6B47]/5 px-3 py-2 text-sm">
-                  <span className="font-bold text-[#1E6B47]">Sí →</span> {paso.si}
+                <div className="rounded-xl border-2 border-[#008840] bg-[#008840]/5 px-3 py-2 text-sm">
+                  <span className="font-bold text-[#008840]">Sí →</span> {paso.si}
                 </div>
                 <div className="rounded-xl border-2 border-[#F4A93C] bg-[#F4A93C]/10 px-3 py-2 text-sm">
                   <span className="font-bold text-[#8A5A2C]">No →</span> {paso.no}
@@ -1806,13 +1806,13 @@ const Instructivo = ({ data }) => (
   <div className="space-y-5">
     {data.enlaceApp && (
       <a href={data.enlaceApp} target="_blank" rel="noopener"
-         className="inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]">
+         className="inline-flex items-center gap-2 rounded-xl bg-[#008840] text-white font-semibold px-4 py-2.5 hover:bg-[#00662F] shadow-[3px_3px_0_#14231B]">
         🔗 Abrir el aplicativo de Órdenes de Pedido ↗
       </a>
     )}
     {data.enlace && (
       <a href={data.enlace.url} target="_blank" rel="noopener"
-         className="inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]">
+         className="inline-flex items-center gap-2 rounded-xl bg-[#008840] text-white font-semibold px-4 py-2.5 hover:bg-[#00662F] shadow-[3px_3px_0_#14231B]">
         🔗 {data.enlace.texto} ↗
       </a>
     )}
@@ -1832,7 +1832,7 @@ const Instructivo = ({ data }) => (
           </div>
         )}
         {c.pasos && (
-          <ol className="list-decimal pl-5 space-y-2 text-sm text-[#3c4a40] marker:font-bold marker:text-[#1E6B47]">
+          <ol className="list-decimal pl-5 space-y-2 text-sm text-[#3c4a40] marker:font-bold marker:text-[#008840]">
             {c.pasos.map((p, j) => {
               const paso = typeof p === 'string' ? { texto: p } : p;
               return (
@@ -1878,16 +1878,16 @@ const Instructivo = ({ data }) => (
           <p className="mt-2 rounded-lg bg-[#F4A93C]/15 border border-[#F4A93C]/50 px-2.5 py-1.5 text-sm text-[#8A5A2C]">⚠️ {c.aviso}</p>
         )}
         {c.flujo && (
-          <p className="mt-3 rounded-xl bg-[#1E6B47]/10 border border-[#1E6B47]/25 px-3 py-2 text-sm text-[#14231B] leading-relaxed">➡️ {c.flujo}</p>
+          <p className="mt-3 rounded-xl bg-[#008840]/10 border border-[#008840]/25 px-3 py-2 text-sm text-[#14231B] leading-relaxed">➡️ {c.flujo}</p>
         )}
         {c.nota && (
-          <p className="mt-2 rounded-xl bg-[#B5E048]/25 border border-[#B5E048]/60 px-3 py-2 text-sm text-[#14231B] leading-relaxed">💡 {c.nota}</p>
+          <p className="mt-2 rounded-xl bg-[#A0C030]/25 border border-[#A0C030]/60 px-3 py-2 text-sm text-[#14231B] leading-relaxed">💡 {c.nota}</p>
         )}
       </div>
     ))}
     {data.resumenFinal && (
-      <div className="rounded-2xl bg-[#B5E048]/25 border-2 border-[#1E6B47]/30 p-4">
-        <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1">Resumen rápido</p>
+      <div className="rounded-2xl bg-[#A0C030]/25 border-2 border-[#008840]/30 p-4">
+        <p className="f-mono text-xs font-bold text-[#008840] uppercase tracking-widest mb-1">Resumen rápido</p>
         <p className="text-sm text-[#14231B] leading-relaxed">{data.resumenFinal}</p>
       </div>
     )}
@@ -1908,8 +1908,8 @@ const VistaGuia = ({ guia, irA }) => {
   const proceso = PROCESOS.find((p) => p.sigla === guia.proceso);
   return (
     <div className="max-w-3xl mx-auto">
-      <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
-      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1">Guía{guia.fuente ? ` · fuente ${guia.fuente}` : ''}</p>
+      <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#008840] mb-4">← Volver al inicio</button>
+      <p className="f-mono text-xs font-bold text-[#008840] uppercase tracking-widest mb-1">Guía{guia.fuente ? ` · fuente ${guia.fuente}` : ''}</p>
       <h2 className="f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-2">{guia.pregunta}</h2>
       <p className="text-[#3c4a40] mb-6 leading-relaxed">{guia.resumen}</p>
       {guia.instructivo ? <Instructivo data={guia.instructivo} /> : <Flujograma pasos={guia.pasos} />}
@@ -1919,18 +1919,18 @@ const VistaGuia = ({ guia, irA }) => {
           <div className="space-y-2">
             {docs.map((d) => (
               <div key={d.codigo} className="flex items-center gap-3 text-sm">
-                <span className="f-mono text-xs font-bold text-[#B5E048]">{d.codigo}</span>
+                <span className="f-mono text-xs font-bold text-[#A0C030]">{d.codigo}</span>
                 <span className="flex-1 text-white/90">{d.nombre}</span>
                 {d.estado === 'aprobacion'
                   ? <span className="text-xs text-[#F4A93C]">En aprobación</span>
-                  : <a className="font-semibold text-[#B5E048] hover:underline" href={enlaceDoc(d.archivo)} target="_blank" rel="noopener">Abrir ↗</a>}
+                  : <a className="font-semibold text-[#A0C030] hover:underline" href={enlaceDoc(d.archivo)} target="_blank" rel="noopener">Abrir ↗</a>}
               </div>
             ))}
             {formatos.map((f) => (
               <div key={f.codigo || f.nombre} className="flex items-center gap-3 text-sm">
-                <span className="f-mono text-xs font-bold text-[#B5E048]">{f.codigo || 'Formato'}</span>
+                <span className="f-mono text-xs font-bold text-[#A0C030]">{f.codigo || 'Formato'}</span>
                 <span className="flex-1 text-white/90">{f.nombre}</span>
-                <a className="font-semibold text-[#B5E048] hover:underline" href={f.url} target="_blank" rel="noopener">Abrir ↗</a>
+                <a className="font-semibold text-[#A0C030] hover:underline" href={f.url} target="_blank" rel="noopener">Abrir ↗</a>
               </div>
             ))}
           </div>
@@ -1953,13 +1953,13 @@ const SeccionesProceso = ({ proceso }) => {
       <div className="flex items-baseline justify-between gap-3 mb-2">
         <h3 className="f-display text-lg font-semibold">Carpetas del proceso en el repositorio</h3>
         <a href={enlaceCarpeta(proceso.carpeta)} target="_blank" rel="noopener"
-           className="text-sm font-semibold text-[#1E6B47] hover:underline whitespace-nowrap">Abrir carpeta ↗</a>
+           className="text-sm font-semibold text-[#008840] hover:underline whitespace-nowrap">Abrir carpeta ↗</a>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {secciones.map((s) => (
           <a key={s.nombre} target="_blank" rel="noopener"
              href={enlaceCarpeta(s.base || proceso.carpeta, s.carpeta || undefined)}
-             className="tarjeta bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 flex flex-col items-start gap-1">
+             className="tarjeta bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#008840] p-4 flex flex-col items-start gap-1">
             <span className="text-2xl" aria-hidden="true">{ICONO_SECCION[s.nombre] || '📁'}</span>
             <span className="font-semibold leading-snug break-words hyphens-auto w-full">{s.nombre}</span>
             <span className="text-xs text-[#5b6b5f]">Abrir en SharePoint ↗</span>
@@ -1974,25 +1974,25 @@ const SeccionesProceso = ({ proceso }) => {
 const VistaCaracterizacion = ({ proceso, c }) => (
   <div>
     <div className="flex flex-wrap items-center gap-2 mb-4">
-      <span className="f-mono text-xs font-bold px-2 py-1 rounded bg-[#14231B] text-[#B5E048]">{c.codigo}</span>
+      <span className="f-mono text-xs font-bold px-2 py-1 rounded bg-[#14231B] text-[#A0C030]">{c.codigo}</span>
       <span className="text-xs font-semibold text-[#5b6b5f]">Versión: {c.version}</span>
       <span className="text-xs text-[#5b6b5f]">· Líder del proceso: {c.lider}</span>
     </div>
     <div className="space-y-3">
       <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4">
-        <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-1">Objetivo</p>
+        <p className="f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mb-1">Objetivo</p>
         <p className="text-sm leading-relaxed">{c.objetivo}</p>
-        <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mt-3 mb-1">Alcance</p>
+        <p className="f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mt-3 mb-1">Alcance</p>
         <p className="text-sm leading-relaxed">{c.alcance}</p>
-        <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mt-3 mb-1">Resultado relevante</p>
+        <p className="f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mt-3 mb-1">Resultado relevante</p>
         <p className="text-sm leading-relaxed">{c.resultado}</p>
       </div>
       <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4">
-        <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-2">Requisitos ISO 9001:2015</p>
+        <p className="f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mb-2">Requisitos ISO 9001:2015</p>
         <p className="text-sm leading-relaxed text-[#3c4a40]">{c.requisitosISO}</p>
       </div>
       <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4">
-        <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-2">Ciclo PHVA</p>
+        <p className="f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mb-2">Ciclo PHVA</p>
         <TablaScroll>
           <table className="w-full text-xs border-collapse min-w-[52rem]">
             <thead>
@@ -2008,7 +2008,7 @@ const VistaCaracterizacion = ({ proceso, c }) => (
             <tbody>
               {c.phva.map((f, i) => (
                 <tr key={i} className="border-t border-[#F0F3EE] align-top">
-                  <td className="px-2 py-1.5"><span className="f-mono font-bold text-white bg-[#1E6B47] rounded px-1.5">{f[0]}</span></td>
+                  <td className="px-2 py-1.5"><span className="f-mono font-bold text-white bg-[#008840] rounded px-1.5">{f[0]}</span></td>
                   <td className="px-2 py-1.5 text-[#3c4a40]">{f[1]}</td>
                   <td className="px-2 py-1.5 text-[#3c4a40]">{f[2]}</td>
                   <td className="px-2 py-1.5 font-medium">{f[3]}</td>
@@ -2022,7 +2022,7 @@ const VistaCaracterizacion = ({ proceso, c }) => (
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4">
-          <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mb-1.5">Indicadores</p>
+          <p className="f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mb-1.5">Indicadores</p>
           <ul className="text-sm space-y-1 list-disc pl-4 text-[#3c4a40]">{c.indicadores.map((x, i) => <li key={i}>{x}</li>)}</ul>
         </div>
         <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4">
@@ -2055,21 +2055,21 @@ const VALORES_INTEGRIDAD = [
 // lleva a la vista propia #/codigo-integridad.
 const EntradaCodigoIntegridad = ({ irA }) => (
   <button onClick={() => irA('codigo-integridad')}
-    className="tarjeta w-full text-left mb-6 bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#1E6B47] p-4 sm:p-5 flex items-center gap-4">
+    className="tarjeta w-full text-left mb-6 bg-white rounded-2xl border-2 border-[#DCE5DC] hover:border-[#008840] p-4 sm:p-5 flex items-center gap-4">
     <span className="text-3xl shrink-0" aria-hidden="true">⚖️</span>
     <span className="flex-1 min-w-0">
       <span className="f-display block text-lg font-bold text-[#14231B]">¿Qué es el Código de Integridad?</span>
       <span className="block text-sm text-[#5b6b5f] leading-snug">Conoce el Código de Integridad y Buen Gobierno de ACTIVA y sus cinco valores del servicio público.</span>
     </span>
-    <span className="text-sm font-semibold text-[#1E6B47] whitespace-nowrap">Ingresar →</span>
+    <span className="text-sm font-semibold text-[#008840] whitespace-nowrap">Ingresar →</span>
   </button>
 );
 
 // Vista propia del Código de Integridad (ruta #/codigo-integridad).
 const VistaCodigoIntegridad = ({ irA }) => (
   <div className="max-w-4xl mx-auto">
-    <button onClick={() => irA('proceso/MIPG')} className="no-print text-sm font-semibold text-[#1E6B47] mb-4">← Volver a MIPG</button>
-    <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest">MIPG · Integridad</p>
+    <button onClick={() => irA('proceso/MIPG')} className="no-print text-sm font-semibold text-[#008840] mb-4">← Volver a MIPG</button>
+    <p className="f-mono text-xs font-bold text-[#008840] uppercase tracking-widest">MIPG · Integridad</p>
     <h2 className="f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-3">¿Qué es el Código de Integridad?</h2>
     <div className="bg-white rounded-2xl border border-[#DCE5DC] p-4 sm:p-5">
       <p className="text-sm leading-relaxed text-[#3c4a40]">
@@ -2080,7 +2080,7 @@ const VistaCodigoIntegridad = ({ irA }) => (
         público definido por la Función Pública —en línea con la OCDE y el Modelo Integrado de Planeación y Gestión (MIPG)—
         y actualiza el código adoptado por la entidad en 2023.
       </p>
-      <p className="f-mono text-[10px] font-bold text-[#1E6B47] uppercase tracking-widest mt-4 mb-2">Los cinco valores</p>
+      <p className="f-mono text-[10px] font-bold text-[#008840] uppercase tracking-widest mt-4 mb-2">Los cinco valores</p>
       <div className="grid sm:grid-cols-2 gap-3">
         {VALORES_INTEGRIDAD.map((v) => (
           <div key={v.valor} className="rounded-xl border border-[#DCE5DC] bg-[#F4F9EE] p-3">
@@ -2099,7 +2099,7 @@ const VistaCodigoIntegridad = ({ irA }) => (
           riesgos y el Programa de Transparencia y Ética Pública (PTEP).
         </p>
         <a href={ENLACE_CODIGO_INTEGRIDAD} target="_blank" rel="noopener"
-          className="text-sm font-semibold text-white bg-[#1E6B47] rounded-full px-4 py-2 hover:bg-[#144D33] whitespace-nowrap">
+          className="text-sm font-semibold text-white bg-[#008840] rounded-full px-4 py-2 hover:bg-[#00662F] whitespace-nowrap">
           Ver el Código de Integridad ↗
         </a>
       </div>
@@ -2114,7 +2114,7 @@ const VistaProceso = ({ sigla, irA }) => {
   const caract = CARACTERIZACIONES[sigla];
   // La caracterización es la primera página del proceso; los documentos, la segunda.
   const [pestana, setPestana] = useState('caracterizacion');
-  if (!proceso) return <p className="text-center py-10">Proceso no encontrado. <button className="text-[#1E6B47] font-semibold" onClick={() => irA('')}>Volver</button></p>;
+  if (!proceso) return <p className="text-center py-10">Proceso no encontrado. <button className="text-[#008840] font-semibold" onClick={() => irA('')}>Volver</button></p>;
   const vistaDocumentos = (
     <div>
       {sigla === 'MIPG' && <EntradaCodigoIntegridad irA={irA} />}
@@ -2131,7 +2131,7 @@ const VistaProceso = ({ sigla, irA }) => {
         <div className="mt-5 flex flex-wrap gap-2">
           {guias.map((g) => (
             <button key={g.id} onClick={() => irA(`guia/${g.id}`)}
-              className="text-sm font-semibold bg-[#B5E048] text-[#14231B] rounded-full px-4 py-2 hover:bg-[#a3d13a]">
+              className="text-sm font-semibold bg-[#A0C030] text-[#14231B] rounded-full px-4 py-2 hover:bg-[#8AA828]">
               {g.pregunta}
             </button>
           ))}
@@ -2149,9 +2149,9 @@ const VistaProceso = ({ sigla, irA }) => {
   );
   return (
     <div className="max-w-4xl mx-auto">
-      <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
+      <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#008840] mb-4">← Volver al inicio</button>
       <div className="mb-3">
-        <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest">{proceso.franja} · {proceso.sigla}</p>
+        <p className="f-mono text-xs font-bold text-[#008840] uppercase tracking-widest">{proceso.franja} · {proceso.sigla}</p>
         <h2 className="f-display text-3xl font-extrabold leading-tight">{proceso.nombre}</h2>
       </div>
       {caract ? (
@@ -2159,7 +2159,7 @@ const VistaProceso = ({ sigla, irA }) => {
           <div className="no-print flex gap-2 mb-4 border-b-2 border-[#DCE5DC]">
             {[['caracterizacion', 'Caracterización'], ['documentos', 'Documentos y carpetas']].map(([id, nombre]) => (
               <button key={id} onClick={() => setPestana(id)}
-                className={`text-sm font-bold px-4 py-2 rounded-t-xl ${pestana === id ? 'bg-[#1E6B47] text-white' : 'text-[#5b6b5f] hover:text-[#1E6B47]'}`}>
+                className={`text-sm font-bold px-4 py-2 rounded-t-xl ${pestana === id ? 'bg-[#008840] text-white' : 'text-[#5b6b5f] hover:text-[#008840]'}`}>
                 {nombre}
               </button>
             ))}
@@ -2187,7 +2187,7 @@ const TablaKris = () => (
         <tr className="bg-[#DCE5DC]/50 text-left">
           <th className="px-3 py-2 font-semibold">KRI</th>
           <th className="px-3 py-2 font-semibold">Indicador</th>
-          <th className="px-3 py-2 font-semibold text-[#1E6B47]">Verde</th>
+          <th className="px-3 py-2 font-semibold text-[#008840]">Verde</th>
           <th className="px-3 py-2 font-semibold text-[#8A5A2C]">Amarillo</th>
           <th className="px-3 py-2 font-semibold text-[#B5432E]">Rojo</th>
           <th className="px-3 py-2 font-semibold">Frecuencia · Responsable</th>
@@ -2196,9 +2196,9 @@ const TablaKris = () => (
       <tbody>
         {KRIS.map((k) => (
           <tr key={k[0]} className="border-t border-[#F0F3EE]">
-            <td className="px-3 py-2 f-mono text-xs font-bold text-[#1E6B47]">{k[0]}</td>
+            <td className="px-3 py-2 f-mono text-xs font-bold text-[#008840]">{k[0]}</td>
             <td className="px-3 py-2">{k[1]}</td>
-            <td className="px-3 py-2 whitespace-nowrap font-semibold text-[#1E6B47]">{k[2]}</td>
+            <td className="px-3 py-2 whitespace-nowrap font-semibold text-[#008840]">{k[2]}</td>
             <td className="px-3 py-2 whitespace-nowrap text-[#8A5A2C]">{k[3]}</td>
             <td className="px-3 py-2 whitespace-nowrap font-semibold text-[#B5432E]">{k[4]}</td>
             <td className="px-3 py-2 text-xs text-[#5b6b5f]">{k[5]}</td>
@@ -2214,7 +2214,7 @@ const TablaKris = () => (
 // celda es una escala secuencial de un solo tono (claro → oscuro = más
 // riesgos); el número es la etiqueta directa y el tooltip lista los códigos.
 const CALOR_ZONAS = ['BAJO', 'MEDIO', 'SIGNIFICATIVO', 'ALTO', 'CRÍTICO'];
-const pasoCalor = (n) => n >= 7 ? { fondo: '#1E6B47', texto: '#FFFFFF' }
+const pasoCalor = (n) => n >= 7 ? { fondo: '#008840', texto: '#FFFFFF' }
   : n >= 5 ? { fondo: '#4E9770', texto: '#FFFFFF' }
   : n >= 3 ? { fondo: '#C2DEC9', texto: '#14231B' }
   : { fondo: '#EAF3EC', texto: '#14231B' };
@@ -2290,8 +2290,8 @@ const VistaRiesgos = ({ irA }) => {
     .map((z) => ({ zona: z, n: TODOS_RIESGOS.filter((r) => r.zi === z).length }));
   return (
     <div className="max-w-4xl mx-auto">
-      <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
-      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest mb-1">Gestión del riesgo · Vigencia 2025</p>
+      <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#008840] mb-4">← Volver al inicio</button>
+      <p className="f-mono text-xs font-bold text-[#008840] uppercase tracking-widest mb-1">Gestión del riesgo · Vigencia 2025</p>
       <h2 className="f-display text-3xl sm:text-4xl font-extrabold leading-tight mb-2">Mapa de riesgos</h2>
       <p className="text-[#3c4a40] leading-relaxed max-w-2xl">
         Seguimiento a la gestión del riesgo con la matriz actualizada al 25/02/2026
@@ -2299,7 +2299,7 @@ const VistaRiesgos = ({ irA }) => {
         {' '}{TODOS_RIESGOS.length} riesgos en 5 componentes.
       </p>
       <a href={ENLACE_SEGUIMIENTO_RIESGOS} target="_blank" rel="noopener"
-         className="mt-3 inline-flex items-center gap-2 rounded-xl bg-[#1E6B47] text-white font-semibold px-4 py-2.5 hover:bg-[#144D33] shadow-[3px_3px_0_#14231B]">
+         className="mt-3 inline-flex items-center gap-2 rounded-xl bg-[#008840] text-white font-semibold px-4 py-2.5 hover:bg-[#00662F] shadow-[3px_3px_0_#14231B]">
         📄 Ver el informe completo de Seguimiento a Riesgos ↗
       </a>
 
@@ -2328,14 +2328,14 @@ const VistaRiesgos = ({ irA }) => {
       {COMPONENTES_RIESGO.map((c) => (
         <section key={c.clave} className="mt-8">
           <div className="flex items-baseline gap-3 mb-2">
-            <span className="f-mono text-xs font-bold bg-[#14231B] text-[#B5E048] rounded px-1.5 py-0.5">{c.clave}</span>
+            <span className="f-mono text-xs font-bold bg-[#14231B] text-[#A0C030] rounded px-1.5 py-0.5">{c.clave}</span>
             <h3 className="f-display text-xl font-bold">{c.nombre}</h3>
             <span className="text-xs text-[#5b6b5f]">{c.fuente}</span>
           </div>
           <div className="space-y-2">
             {c.riesgos.map((r) => (
               <div key={r.id} className="tarjeta bg-white rounded-xl border border-[#DCE5DC] px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                <span className="f-mono text-xs font-bold text-[#1E6B47] w-9">{r.id}</span>
+                <span className="f-mono text-xs font-bold text-[#008840] w-9">{r.id}</span>
                 <div className="flex-1 min-w-[14rem]">
                   <p className="text-sm font-medium leading-snug">{r.desc}</p>
                   <p className="text-xs text-[#5b6b5f]">{r.proc} · Tratamiento: {r.trat}</p>
@@ -2365,14 +2365,14 @@ const VistaRiesgos = ({ irA }) => {
         <p className="f-display font-semibold mb-2">Documentos de referencia</p>
         <div className="space-y-2">
           <div className="flex items-center gap-3 text-sm">
-            <span className="f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap">Informe</span>
+            <span className="f-mono text-xs font-bold text-[#A0C030] whitespace-nowrap">Informe</span>
             <span className="flex-1 text-white/90">Seguimiento a la Gestión del Riesgo — Mapa de Riesgos (vigencia 2025)</span>
-            <a className="font-semibold text-[#B5E048] hover:underline" href={ENLACE_SEGUIMIENTO_RIESGOS} target="_blank" rel="noopener">Abrir ↗</a>
+            <a className="font-semibold text-[#A0C030] hover:underline" href={ENLACE_SEGUIMIENTO_RIESGOS} target="_blank" rel="noopener">Abrir ↗</a>
           </div>
           <div className="flex items-center gap-3 text-sm">
-            <span className="f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap">OE-M02</span>
+            <span className="f-mono text-xs font-bold text-[#A0C030] whitespace-nowrap">OE-M02</span>
             <span className="flex-1 text-white/90">Política de administración y gestión del riesgo</span>
-            <a className="font-semibold text-[#B5E048] hover:underline" href={enlaceDoc('OE-M02 Politica de administracion gestión del riesgo.docx')} target="_blank" rel="noopener">Abrir ↗</a>
+            <a className="font-semibold text-[#A0C030] hover:underline" href={enlaceDoc('OE-M02 Politica de administracion gestión del riesgo.docx')} target="_blank" rel="noopener">Abrir ↗</a>
           </div>
         </div>
         <p className="text-xs text-white/60 mt-3">Resumen orientativo del informe de seguimiento; ante cualquier diferencia, manda el documento oficial aprobado por la Dirección.</p>
@@ -2390,13 +2390,13 @@ const VistaDocumentos = ({ irA, docs = DOCS_FALLBACK }) => {
     .slice().sort((a, b) => (a.codigo || 'ZZ').localeCompare(b.codigo || 'ZZ'));
   return (
     <div className="max-w-3xl mx-auto">
-      <button onClick={() => irA('')} className="text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
+      <button onClick={() => irA('')} className="text-sm font-semibold text-[#008840] mb-4">← Volver al inicio</button>
       <h2 className="f-display text-3xl font-extrabold mb-4">Todos los documentos <span className="text-[#5b6b5f] text-xl font-semibold">({visibles.length})</span></h2>
       <div className="relative mb-4">
         <input value={q} onChange={(e) => setQ(e.target.value)}
           placeholder="Buscar por código o nombre…"
           aria-label="Buscar en el listado de documentos"
-          className="w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-3 text-base shadow-[3px_3px_0_#14231B] focus:outline-none focus:border-[#1E6B47]" />
+          className="w-full rounded-2xl border-2 border-[#14231B] bg-white px-5 py-3 text-base shadow-[3px_3px_0_#14231B] focus:outline-none focus:border-[#008840]" />
         {q && (
           <button onClick={() => setQ('')} aria-label="Limpiar búsqueda"
             className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5b6b5f] hover:text-[#14231B] text-lg font-bold">×</button>
@@ -2415,28 +2415,28 @@ const Inicio = ({ irA, docs }) => (
   <div className="max-w-4xl mx-auto">
     {/* El mapa de procesos es la puerta de entrada: va arriba de todo */}
     <div className="pt-6 pb-4 text-center">
-      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-[.2em] mb-1">Sistema de Gestión de Calidad · ACTIVA</p>
+      <p className="f-mono text-xs font-bold text-[#008840] uppercase tracking-[.2em] mb-1">Sistema de Gestión de Calidad · ACTIVA</p>
       <h1 className="f-display text-3xl sm:text-4xl font-extrabold leading-tight">Mapa de procesos</h1>
     </div>
     <MapaProcesos irA={irA} />
 
     <h2 className="f-display text-2xl sm:text-3xl font-extrabold leading-tight mt-10 mb-4">
-      ¿Cómo pido <span className="text-[#1E6B47]">lo que necesito</span>?
+      ¿Cómo pido <span className="text-[#008840]">lo que necesito</span>?
     </h2>
     <div className="flex flex-wrap gap-2 mb-6">
       {GUIAS.map((g) => (
         <button key={g.id} onClick={() => irA(`guia/${g.id}`)}
-          className="tarjeta text-sm font-semibold bg-[#B5E048] text-[#14231B] rounded-full px-4 py-2">
+          className="tarjeta text-sm font-semibold bg-[#A0C030] text-[#14231B] rounded-full px-4 py-2">
           {g.pregunta}
         </button>
       ))}
     </div>
     <Buscador irA={irA} docs={docs} />
     <div className="mt-3 flex justify-end gap-5">
-      <button onClick={() => irA('riesgos')} className="text-sm font-semibold text-[#1E6B47] hover:underline">
+      <button onClick={() => irA('riesgos')} className="text-sm font-semibold text-[#008840] hover:underline">
         Mapa de riesgos →
       </button>
-      <button onClick={() => irA('documentos')} className="text-sm font-semibold text-[#1E6B47] hover:underline">
+      <button onClick={() => irA('documentos')} className="text-sm font-semibold text-[#008840] hover:underline">
         Ver todos los documentos →
       </button>
     </div>
@@ -2446,9 +2446,9 @@ const Inicio = ({ irA, docs }) => (
 // Indicadores del Plan Estratégico 2025-2027 + KRI, solo de los documentos oficiales.
 const VistaIndicadores = ({ irA }) => (
   <div className="max-w-4xl mx-auto">
-    <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
+    <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#008840] mb-4">← Volver al inicio</button>
     <div className="mb-4">
-      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest">Seguimiento y medición</p>
+      <p className="f-mono text-xs font-bold text-[#008840] uppercase tracking-widest">Seguimiento y medición</p>
       <h2 className="f-display text-3xl font-extrabold leading-tight">Indicadores</h2>
       <p className="text-sm text-[#3c4a40] mt-2 max-w-2xl">
         Metas 2025–2027 del Plan Estratégico de ACTIVA, por línea estratégica, e indicadores
@@ -2473,9 +2473,9 @@ const VistaIndicadores = ({ irA }) => (
               {l.indicadores.map((i) => (
                 <tr key={i[0]} className="border-t border-[#F0F3EE]">
                   <td className="px-3 py-2 min-w-[13rem]">{i[0]}</td>
-                  <td className="px-3 py-2 font-semibold text-[#1E6B47]">{i[1]}</td>
-                  <td className="px-3 py-2 font-semibold text-[#1E6B47]">{i[2]}</td>
-                  <td className="px-3 py-2 font-semibold text-[#1E6B47]">{i[3]}</td>
+                  <td className="px-3 py-2 font-semibold text-[#008840]">{i[1]}</td>
+                  <td className="px-3 py-2 font-semibold text-[#008840]">{i[2]}</td>
+                  <td className="px-3 py-2 font-semibold text-[#008840]">{i[3]}</td>
                 </tr>
               ))}
             </tbody>
@@ -2487,7 +2487,7 @@ const VistaIndicadores = ({ irA }) => (
       <h3 className="f-display text-xl font-bold mb-1">Indicadores clave de riesgo (KRI) 2026</h3>
       <p className="text-sm text-[#3c4a40] mb-3 max-w-2xl">
         Alertas tempranas del seguimiento al mapa de riesgos. El detalle de los riesgos que
-        vigilan está en la <button onClick={() => irA('riesgos')} className="font-semibold text-[#1E6B47] hover:underline">sección de riesgos</button>.
+        vigilan está en la <button onClick={() => irA('riesgos')} className="font-semibold text-[#008840] hover:underline">sección de riesgos</button>.
       </p>
       <TablaKris />
     </section>
@@ -2495,14 +2495,14 @@ const VistaIndicadores = ({ irA }) => (
       <p className="f-display font-semibold mb-2">Documentos de referencia</p>
       <div className="space-y-2">
         <div className="flex items-center gap-3 text-sm">
-          <span className="f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap">Plan</span>
+          <span className="f-mono text-xs font-bold text-[#A0C030] whitespace-nowrap">Plan</span>
           <span className="flex-1 text-white/90">Indicadores para Plan Estratégico (sitio Plan Estratégico)</span>
-          <a className="font-semibold text-[#B5E048] hover:underline" href={ENLACE_INDICADORES_PLAN} target="_blank" rel="noopener">Abrir ↗</a>
+          <a className="font-semibold text-[#A0C030] hover:underline" href={ENLACE_INDICADORES_PLAN} target="_blank" rel="noopener">Abrir ↗</a>
         </div>
         <div className="flex items-center gap-3 text-sm">
-          <span className="f-mono text-xs font-bold text-[#B5E048] whitespace-nowrap">Informe</span>
+          <span className="f-mono text-xs font-bold text-[#A0C030] whitespace-nowrap">Informe</span>
           <span className="flex-1 text-white/90">Seguimiento a la Gestión del Riesgo — Mapa de Riesgos (vigencia 2025)</span>
-          <a className="font-semibold text-[#B5E048] hover:underline" href={ENLACE_SEGUIMIENTO_RIESGOS} target="_blank" rel="noopener">Abrir ↗</a>
+          <a className="font-semibold text-[#A0C030] hover:underline" href={ENLACE_SEGUIMIENTO_RIESGOS} target="_blank" rel="noopener">Abrir ↗</a>
         </div>
       </div>
       <p className="text-xs text-white/60 mt-3">Transcripción de los documentos oficiales; ante cualquier diferencia, mandan los documentos aprobados por la Dirección.</p>
@@ -2513,9 +2513,9 @@ const VistaIndicadores = ({ irA }) => (
 // Organigrama oficial de ACTIVA: se muestra la imagen institucional tal cual.
 const VistaOrganigrama = ({ irA }) => (
   <div className="max-w-4xl mx-auto">
-    <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#1E6B47] mb-4">← Volver al inicio</button>
+    <button onClick={() => irA('')} className="no-print text-sm font-semibold text-[#008840] mb-4">← Volver al inicio</button>
     <div className="mb-4">
-      <p className="f-mono text-xs font-bold text-[#1E6B47] uppercase tracking-widest">Estructura organizacional</p>
+      <p className="f-mono text-xs font-bold text-[#008840] uppercase tracking-widest">Estructura organizacional</p>
       <h2 className="f-display text-3xl font-extrabold leading-tight">Organigrama</h2>
     </div>
     <div className="bg-white rounded-2xl border border-[#DCE5DC] p-3 sm:p-5">
@@ -2526,7 +2526,7 @@ const VistaOrganigrama = ({ irA }) => (
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
         <p className="text-xs text-[#5b6b5f]">En el celular, ábrelo en pantalla completa para leer los cargos.</p>
         <a href="organigrama.png" target="_blank" rel="noopener"
-          className="text-sm font-semibold text-white bg-[#1E6B47] rounded-full px-4 py-2 hover:bg-[#144D33] whitespace-nowrap">
+          className="text-sm font-semibold text-white bg-[#008840] rounded-full px-4 py-2 hover:bg-[#00662F] whitespace-nowrap">
           Ver en pantalla completa ↗
         </a>
       </div>
@@ -2590,16 +2590,16 @@ const App = () => {
       <header className="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-[#DCE5DC]">
         <div className="max-w-4xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-1">
           <button onClick={() => irA('')} className="f-display font-extrabold tracking-tight flex items-center gap-2 shrink-0 text-left">
-            <span className="w-7 h-7 rounded-lg bg-[#1E6B47] text-[#B5E048] flex items-center justify-center text-sm shrink-0" aria-hidden="true">A</span>
+            <img src="activa-logo.png" alt="ACTIVA — Empresa de Parques y Eventos de Antioquia" className="h-9 w-auto shrink-0" />
             <span className="text-[12px] sm:text-[13px] leading-tight max-w-[14rem] sm:max-w-[22rem]">Sistema de Gestión de Calidad - Empresa de Parques y Eventos de Antioquia ACTIVA</span>
           </button>
           <nav className="w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-semibold">
-            <button onClick={() => irA('')} className="hover:text-[#1E6B47]">Inicio</button>
-            <button onClick={() => irA('organigrama')} className="hover:text-[#1E6B47]">Organigrama</button>
-            <button onClick={() => irA('indicadores')} className="hover:text-[#1E6B47]">Indicadores</button>
-            <button onClick={() => irA('riesgos')} className="hover:text-[#1E6B47]">Riesgos</button>
-            <button onClick={() => irA('documentos')} className="hover:text-[#1E6B47]">Documentos</button>
-            <a href={ENLACE_NORMOGRAMA} target="_blank" rel="noopener" className="hover:text-[#1E6B47] inline-flex items-center gap-1">Normograma <span aria-hidden="true">↗</span></a>
+            <button onClick={() => irA('')} className="hover:text-[#008840]">Inicio</button>
+            <button onClick={() => irA('organigrama')} className="hover:text-[#008840]">Organigrama</button>
+            <button onClick={() => irA('indicadores')} className="hover:text-[#008840]">Indicadores</button>
+            <button onClick={() => irA('riesgos')} className="hover:text-[#008840]">Riesgos</button>
+            <button onClick={() => irA('documentos')} className="hover:text-[#008840]">Documentos</button>
+            <a href={ENLACE_NORMOGRAMA} target="_blank" rel="noopener" className="hover:text-[#008840] inline-flex items-center gap-1">Normograma <span aria-hidden="true">↗</span></a>
           </nav>
         </div>
       </header>
@@ -2607,7 +2607,7 @@ const App = () => {
       <footer className="border-t border-[#DCE5DC] bg-white">
         <div className="max-w-4xl mx-auto px-4 py-5 text-sm text-[#5b6b5f] space-y-1">
           <p>Empresa de Parques y Eventos de Antioquia — ACTIVA · Portal de consulta del SGC.</p>
-          <p>Los enlaces abren el <a className="font-semibold text-[#1E6B47] hover:underline" href={CARPETA_SGC_DEFAULT} target="_blank" rel="noopener">repositorio oficial en SharePoint</a> y requieren sesión Microsoft institucional.</p>
+          <p>Los enlaces abren el <a className="font-semibold text-[#008840] hover:underline" href={CARPETA_SGC_DEFAULT} target="_blank" rel="noopener">repositorio oficial en SharePoint</a> y requieren sesión Microsoft institucional.</p>
         </div>
       </footer>
     </div>

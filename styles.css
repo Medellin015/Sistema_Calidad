@@ -3,8 +3,11 @@
    Tailwind se usa para el layout; aquí vive lo que Tailwind CDN no cubre.
    ============================================================================ */
 :root{
-  --tinta:#14231B; --bosque:#1E6B47; --bosque-osc:#144D33; --lima:#B5E048;
+  /* Paleta institucional ACTIVA (tomada del logo oficial):
+     verde #008840, lima #A0C030 y azul #0088C0. */
+  --tinta:#14231B; --bosque:#008840; --bosque-osc:#00662F; --lima:#A0C030;
   --papel:#FFFFFF; --niebla:#DCE5DC; --sol:#F4A93C; --arcilla:#8A5A2C;
+  --azul:#0088C0; --azul-osc:#006E9B;
 }
 html{scroll-behavior:smooth}
 body{background:var(--papel);color:var(--tinta);font-family:'Nunito Sans',system-ui,sans-serif}
@@ -26,7 +29,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--lima);outline-offse
   background:#fff;border:3px solid var(--bosque);font-weight:700;z-index:1}
 .nodo.decision .marca{border-radius:6px;transform:rotate(45deg);border-color:var(--sol)}
 .nodo.decision .marca span{transform:rotate(-45deg)}
-.nodo.extremo .marca{background:var(--bosque);border-color:var(--bosque);color:var(--lima)}
+.nodo.extremo .marca{background:var(--bosque);border-color:var(--bosque);color:#fff}
 .nodo.fin .marca{background:var(--tinta);border-color:var(--tinta)}
 @keyframes aparecer{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @keyframes crecer{from{transform:scaleY(0)}to{transform:scaleY(1)}}
@@ -43,10 +46,10 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--lima);outline-offse
 .franja-titulo{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.65rem;
   font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.4rem;opacity:.85}
 .franja-nodos{display:grid;gap:.45rem;grid-template-columns:repeat(auto-fit,minmax(11.5rem,1fr))}
-.f-estrategicos{background:rgba(30,107,71,.08);border-color:var(--bosque)}
-.f-misionales{background:rgba(181,224,72,.28);border-color:var(--tinta)}
+.f-estrategicos{background:rgba(0,136,64,.08);border-color:var(--bosque)}
+.f-misionales{background:rgba(160,192,48,.26);border-color:var(--tinta)}
 .f-apoyo{background:rgba(220,229,220,.45);border-color:#9db3a2}
-.f-evaluacion{background:rgba(244,169,60,.12);border-color:var(--sol)}
+.f-evaluacion{background:rgba(0,136,192,.10);border-color:var(--azul)}
 .nodo-proceso{display:flex;align-items:center;gap:.5rem;width:100%;
   background:#fff;border:2px solid var(--niebla);border-radius:.7rem;
   padding:.5rem .65rem;font-size:.8rem;font-weight:600;color:var(--tinta);
