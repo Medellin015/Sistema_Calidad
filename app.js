@@ -205,6 +205,8 @@ const ROLES = {
 const APP_OP = 'https://medellin015.github.io/Ordenes-Pedido-Activa';
 // Normograma de ACTIVA (matriz de normatividad aplicable), alojado aparte.
 const ENLACE_NORMOGRAMA = 'https://medellin015.github.io/Normograma-Activa/';
+// Membrete institucional de ACTIVA (plantilla Word en el repositorio del SGC).
+const ENLACE_MEMBRETE = 'https://activaparquesyeventos.sharepoint.com/:w:/s/SistemadeGestindeCalidad/IQAP9JsQGAfQTJDne57wlPZOAUA955ATEkU_Lxw19lb1VoA?e=N9b2PV';
 // Comparación compartida por las guías internas de CDP y RP (se muestra al
 // final de ambas).
 const COMPARACION_CDP_RP = {
@@ -2118,8 +2120,11 @@ const Inicio = ({ irA, docs }) => (React.createElement("div", { className: "max-
         "?"),
     React.createElement("div", { className: "flex flex-wrap gap-2 mb-6" }, GUIAS.map((g) => (React.createElement("button", { key: g.id, onClick: () => irA(`guia/${g.id}`), className: "tarjeta text-sm font-semibold bg-[#A0C030] text-[#14231B] rounded-full px-4 py-2" }, g.pregunta)))),
     React.createElement(Buscador, { irA: irA, docs: docs }),
-    React.createElement("div", { className: "mt-3 flex justify-end gap-5" },
-        React.createElement("button", { onClick: () => irA('riesgos'), className: "text-sm font-semibold text-[#008840] hover:underline" }, "Mapa de riesgos \u2192"),
+    React.createElement("div", { className: "mt-3 flex flex-wrap items-center gap-x-5 gap-y-2" },
+        React.createElement("a", { href: ENLACE_MEMBRETE, target: "_blank", rel: "noopener", className: "tarjeta inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-[#008840] hover:bg-[#00662F] rounded-full px-4 py-2" },
+            React.createElement("span", { "aria-hidden": "true" }, "\u2193"),
+            " Descargar membrete ACTIVA"),
+        React.createElement("button", { onClick: () => irA('riesgos'), className: "text-sm font-semibold text-[#008840] hover:underline sm:ml-auto" }, "Mapa de riesgos \u2192"),
         React.createElement("button", { onClick: () => irA('documentos'), className: "text-sm font-semibold text-[#008840] hover:underline" }, "Ver todos los documentos \u2192"))));
 // Indicadores del Plan Estratégico 2025-2027 + KRI, solo de los documentos oficiales.
 const VistaIndicadores = ({ irA }) => (React.createElement("div", { className: "max-w-4xl mx-auto" },

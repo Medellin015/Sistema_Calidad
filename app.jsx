@@ -215,6 +215,8 @@ const ROLES = {
 const APP_OP = 'https://medellin015.github.io/Ordenes-Pedido-Activa';
 // Normograma de ACTIVA (matriz de normatividad aplicable), alojado aparte.
 const ENLACE_NORMOGRAMA = 'https://medellin015.github.io/Normograma-Activa/';
+// Membrete institucional de ACTIVA (plantilla Word en el repositorio del SGC).
+const ENLACE_MEMBRETE = 'https://activaparquesyeventos.sharepoint.com/:w:/s/SistemadeGestindeCalidad/IQAP9JsQGAfQTJDne57wlPZOAUA955ATEkU_Lxw19lb1VoA?e=N9b2PV';
 
 // Comparación compartida por las guías internas de CDP y RP (se muestra al
 // final de ambas).
@@ -2432,8 +2434,12 @@ const Inicio = ({ irA, docs }) => (
       ))}
     </div>
     <Buscador irA={irA} docs={docs} />
-    <div className="mt-3 flex justify-end gap-5">
-      <button onClick={() => irA('riesgos')} className="text-sm font-semibold text-[#008840] hover:underline">
+    <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+      <a href={ENLACE_MEMBRETE} target="_blank" rel="noopener"
+        className="tarjeta inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-[#008840] hover:bg-[#00662F] rounded-full px-4 py-2">
+        <span aria-hidden="true">↓</span> Descargar membrete ACTIVA
+      </a>
+      <button onClick={() => irA('riesgos')} className="text-sm font-semibold text-[#008840] hover:underline sm:ml-auto">
         Mapa de riesgos →
       </button>
       <button onClick={() => irA('documentos')} className="text-sm font-semibold text-[#008840] hover:underline">
